@@ -98,24 +98,24 @@
       font-size: 12px; font-weight: 600;
       letter-spacing: 0.14em; text-transform: uppercase;
       text-decoration: none; cursor: none;
-      border: 1px solid rgba(255,255,255,0.25);
+      border: 1px solid var(--accent-a);
       color: var(--white); background: transparent;
       position: relative; overflow: hidden;
-      transition: border-color 0.25s;
+      transition: border-color 0.25s, color 0.25s;
     }
     .btn::after {
       content: ''; position: absolute; inset: 0;
-      background: var(--white);
+      background: var(--gradient);
       transform: scaleX(0); transform-origin: left;
       transition: transform 0.28s ease; z-index: 0;
     }
     .btn:hover::after { transform: scaleX(1); }
-    .btn:hover { color: var(--bg); border-color: var(--white); }
+    .btn:hover { color: var(--bg); border-color: transparent; }
     .btn span, .btn svg { position: relative; z-index: 1; }
     .btn svg { transition: transform 0.25s; }
     .btn:hover svg { transform: translateX(4px); }
-    .btn-solid { background: var(--gradient); color: var(--bg); border-color: transparent; }
-    .btn-solid::after { background: var(--gradient-d); }
+    .btn-solid { background: var(--gradient); color: var(--bg); border-color: transparent; font-weight: 700; }
+    .btn-solid::after { background: linear-gradient(90deg, #f6eb16, #f6851f); }
     .btn-solid:hover { color: var(--bg); }
 
     /* ─── SCROLL REVEAL ─────────────────────────────────────────── */
@@ -241,14 +241,14 @@
     }
     .hero-reel-btn {
       display: flex; align-items: center; gap: 14px;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(246,133,31,0.08);
+      border: 1px solid rgba(246,133,31,0.4);
       border-radius: 100px; padding: 12px 28px;
       color: var(--white); font-size: 13px; font-weight: 500;
       letter-spacing: 0.08em; cursor: none; text-decoration: none;
       transition: border-color 0.25s, background 0.25s;
     }
-    .hero-reel-btn:hover { border-color: rgba(255,255,255,0.45); background: rgba(255,255,255,0.13); }
+    .hero-reel-btn:hover { border-color: var(--accent-a); background: rgba(246,133,31,0.18); }
     .play-icon {
       width: 36px; height: 36px; background: var(--gradient);
       border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
@@ -336,7 +336,7 @@
       opacity: 0; transform: scale(0.7);
       transition: opacity 0.3s, transform 0.3s, border-color 0.3s;
     }
-    .service-card:hover .service-card-arrow { opacity: 1; transform: scale(1); border-color: rgba(255,255,255,0.6); }
+    .service-card:hover .service-card-arrow { opacity: 1; transform: scale(1); border-color: var(--accent-a); }
     .service-card-content {
       position: absolute; inset: 0;
       display: flex; flex-direction: column; justify-content: flex-end; padding: 28px;
@@ -662,7 +662,7 @@
       cursor: none; display: flex; align-items: center; justify-content: center;
       transition: border-color 0.2s;
     }
-    .modal-close:hover { border-color: var(--white); }
+    .modal-close:hover { border-color: var(--accent-a); color: var(--accent-a); }
 
     /* ═══════════════════════════════════════════════════════════════
        RESPONSIVE
