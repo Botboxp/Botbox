@@ -293,11 +293,16 @@
     }
     .ticker-list:hover { animation-play-state: paused; }
     .ticker-item {
-      font-family: var(--font-disp); font-size: 13px;
-      letter-spacing: 0.2em; color: var(--grey);
-      white-space: nowrap; transition: color 0.25s; cursor: default;
+      display: flex; align-items: center; flex-shrink: 0; cursor: default;
     }
-    .ticker-item:hover { color: var(--accent-b); }
+    .ticker-item img {
+      height: 22px; width: auto; max-width: 90px;
+      object-fit: contain;
+      filter: brightness(0) invert(1);
+      opacity: 0.4;
+      transition: opacity 0.3s;
+    }
+    .ticker-item:hover img { opacity: 0.9; }
     .ticker-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--accent-a); opacity: 0.6; flex-shrink: 0; }
     @keyframes ticker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
 
@@ -530,17 +535,22 @@
     .clients-wall-header { margin-bottom: 56px; }
     .clients-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 2px; }
     .client-logo-card {
-      background: var(--surface); padding: 32px 20px;
+      background: var(--surface); padding: 28px 24px;
       display: flex; align-items: center; justify-content: center;
       transition: background 0.3s; cursor: default; min-height: 88px;
     }
     .client-logo-card:hover { background: var(--surface2); }
-    .client-logo-text {
-      font-family: var(--font-disp); font-size: 13px;
-      letter-spacing: 0.2em; color: var(--grey);
-      text-align: center; transition: color 0.3s;
+    .client-logo-img {
+      max-width: 110px; max-height: 44px;
+      width: auto; height: auto;
+      object-fit: contain;
+      filter: brightness(0) invert(1);
+      opacity: 0.45;
+      transition: opacity 0.3s, filter 0.3s;
     }
-    .client-logo-card:hover .client-logo-text { color: var(--accent-b); }
+    .client-logo-card:hover .client-logo-img {
+      opacity: 1;
+    }
 
     /* ═══════════════════════════════════════════════════════════════
        CTA / CONTACT
@@ -771,31 +781,31 @@
       <div class="ticker-label">Trusted by</div>
       <div class="ticker-track">
         <div class="ticker-list">
-          <span class="ticker-item">AMC</span><span class="ticker-dot"></span>
-          <span class="ticker-item">PEPSI</span><span class="ticker-dot"></span>
-          <span class="ticker-item">DISCOVERY CHANNEL</span><span class="ticker-dot"></span>
-          <span class="ticker-item">NBC UNIVERSAL</span><span class="ticker-dot"></span>
-          <span class="ticker-item">TELEMUNDO</span><span class="ticker-dot"></span>
-          <span class="ticker-item">MGM</span><span class="ticker-dot"></span>
-          <span class="ticker-item">ESTÉE LAUDER</span><span class="ticker-dot"></span>
-          <span class="ticker-item">UNIVISION</span><span class="ticker-dot"></span>
-          <span class="ticker-item">ANIMAL PLANET</span><span class="ticker-dot"></span>
-          <span class="ticker-item">CLINIQUE</span><span class="ticker-dot"></span>
-          <span class="ticker-item">TELEFUTURA</span><span class="ticker-dot"></span>
-          <span class="ticker-item">DR. BRANDT</span><span class="ticker-dot"></span>
-          <!-- dup for loop -->
-          <span class="ticker-item">AMC</span><span class="ticker-dot"></span>
-          <span class="ticker-item">PEPSI</span><span class="ticker-dot"></span>
-          <span class="ticker-item">DISCOVERY CHANNEL</span><span class="ticker-dot"></span>
-          <span class="ticker-item">NBC UNIVERSAL</span><span class="ticker-dot"></span>
-          <span class="ticker-item">TELEMUNDO</span><span class="ticker-dot"></span>
-          <span class="ticker-item">MGM</span><span class="ticker-dot"></span>
-          <span class="ticker-item">ESTÉE LAUDER</span><span class="ticker-dot"></span>
-          <span class="ticker-item">UNIVISION</span><span class="ticker-dot"></span>
-          <span class="ticker-item">ANIMAL PLANET</span><span class="ticker-dot"></span>
-          <span class="ticker-item">CLINIQUE</span><span class="ticker-dot"></span>
-          <span class="ticker-item">TELEFUTURA</span><span class="ticker-dot"></span>
-          <span class="ticker-item">DR. BRANDT</span><span class="ticker-dot"></span>
+          <span class="ticker-item"><img src="https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1460921652259-3M8XCUWRS5DYG4UZ6ZDD/Amc_logo.png" alt="AMC"/></span><span class="ticker-dot"></span>
+          <span class="ticker-item"><img src="https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1460921653420-3N1YZWYX49PSGTSJSK4W/Pepsi.png" alt="Pepsi"/></span><span class="ticker-dot"></span>
+          <span class="ticker-item"><img src="https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1460921652736-4TLCZZVDBEQ8B307I6YN/discovery_channel.png" alt="Discovery"/></span><span class="ticker-dot"></span>
+          <span class="ticker-item"><img src="https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1496177109055-RIWRBPXI5U0NM9EGALIN/NBC+UNI.png" alt="NBC Universal"/></span><span class="ticker-dot"></span>
+          <span class="ticker-item"><img src="https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1460921657705-72YD5NHG2TIRNL7SCJ7V/Telemundo.png" alt="Telemundo"/></span><span class="ticker-dot"></span>
+          <span class="ticker-item"><img src="https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1460921653216-3TMFFGFPEC9J692PTNMF/Metro_Goldwyn_Mayer.png" alt="MGM"/></span><span class="ticker-dot"></span>
+          <span class="ticker-item"><img src="https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1496174649739-9X1FIYQU3R62T8BFN6XI/estee-lauder.png" alt="Estée Lauder"/></span><span class="ticker-dot"></span>
+          <span class="ticker-item"><img src="https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1461018306817-3XE5AXOWBVKGM2U98CLY/Univision.png" alt="Univision"/></span><span class="ticker-dot"></span>
+          <span class="ticker-item"><img src="https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1460921652206-X8S0KF7WKO8GXKA8JO0X/Animal_Planet_Logo.png" alt="Animal Planet"/></span><span class="ticker-dot"></span>
+          <span class="ticker-item"><img src="https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1496174766550-22R4J4ZAX2VJLBX0BPHZ/Clinique.png" alt="Clinique"/></span><span class="ticker-dot"></span>
+          <span class="ticker-item"><img src="https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1460922167603-H6PTUCZGLLMS3SZ7QR1E/telefutura_logo.png" alt="Telefutura"/></span><span class="ticker-dot"></span>
+          <span class="ticker-item"><img src="https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1460921652888-F8XG99SUIYSQLQ3W8QWG/dr_brandt_logo.png" alt="Dr. Brandt"/></span><span class="ticker-dot"></span>
+          <!-- dup for seamless loop -->
+          <span class="ticker-item"><img src="https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1460921652259-3M8XCUWRS5DYG4UZ6ZDD/Amc_logo.png" alt="AMC"/></span><span class="ticker-dot"></span>
+          <span class="ticker-item"><img src="https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1460921653420-3N1YZWYX49PSGTSJSK4W/Pepsi.png" alt="Pepsi"/></span><span class="ticker-dot"></span>
+          <span class="ticker-item"><img src="https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1460921652736-4TLCZZVDBEQ8B307I6YN/discovery_channel.png" alt="Discovery"/></span><span class="ticker-dot"></span>
+          <span class="ticker-item"><img src="https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1496177109055-RIWRBPXI5U0NM9EGALIN/NBC+UNI.png" alt="NBC Universal"/></span><span class="ticker-dot"></span>
+          <span class="ticker-item"><img src="https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1460921657705-72YD5NHG2TIRNL7SCJ7V/Telemundo.png" alt="Telemundo"/></span><span class="ticker-dot"></span>
+          <span class="ticker-item"><img src="https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1460921653216-3TMFFGFPEC9J692PTNMF/Metro_Goldwyn_Mayer.png" alt="MGM"/></span><span class="ticker-dot"></span>
+          <span class="ticker-item"><img src="https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1496174649739-9X1FIYQU3R62T8BFN6XI/estee-lauder.png" alt="Estée Lauder"/></span><span class="ticker-dot"></span>
+          <span class="ticker-item"><img src="https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1461018306817-3XE5AXOWBVKGM2U98CLY/Univision.png" alt="Univision"/></span><span class="ticker-dot"></span>
+          <span class="ticker-item"><img src="https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1460921652206-X8S0KF7WKO8GXKA8JO0X/Animal_Planet_Logo.png" alt="Animal Planet"/></span><span class="ticker-dot"></span>
+          <span class="ticker-item"><img src="https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1496174766550-22R4J4ZAX2VJLBX0BPHZ/Clinique.png" alt="Clinique"/></span><span class="ticker-dot"></span>
+          <span class="ticker-item"><img src="https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1460922167603-H6PTUCZGLLMS3SZ7QR1E/telefutura_logo.png" alt="Telefutura"/></span><span class="ticker-dot"></span>
+          <span class="ticker-item"><img src="https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1460921652888-F8XG99SUIYSQLQ3W8QWG/dr_brandt_logo.png" alt="Dr. Brandt"/></span><span class="ticker-dot"></span>
         </div>
       </div>
     </div>
@@ -1221,18 +1231,18 @@
         <h2 class="disp" style="font-size:clamp(40px,5vw,62px);letter-spacing:0.04em">OUR CLIENTS</h2>
       </div>
       <div class="clients-grid reveal">
-        <div class="client-logo-card"><span class="client-logo-text">AMC</span></div>
-        <div class="client-logo-card"><span class="client-logo-text">PEPSI</span></div>
-        <div class="client-logo-card"><span class="client-logo-text">DISCOVERY CHANNEL</span></div>
-        <div class="client-logo-card"><span class="client-logo-text">NBC UNIVERSAL</span></div>
-        <div class="client-logo-card"><span class="client-logo-text">TELEMUNDO</span></div>
-        <div class="client-logo-card"><span class="client-logo-text">MGM</span></div>
-        <div class="client-logo-card"><span class="client-logo-text">ESTÉE LAUDER</span></div>
-        <div class="client-logo-card"><span class="client-logo-text">UNIVISION</span></div>
-        <div class="client-logo-card"><span class="client-logo-text">ANIMAL PLANET</span></div>
-        <div class="client-logo-card"><span class="client-logo-text">CLINIQUE</span></div>
-        <div class="client-logo-card"><span class="client-logo-text">TELEFUTURA</span></div>
-        <div class="client-logo-card"><span class="client-logo-text">DR. BRANDT</span></div>
+        <div class="client-logo-card"><img class="client-logo-img" src="https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1460921652259-3M8XCUWRS5DYG4UZ6ZDD/Amc_logo.png" alt="AMC" /></div>
+        <div class="client-logo-card"><img class="client-logo-img" src="https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1460921653420-3N1YZWYX49PSGTSJSK4W/Pepsi.png" alt="Pepsi" /></div>
+        <div class="client-logo-card"><img class="client-logo-img" src="https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1460921652736-4TLCZZVDBEQ8B307I6YN/discovery_channel.png" alt="Discovery Channel" /></div>
+        <div class="client-logo-card"><img class="client-logo-img" src="https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1496177109055-RIWRBPXI5U0NM9EGALIN/NBC+UNI.png" alt="NBC Universal" /></div>
+        <div class="client-logo-card"><img class="client-logo-img" src="https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1460921657705-72YD5NHG2TIRNL7SCJ7V/Telemundo.png" alt="Telemundo" /></div>
+        <div class="client-logo-card"><img class="client-logo-img" src="https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1460921653216-3TMFFGFPEC9J692PTNMF/Metro_Goldwyn_Mayer.png" alt="MGM" /></div>
+        <div class="client-logo-card"><img class="client-logo-img" src="https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1496174649739-9X1FIYQU3R62T8BFN6XI/estee-lauder.png" alt="Estée Lauder" /></div>
+        <div class="client-logo-card"><img class="client-logo-img" src="https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1461018306817-3XE5AXOWBVKGM2U98CLY/Univision.png" alt="Univision" /></div>
+        <div class="client-logo-card"><img class="client-logo-img" src="https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1460921652206-X8S0KF7WKO8GXKA8JO0X/Animal_Planet_Logo.png" alt="Animal Planet" /></div>
+        <div class="client-logo-card"><img class="client-logo-img" src="https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1496174766550-22R4J4ZAX2VJLBX0BPHZ/Clinique.png" alt="Clinique" /></div>
+        <div class="client-logo-card"><img class="client-logo-img" src="https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1460922167603-H6PTUCZGLLMS3SZ7QR1E/telefutura_logo.png" alt="Telefutura" /></div>
+        <div class="client-logo-card"><img class="client-logo-img" src="https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1460921652888-F8XG99SUIYSQLQ3W8QWG/dr_brandt_logo.png" alt="Dr. Brandt" /></div>
       </div>
     </div>
   </section>
