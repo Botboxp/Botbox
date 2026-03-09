@@ -1581,7 +1581,9 @@
       `).join('');
 
       // Re-initialize scroll reveal for dynamically added elements
-      document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+      requestAnimationFrame(() => {
+        document.querySelectorAll('.reveal:not(.visible)').forEach(el => revealObs.observe(el));
+      });
     }
 
     loadContent();
