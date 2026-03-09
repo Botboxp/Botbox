@@ -27,6 +27,13 @@
       "number": "04",
       "label": "PHOTOGRAPHY",
       "background": "assets/img/services/service-04.jpg"
+    },
+    {
+      "title": "EVENTS",
+      "description": "Live Events, Weddings, Festivals",
+      "number": "05",
+      "label": "EVENTS",
+      "background": "assets/img/services/service-05.webp"
     }
   ]
 }
