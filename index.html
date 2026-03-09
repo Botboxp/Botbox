@@ -136,7 +136,7 @@
       transition: background 0.4s, border-bottom 0.4s;
     }
     nav.scrolled {
-      background: rgba(34,34,34,0.92);
+      background: rgba(20,20,20,0.95);
       backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border);
     }
@@ -178,10 +178,10 @@
       position: absolute; inset: 0; z-index: 0;
       background-color: #1a1a1a;
     }
-    .hero-bg-img {
+    .hero-video {
       position: absolute; inset: 0;
-      background-image: url('https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1461018558114-0TAOA263FXOJVHMV504R/image-asset.png');
-      background-size: cover; background-position: center;
+      width: 100%; height: 100%;
+      object-fit: cover;
       opacity: 0.35;
       transition: opacity 0.5s;
     }
@@ -222,12 +222,11 @@
       line-height: 0.9; letter-spacing: 0.03em; color: var(--white);
       animation: fadeUp 0.8s 0.4s both;
     }
-    .hero-title .accent {
+    .hero-logo {
+      width: clamp(320px, 50vw, 620px);
+      height: auto;
       display: block;
-      background: var(--gradient);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      margin: 0 auto;
     }
     .hero-subtitle {
       font-size: 17px; color: var(--grey-lt);
@@ -309,7 +308,7 @@
     /* ═══════════════════════════════════════════════════════════════
        SERVICES
     ═══════════════════════════════════════════════════════════════ */
-    #services { background: var(--bg); }
+    #services { background: var(--surface); }
     .services-header {
       display: flex; align-items: flex-end;
       justify-content: space-between; margin-bottom: 56px;
@@ -370,7 +369,7 @@
     /* ═══════════════════════════════════════════════════════════════
        VIDEO PORTFOLIO
     ═══════════════════════════════════════════════════════════════ */
-    #videos { background: var(--surface); }
+    #videos { background: var(--bg); }
     .videos-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 48px; }
     .videos-title { font-family: var(--font-disp); font-size: clamp(40px,5vw,62px); letter-spacing: 0.04em; }
     .videos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
@@ -404,20 +403,37 @@
     .video-play-btn svg { margin-left: 3px; }
     .video-info { position: absolute; bottom: 0; left: 0; right: 0; padding: 20px; background: linear-gradient(to top, rgba(34,34,34,0.95) 0%, transparent 100%); }
     .video-info-title { font-family: var(--font-disp); font-size: 16px; letter-spacing: 0.04em; color: var(--white); }
-    .video-tag {
-      position: absolute; top: 14px; left: 14px;
-      background: rgba(34,34,34,0.85);
-      border: 1px solid rgba(246,133,31,0.4); padding: 4px 10px;
-      font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent-b);
-    }
+    .video-tag { display: none; }
     /* Big feature row */
-    .videos-feature { display: grid; grid-template-columns: 1.7fr 1fr; gap: 2px; margin-bottom: 2px; }
-    .video-card-big { aspect-ratio: 16/9; }
+    .videos-feature { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-bottom: 2px; }
+    .video-card.v-hidden, .video-card.v-overflow { display: none; }
+
+    /* ═══════════════════════════════════════════════════════════════
+       ABOUT US
+    ═══════════════════════════════════════════════════════════════ */
+    #about { background: var(--bg); }
+    .about-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+    .about-text-sub { font-size: 16px; color: var(--grey-lt); line-height: 1.8; margin-bottom: 24px; }
+    .about-highlight {
+      display: flex; align-items: center; gap: 14px;
+      padding: 20px 24px; background: var(--surface); border-left: 2px solid var(--accent-a);
+      margin-bottom: 24px;
+    }
+    .about-highlight p { font-size: 14px; color: var(--grey-lt); line-height: 1.6; font-style: italic; }
+    .about-gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+    .about-gallery-img {
+      width: 100%; aspect-ratio: 4/3; object-fit: cover;
+      filter: brightness(0.85); transition: filter 0.3s;
+    }
+    .about-gallery-img:hover { filter: brightness(1); }
+    @media (max-width: 1100px) {
+      .about-inner { grid-template-columns: 1fr; gap: 40px; }
+    }
 
     /* ═══════════════════════════════════════════════════════════════
        PHOTO PORTFOLIO
     ═══════════════════════════════════════════════════════════════ */
-    #photos { background: var(--bg); }
+    #photos { background: var(--surface); }
     .photos-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 48px; }
     .photos-title { font-family: var(--font-disp); font-size: clamp(40px,5vw,62px); letter-spacing: 0.04em; }
     /* Tab nav */
@@ -429,6 +445,10 @@
       transition: background 0.25s, color 0.25s;
     }
     .photo-tab.active, .photo-tab:hover { background: var(--gradient); color: var(--bg); border-color: transparent; }
+    #videos .photo-tab { background: var(--surface); }
+    #videos .photo-tab.active, #videos .photo-tab:hover { background: var(--gradient); color: var(--bg); }
+    #photos .photo-tab { background: var(--surface2); }
+    #photos .photo-tab.active, #photos .photo-tab:hover { background: var(--gradient); color: var(--bg); }
     .photos-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; }
     .photo-card {
       position: relative; overflow: hidden; aspect-ratio: 3/4;
@@ -455,10 +475,21 @@
     }
     .photo-card:hover .photo-expand { opacity: 1; transform: scale(1); }
 
+    /* View More system */
+    .grid-collapsed .photo-card:nth-child(n+9) { display: none; }
+    .view-more-btn {
+      display: block; margin: 24px auto 0; padding: 12px 36px;
+      background: transparent; border: 1px solid var(--border);
+      color: var(--grey-lt); font-family: var(--font-body);
+      font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+      cursor: none; transition: border-color 0.3s, color 0.3s;
+    }
+    .view-more-btn:hover { border-color: var(--accent-a); color: var(--accent-a); }
+
     /* ═══════════════════════════════════════════════════════════════
        STATS
     ═══════════════════════════════════════════════════════════════ */
-    #stats { background: var(--surface); padding: 100px 0; }
+    #stats { background: var(--bg); padding: 100px 0; }
     .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; }
     .stat-card { background: var(--bg); padding: 48px 40px; position: relative; overflow: hidden; }
     .stat-card::before {
@@ -480,7 +511,7 @@
     /* ═══════════════════════════════════════════════════════════════
        PROCESS
     ═══════════════════════════════════════════════════════════════ */
-    #process { background: var(--bg); }
+    #process { background: var(--surface); }
     .process-header { margin-bottom: 72px; }
     .process-steps { display: grid; grid-template-columns: repeat(4, 1fr); position: relative; }
     .process-steps::before {
@@ -504,10 +535,10 @@
     /* ═══════════════════════════════════════════════════════════════
        TESTIMONIALS
     ═══════════════════════════════════════════════════════════════ */
-    #testimonials { background: var(--surface); }
+    #testimonials { background: var(--surface); padding: 70px 0; }
     .test-header { margin-bottom: 56px; }
     .test-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
-    .test-card { background: var(--bg); padding: 40px; transition: background 0.3s; }
+    .test-card { background: var(--bg); padding: 28px 32px; transition: background 0.3s; }
     .test-card:hover { background: var(--surface2); }
     .test-quote-mark {
       font-family: 'Georgia', serif; font-size: 72px; line-height: 0.5;
@@ -515,10 +546,10 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      opacity: 0.6; margin-bottom: 24px; display: block;
+      opacity: 0.6; margin-bottom: 14px; display: block;
     }
-    .test-text { font-size: 15px; line-height: 1.8; color: var(--grey-lt); margin-bottom: 32px; font-style: italic; }
-    .test-author { display: flex; align-items: center; gap: 14px; padding-top: 24px; border-top: 1px solid var(--border); }
+    .test-text { font-size: 15px; line-height: 1.7; color: var(--grey-lt); margin-bottom: 20px; font-style: italic; }
+    .test-author { display: flex; align-items: center; gap: 14px; padding-top: 16px; border-top: 1px solid var(--border); }
     .test-avatar {
       width: 44px; height: 44px; border-radius: 50%;
       background: var(--surface2); border: 1px solid var(--border);
@@ -531,7 +562,7 @@
     /* ═══════════════════════════════════════════════════════════════
        CLIENTS WALL
     ═══════════════════════════════════════════════════════════════ */
-    #clients-wall { background: var(--bg); padding: 100px 0; }
+    #clients-wall { background: var(--bg); padding: 70px 0; }
     .clients-wall-header { margin-bottom: 56px; }
     .clients-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 2px; }
     .client-logo-card {
@@ -553,7 +584,7 @@
     /* ═══════════════════════════════════════════════════════════════
        CTA / CONTACT
     ═══════════════════════════════════════════════════════════════ */
-    #cta { background: var(--surface); padding: 140px 0; position: relative; overflow: hidden; }
+    #cta { background: var(--bg); padding: 140px 0; position: relative; overflow: hidden; }
     #cta::before {
       content: 'BOTBOX';
       position: absolute; font-family: var(--font-disp);
@@ -650,6 +681,7 @@
       transform: scale(0.95); transition: transform 0.3s;
     }
     .modal-overlay.open .modal-box { transform: scale(1); }
+    #modalContent { width: 100%; height: 100%; }
     .modal-box iframe { width: 100%; height: 100%; border: none; display: block; }
     .modal-placeholder {
       width: 100%; height: 100%;
@@ -672,6 +704,38 @@
     }
     .modal-close:hover { border-color: var(--accent-a); color: var(--accent-a); }
 
+    /* Photo Lightbox */
+    .lightbox {
+      position: fixed; inset: 0; z-index: 2000;
+      background: rgba(12,12,12,0.96); backdrop-filter: blur(14px);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none; transition: opacity 0.3s;
+    }
+    .lightbox.open { opacity: 1; pointer-events: all; }
+    .lightbox-img {
+      max-width: 90vw; max-height: 85vh; object-fit: contain;
+      transform: scale(0.95); transition: transform 0.3s;
+    }
+    .lightbox.open .lightbox-img { transform: scale(1); }
+    .lightbox-close {
+      position: absolute; top: 24px; right: 28px;
+      width: 34px; height: 34px; background: transparent;
+      border: 1px solid var(--border); color: var(--white); font-size: 16px;
+      cursor: none; display: flex; align-items: center; justify-content: center;
+      transition: border-color 0.2s;
+    }
+    .lightbox-close:hover { border-color: var(--accent-a); color: var(--accent-a); }
+    .lightbox-nav {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      width: 42px; height: 42px; background: transparent;
+      border: 1px solid var(--border); color: var(--white); font-size: 18px;
+      cursor: none; display: flex; align-items: center; justify-content: center;
+      transition: border-color 0.2s;
+    }
+    .lightbox-nav:hover { border-color: var(--accent-a); color: var(--accent-a); }
+    .lightbox-prev { left: 20px; }
+    .lightbox-next { right: 20px; }
+
     /* ═══════════════════════════════════════════════════════════════
        RESPONSIVE
     ═══════════════════════════════════════════════════════════════ */
@@ -684,7 +748,7 @@
       .test-grid { grid-template-columns: 1fr 1fr; }
       .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
       .cta-inner { grid-template-columns: 1fr; gap: 48px; }
-      .videos-feature { grid-template-columns: 1fr 1fr; }
+      .videos-feature { grid-template-columns: repeat(2, 1fr); }
       .videos-grid { grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 768px) {
@@ -723,10 +787,12 @@
         <span class="nav-logo-fallback" style="display:none">BOTBOX<span style="color:var(--grey)">P</span></span>
       </a>
       <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Services</a></li>
         <li><a href="#videos">Video</a></li>
         <li><a href="#photos">Photography</a></li>
-        <li><a href="#clients-wall">Clients</a></li>
         <li><a href="#process">Process</a></li>
+        <li><a href="#clients-wall">Clients</a></li>
         <li><a href="#cta">Contact</a></li>
       </ul>
       <div class="nav-cta">
@@ -741,7 +807,9 @@
   <!-- ═══ HERO ══════════════════════════════════════════════════ -->
   <section id="hero">
     <div class="hero-bg">
-      <div class="hero-bg-img"></div>
+      <video class="hero-video" autoplay muted loop playsinline>
+        <source src="assets/video/Botbox DemoReel.mp4" type="video/mp4" />
+      </video>
       <div class="hero-overlay"></div>
     </div>
     <div class="hero-grid"></div>
@@ -750,9 +818,8 @@
         <span class="hero-badge-dot"></span>
         Miami, Florida · Est. 2009
       </div>
-      <h1 class="hero-title disp">
-        BOTBOX
-        <span class="accent">PRODUCTION</span>
+      <h1 class="hero-title">
+        <img src="assets/img/botbox-logo.svg" alt="Botbox Production" class="hero-logo" />
       </h1>
       <p class="hero-subtitle">
         Producción audiovisual de alto nivel para cine, televisión y comerciales. Más de 15 años creando imágenes que mueven al mundo.
@@ -809,6 +876,32 @@
     </div>
   </div>
 
+  <!-- ═══ ABOUT US ══════════════════════════════════════════════ -->
+  <section id="about">
+    <div class="container">
+      <div class="about-inner">
+        <div class="reveal">
+          <div class="section-label" style="margin-bottom:14px">About us</div>
+          <h2 class="disp" style="font-size:clamp(40px,5vw,62px);letter-spacing:0.04em">WHO WE ARE</h2>
+          <p class="about-text-sub" id="about-p1">Botbox Productions is an award-winning film production and post-production creative studio, specializing in digital media advertising.</p>
+          <p class="about-text-sub" id="about-p2">We are a team of talented artists with backgrounds in a variety of disciplines from fine art, videography, photography and design.</p>
+          <div class="about-highlight">
+            <p id="about-emmy">We have built entertainment brands for television networks, films and advertising agencies, receiving recognition through various Academy of Television Arts &amp; Sciences awards (Emmy Awards).</p>
+          </div>
+          <a href="#cta" class="btn"><span>Work With Us</span><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M1.5 6.5h10M6.5 1.5l5 5-5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+        <div class="about-gallery reveal reveal-delay-2" id="about-gallery">
+          <img class="about-gallery-img" src="assets/img/about/about-01.webp" alt="Behind the scenes" />
+          <img class="about-gallery-img" src="assets/img/about/about-02.webp" alt="On set" />
+          <img class="about-gallery-img" src="assets/img/about/about-03.webp" alt="Production" />
+          <img class="about-gallery-img" src="assets/img/about/about-04.webp" alt="Equipment" />
+          <img class="about-gallery-img" src="assets/img/about/about-05.webp" alt="Team" />
+          <img class="about-gallery-img" src="assets/img/about/about-06.webp" alt="Studio" />
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ═══ SERVICES ═════════════════════════════════════════════ -->
   <section id="services">
     <div class="container">
@@ -820,74 +913,6 @@
         <a href="#cta" class="btn"><span>Get a Quote</span><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M1.5 6.5h10M6.5 1.5l5 5-5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       </div>
       <div class="services-grid">
-        <!-- Video Ads -->
-        <div class="service-card reveal">
-          <div class="service-card-img" style="background-image:url('https://i.ytimg.com/vi/lfIq4rXrXF4/hqdefault.jpg')"></div>
-          <div class="service-card-overlay"></div>
-          <div class="service-card-arrow">
-            <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M1.5 6.5h10M6.5 1.5l5 5-5 5" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <div class="service-card-content">
-            <div class="service-card-number">01 / COMMERCIALS</div>
-            <h3 class="service-card-title disp">VIDEO ADS</h3>
-            <ul class="service-card-list">
-              <li>TV Commercials</li>
-              <li>Promotional Videos</li>
-              <li>Product Videos</li>
-            </ul>
-          </div>
-        </div>
-        <!-- Music Videos -->
-        <div class="service-card reveal reveal-delay-1">
-          <div class="service-card-img" style="background-image:url('https://i.ytimg.com/vi/XJTLHcif6UI/hqdefault.jpg')"></div>
-          <div class="service-card-overlay"></div>
-          <div class="service-card-arrow">
-            <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M1.5 6.5h10M6.5 1.5l5 5-5 5" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <div class="service-card-content">
-            <div class="service-card-number">02 / ENTERTAINMENT</div>
-            <h3 class="service-card-title disp">MUSIC VIDEOS</h3>
-            <ul class="service-card-list">
-              <li>Music Videos</li>
-              <li>Short Films</li>
-              <li>Sizzle Reels</li>
-            </ul>
-          </div>
-        </div>
-        <!-- Corporate -->
-        <div class="service-card reveal reveal-delay-2">
-          <div class="service-card-img" style="background-image:url('https://i.ytimg.com/vi/FlQkNbZRvNE/hqdefault.jpg')"></div>
-          <div class="service-card-overlay"></div>
-          <div class="service-card-arrow">
-            <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M1.5 6.5h10M6.5 1.5l5 5-5 5" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <div class="service-card-content">
-            <div class="service-card-number">03 / CORPORATE</div>
-            <h3 class="service-card-title disp">CORPORATE</h3>
-            <ul class="service-card-list">
-              <li>Corporate Events</li>
-              <li>Profile Videos</li>
-              <li>Interviews</li>
-            </ul>
-          </div>
-        </div>
-        <!-- Photography -->
-        <div class="service-card reveal reveal-delay-3">
-          <div class="service-card-img" style="background-image:url('https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1491923631567-9AVRYL5DSYSRN4U8182Z/8Z3A9834.jpg');background-position:center top;"></div>
-          <div class="service-card-overlay"></div>
-          <div class="service-card-arrow">
-            <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M1.5 6.5h10M6.5 1.5l5 5-5 5" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <div class="service-card-content">
-            <div class="service-card-number">04 / PHOTOGRAPHY</div>
-            <h3 class="service-card-title disp">PHOTOGRAPHY</h3>
-            <ul class="service-card-list">
-              <li>Portraits</li>
-              <li>Athletes & Events</li>
-              <li>Nature & Editorial</li>
-            </ul>
-          </div>
-        </div>
       </div>
     </div>
   </section>
@@ -900,72 +925,22 @@
           <div class="section-label" style="margin-bottom:14px">Portfolio</div>
           <h2 class="videos-title disp">VIDEO WORK</h2>
         </div>
-        <a href="https://www.botboxp.com/video" target="_blank" class="btn"><span>View All Videos</span><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M1.5 6.5h10M6.5 1.5l5 5-5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       </div>
 
-      <!-- Featured row -->
-      <div class="videos-feature reveal">
-        <div class="video-card video-card-big" data-videoid="lfIq4rXrXF4">
-          <div class="video-thumb" style="background-image:url('https://i.ytimg.com/vi/lfIq4rXrXF4/hqdefault.jpg')"></div>
-          <div class="video-overlay"></div>
-          <div class="video-play-btn"><svg width="15" height="17" viewBox="0 0 15 17" fill="none"><path d="M1 1l13 7.5L1 16V1z" fill="white"/></svg></div>
-          <div class="video-tag">Featured</div>
-          <div class="video-info"><div class="video-info-title disp">Showreel · Botbox Production</div></div>
-        </div>
-        <div class="video-card" data-videoid="XJTLHcif6UI">
-          <div class="video-thumb" style="background-image:url('https://i.ytimg.com/vi/XJTLHcif6UI/hqdefault.jpg')"></div>
-          <div class="video-overlay"></div>
-          <div class="video-play-btn"><svg width="13" height="15" viewBox="0 0 13 15" fill="none"><path d="M1 1l11 6.5L1 14V1z" fill="white"/></svg></div>
-          <div class="video-tag">Commercial</div>
-          <div class="video-info"><div class="video-info-title disp">Video Production</div></div>
-        </div>
+      <!-- Video Tabs -->
+      <div class="photo-tabs reveal" style="margin-bottom:2px">
+        <button class="photo-tab active" onclick="filterVideos(this,'all')">All</button>
+        <button class="photo-tab" onclick="filterVideos(this,'commercial')">Commercial</button>
+        <button class="photo-tab" onclick="filterVideos(this,'music-video')">Music Video</button>
+        <button class="photo-tab" onclick="filterVideos(this,'documentary')">Documentary</button>
+        <button class="photo-tab" onclick="filterVideos(this,'promo')">Promo</button>
+        <button class="photo-tab" onclick="filterVideos(this,'real-estate')">Real Estate</button>
+        <button class="photo-tab" onclick="filterVideos(this,'event')">Event</button>
       </div>
 
-      <!-- Grid row -->
-      <div class="videos-grid reveal">
-        <div class="video-card" data-videoid="FlQkNbZRvNE">
-          <div class="video-thumb" style="background-image:url('https://i.ytimg.com/vi/FlQkNbZRvNE/hqdefault.jpg')"></div>
-          <div class="video-overlay"></div>
-          <div class="video-play-btn"><svg width="13" height="15" viewBox="0 0 13 15" fill="none"><path d="M1 1l11 6.5L1 14V1z" fill="white"/></svg></div>
-          <div class="video-tag">Music Video</div>
-          <div class="video-info"><div class="video-info-title disp">Music Video</div></div>
-        </div>
-        <div class="video-card" data-videoid="H3ehF4_McRM">
-          <div class="video-thumb" style="background-image:url('https://i.ytimg.com/vi/H3ehF4_McRM/hqdefault.jpg')"></div>
-          <div class="video-overlay"></div>
-          <div class="video-play-btn"><svg width="13" height="15" viewBox="0 0 13 15" fill="none"><path d="M1 1l11 6.5L1 14V1z" fill="white"/></svg></div>
-          <div class="video-tag">Corporate</div>
-          <div class="video-info"><div class="video-info-title disp">Corporate Video</div></div>
-        </div>
-        <div class="video-card" data-videoid="kd5SiiZhS7g">
-          <div class="video-thumb" style="background-image:url('https://i.ytimg.com/vi/kd5SiiZhS7g/hqdefault.jpg')"></div>
-          <div class="video-overlay"></div>
-          <div class="video-play-btn"><svg width="13" height="15" viewBox="0 0 13 15" fill="none"><path d="M1 1l11 6.5L1 14V1z" fill="white"/></svg></div>
-          <div class="video-tag">Documentary</div>
-          <div class="video-info"><div class="video-info-title disp">Documentary</div></div>
-        </div>
-        <div class="video-card" data-videoid="OeSTDudywSY">
-          <div class="video-thumb" style="background-image:url('https://i.ytimg.com/vi/OeSTDudywSY/hqdefault.jpg')"></div>
-          <div class="video-overlay"></div>
-          <div class="video-play-btn"><svg width="13" height="15" viewBox="0 0 13 15" fill="none"><path d="M1 1l11 6.5L1 14V1z" fill="white"/></svg></div>
-          <div class="video-tag">Commercial</div>
-          <div class="video-info"><div class="video-info-title disp">Commercial</div></div>
-        </div>
-        <div class="video-card" data-videoid="mdN-IVsV7Vs">
-          <div class="video-thumb" style="background-image:url('https://i.ytimg.com/vi/mdN-IVsV7Vs/hqdefault.jpg')"></div>
-          <div class="video-overlay"></div>
-          <div class="video-play-btn"><svg width="13" height="15" viewBox="0 0 13 15" fill="none"><path d="M1 1l11 6.5L1 14V1z" fill="white"/></svg></div>
-          <div class="video-tag">Music Video</div>
-          <div class="video-info"><div class="video-info-title disp">Music Video</div></div>
-        </div>
-        <div class="video-card" data-videoid="UZBDpiNMI-M">
-          <div class="video-thumb" style="background-image:url('https://i.ytimg.com/vi/UZBDpiNMI-M/hqdefault.jpg')"></div>
-          <div class="video-overlay"></div>
-          <div class="video-play-btn"><svg width="13" height="15" viewBox="0 0 13 15" fill="none"><path d="M1 1l11 6.5L1 14V1z" fill="white"/></svg></div>
-          <div class="video-tag">Fitness</div>
-          <div class="video-info"><div class="video-info-title disp">Fitness Video</div></div>
-        </div>
+      <div class="videos-grid reveal" id="videosGrid">
       </div>
+      <button class="view-more-btn" onclick="toggleGrid(this,'videosGrid')">View More</button>
     </div>
   </section>
 
@@ -975,148 +950,44 @@
       <div class="photos-header reveal">
         <div>
           <div class="section-label" style="margin-bottom:14px">Portfolio</div>
-          <h2 class="photos-title disp">PHOTO<br>WORK</h2>
+          <h2 class="photos-title disp">PHOTO WORK</h2>
         </div>
-        <a href="https://www.botboxp.com/portraits" target="_blank" class="btn"><span>View All Photos</span><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M1.5 6.5h10M6.5 1.5l5 5-5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+
       </div>
       <!-- Tabs -->
       <div class="photo-tabs reveal">
-        <button class="photo-tab active" onclick="switchTab(this,'portraits')">Portraits</button>
+        <button class="photo-tab active" onclick="switchTab(this,'all')">All</button>
+        <button class="photo-tab" onclick="switchTab(this,'portraits')">Portraits</button>
+        <button class="photo-tab" onclick="switchTab(this,'events')">Events</button>
+        <button class="photo-tab" onclick="switchTab(this,'products')">Products</button>
         <button class="photo-tab" onclick="switchTab(this,'athletes')">Athletes</button>
-        <button class="photo-tab" onclick="switchTab(this,'nature')">Nature</button>
+        <button class="photo-tab" onclick="switchTab(this,'nature')">Nature / Landscapes</button>
+      </div>
+
+      <!-- All grid (mix) -->
+      <div id="grid-all" class="photos-grid photo-grid-panel reveal grid-collapsed">
       </div>
 
       <!-- Portraits grid -->
-      <div id="grid-portraits" class="photos-grid photo-grid-panel reveal">
-        <div class="photo-card">
-          <div class="photo-img" style="background-image:url('https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1491923631567-9AVRYL5DSYSRN4U8182Z/8Z3A9834.jpg')"></div>
-          <div class="photo-overlay"></div>
-          <div class="photo-expand"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 1h4M1 1v4M11 1h-4M11 1v4M1 11h4M1 11v-4M11 11h-4M11 11v-4" stroke="white" stroke-width="1.3" stroke-linecap="round"/></svg></div>
-        </div>
-        <div class="photo-card">
-          <div class="photo-img" style="background-image:url('https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1496250452243-OVF0YMQ0FE84SC3TVVPD/Edited-0970.jpg')"></div>
-          <div class="photo-overlay"></div>
-          <div class="photo-expand"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 1h4M1 1v4M11 1h-4M11 1v4M1 11h4M1 11v-4M11 11h-4M11 11v-4" stroke="white" stroke-width="1.3" stroke-linecap="round"/></svg></div>
-        </div>
-        <div class="photo-card">
-          <div class="photo-img" style="background-image:url('https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1496676617130-HSO2K27YSFV1U6KQ2BOW/20161020-8Z3A7855+%281%29.jpg')"></div>
-          <div class="photo-overlay"></div>
-          <div class="photo-expand"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 1h4M1 1v4M11 1h-4M11 1v4M1 11h4M1 11v-4M11 11h-4M11 11v-4" stroke="white" stroke-width="1.3" stroke-linecap="round"/></svg></div>
-        </div>
-        <div class="photo-card">
-          <div class="photo-img" style="background-image:url('https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1496439106321-PYIS44WW7Z8A0QY8XXNQ/_MG_7253-Edit.jpg')"></div>
-          <div class="photo-overlay"></div>
-          <div class="photo-expand"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 1h4M1 1v4M11 1h-4M11 1v4M1 11h4M1 11v-4M11 11h-4M11 11v-4" stroke="white" stroke-width="1.3" stroke-linecap="round"/></svg></div>
-        </div>
-        <div class="photo-card">
-          <div class="photo-img" style="background-image:url('https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1491923682839-LZCP8MN30CYPIT9QXTY2/8Z3A9156+V2.jpg')"></div>
-          <div class="photo-overlay"></div>
-          <div class="photo-expand"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 1h4M1 1v4M11 1h-4M11 1v4M1 11h4M1 11v-4M11 11h-4M11 11v-4" stroke="white" stroke-width="1.3" stroke-linecap="round"/></svg></div>
-        </div>
-        <div class="photo-card">
-          <div class="photo-img" style="background-image:url('https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1496250510440-YD7UW4TH1RPAUS8TOCEG/Edited-4122.jpg')"></div>
-          <div class="photo-overlay"></div>
-          <div class="photo-expand"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 1h4M1 1v4M11 1h-4M11 1v4M1 11h4M1 11v-4M11 11h-4M11 11v-4" stroke="white" stroke-width="1.3" stroke-linecap="round"/></svg></div>
-        </div>
-        <div class="photo-card">
-          <div class="photo-img" style="background-image:url('https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1491923603714-IBE0GG0UXTARGPMPZ5WA/8Z3A9655.jpg')"></div>
-          <div class="photo-overlay"></div>
-          <div class="photo-expand"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 1h4M1 1v4M11 1h-4M11 1v4M1 11h4M1 11v-4M11 11h-4M11 11v-4" stroke="white" stroke-width="1.3" stroke-linecap="round"/></svg></div>
-        </div>
-        <div class="photo-card">
-          <div class="photo-img" style="background-image:url('https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1496439133574-LOAH2JE3SOB0IK9FB5VC/8Z3A8281.jpg')"></div>
-          <div class="photo-overlay"></div>
-          <div class="photo-expand"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 1h4M1 1v4M11 1h-4M11 1v4M1 11h4M1 11v-4M11 11h-4M11 11v-4" stroke="white" stroke-width="1.3" stroke-linecap="round"/></svg></div>
-        </div>
+      <div id="grid-portraits" class="photos-grid photo-grid-panel reveal grid-collapsed" style="display:none">
       </div>
 
       <!-- Athletes grid -->
-      <div id="grid-athletes" class="photos-grid photo-grid-panel reveal" style="display:none">
-        <div class="photo-card">
-          <div class="photo-img" style="background-image:url('https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1496272249148-WRPJ7NC7F7VKBE9383OQ/DSC09939.jpg')"></div>
-          <div class="photo-overlay"></div>
-          <div class="photo-expand"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 1h4M1 1v4M11 1h-4M11 1v4M1 11h4M1 11v-4M11 11h-4M11 11v-4" stroke="white" stroke-width="1.3" stroke-linecap="round"/></svg></div>
-        </div>
-        <div class="photo-card">
-          <div class="photo-img" style="background-image:url('https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1496251133510-UZ60VSNMW122194S863O/Fotos.jpg')"></div>
-          <div class="photo-overlay"></div>
-          <div class="photo-expand"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 1h4M1 1v4M11 1h-4M11 1v4M1 11h4M1 11v-4M11 11h-4M11 11v-4" stroke="white" stroke-width="1.3" stroke-linecap="round"/></svg></div>
-        </div>
-        <div class="photo-card">
-          <div class="photo-img" style="background-image:url('https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1496361413899-FF5YP07482P11BRFQ1IS/DSC09892.jpg')"></div>
-          <div class="photo-overlay"></div>
-          <div class="photo-expand"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 1h4M1 1v4M11 1h-4M11 1v4M1 11h4M1 11v-4M11 11h-4M11 11v-4" stroke="white" stroke-width="1.3" stroke-linecap="round"/></svg></div>
-        </div>
-        <div class="photo-card">
-          <div class="photo-img" style="background-image:url('https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1496251077859-ZL372VFNHNC37JG1W581/8Z3A0938.jpg')"></div>
-          <div class="photo-overlay"></div>
-          <div class="photo-expand"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 1h4M1 1v4M11 1h-4M11 1v4M1 11h4M1 11v-4M11 11h-4M11 11v-4" stroke="white" stroke-width="1.3" stroke-linecap="round"/></svg></div>
-        </div>
-        <div class="photo-card">
-          <div class="photo-img" style="background-image:url('https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1496438901005-O0WWZDFL343CI9EPFIK0/_MG_7302.jpg')"></div>
-          <div class="photo-overlay"></div>
-          <div class="photo-expand"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 1h4M1 1v4M11 1h-4M11 1v4M1 11h4M1 11v-4M11 11h-4M11 11v-4" stroke="white" stroke-width="1.3" stroke-linecap="round"/></svg></div>
-        </div>
-        <div class="photo-card">
-          <div class="photo-img" style="background-image:url('https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1496355439290-9BZCL7M033D2F8SSIBUM/DSC07480.jpg')"></div>
-          <div class="photo-overlay"></div>
-          <div class="photo-expand"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 1h4M1 1v4M11 1h-4M11 1v4M1 11h4M1 11v-4M11 11h-4M11 11v-4" stroke="white" stroke-width="1.3" stroke-linecap="round"/></svg></div>
-        </div>
-        <div class="photo-card">
-          <div class="photo-img" style="background-image:url('https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1496438905615-MLK4PD0CYY0CSGBN6XSB/8Z3A0956.jpg')"></div>
-          <div class="photo-overlay"></div>
-          <div class="photo-expand"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 1h4M1 1v4M11 1h-4M11 1v4M1 11h4M1 11v-4M11 11h-4M11 11v-4" stroke="white" stroke-width="1.3" stroke-linecap="round"/></svg></div>
-        </div>
-        <div class="photo-card">
-          <div class="photo-img" style="background-image:url('https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1496361407123-05MQB03EV8GATBEC661K/_DSC8718.jpg')"></div>
-          <div class="photo-overlay"></div>
-          <div class="photo-expand"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 1h4M1 1v4M11 1h-4M11 1v4M1 11h4M1 11v-4M11 11h-4M11 11v-4" stroke="white" stroke-width="1.3" stroke-linecap="round"/></svg></div>
-        </div>
+      <div id="grid-athletes" class="photos-grid photo-grid-panel reveal grid-collapsed" style="display:none">
       </div>
 
       <!-- Nature grid -->
-      <div id="grid-nature" class="photos-grid photo-grid-panel reveal" style="display:none">
-        <div class="photo-card landscape">
-          <div class="photo-img" style="background-image:url('https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1578629468287-JQVZ43IOWTCXYFL8PPF8/20190912-IMG_7907-Pano-33.JPG');background-position:center center;"></div>
-          <div class="photo-overlay"></div>
-          <div class="photo-expand"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 1h4M1 1v4M11 1h-4M11 1v4M1 11h4M1 11v-4M11 11h-4M11 11v-4" stroke="white" stroke-width="1.3" stroke-linecap="round"/></svg></div>
-        </div>
-        <div class="photo-card landscape">
-          <div class="photo-img" style="background-image:url('https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1578628905601-7XRMYY393H8TXC0ILT0R/20190913-IMG_8824-16.JPG');background-position:center center;"></div>
-          <div class="photo-overlay"></div>
-          <div class="photo-expand"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 1h4M1 1v4M11 1h-4M11 1v4M1 11h4M1 11v-4M11 11h-4M11 11v-4" stroke="white" stroke-width="1.3" stroke-linecap="round"/></svg></div>
-        </div>
-        <div class="photo-card landscape">
-          <div class="photo-img" style="background-image:url('https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1578626651100-W7JVE9TZM3Q6YC7W1A0O/DSC01469.jpg');background-position:center center;"></div>
-          <div class="photo-overlay"></div>
-          <div class="photo-expand"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 1h4M1 1v4M11 1h-4M11 1v4M1 11h4M1 11v-4M11 11h-4M11 11v-4" stroke="white" stroke-width="1.3" stroke-linecap="round"/></svg></div>
-        </div>
-        <div class="photo-card landscape">
-          <div class="photo-img" style="background-image:url('https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1430588395450-QLYMBC25HMARLTOIPDAP/Mykonos-13.jpg');background-position:center center;"></div>
-          <div class="photo-overlay"></div>
-          <div class="photo-expand"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 1h4M1 1v4M11 1h-4M11 1v4M1 11h4M1 11v-4M11 11h-4M11 11v-4" stroke="white" stroke-width="1.3" stroke-linecap="round"/></svg></div>
-        </div>
-        <div class="photo-card landscape">
-          <div class="photo-img" style="background-image:url('https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1578626054444-H2GUCROQAJBMRM60UAXV/DSC03274.jpg');background-position:center center;"></div>
-          <div class="photo-overlay"></div>
-          <div class="photo-expand"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 1h4M1 1v4M11 1h-4M11 1v4M1 11h4M1 11v-4M11 11h-4M11 11v-4" stroke="white" stroke-width="1.3" stroke-linecap="round"/></svg></div>
-        </div>
-        <div class="photo-card landscape">
-          <div class="photo-img" style="background-image:url('https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1430367820446-49NXIUXJZV2X04KZVKO3/Athenas-17.jpg');background-position:center center;"></div>
-          <div class="photo-overlay"></div>
-          <div class="photo-expand"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 1h4M1 1v4M11 1h-4M11 1v4M1 11h4M1 11v-4M11 11h-4M11 11v-4" stroke="white" stroke-width="1.3" stroke-linecap="round"/></svg></div>
-        </div>
-        <div class="photo-card landscape">
-          <div class="photo-img" style="background-image:url('https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1430367928799-F6W5W92NGU4OV0STLFUR/Las+Vegas+2013-116.jpg');background-position:center center;"></div>
-          <div class="photo-overlay"></div>
-          <div class="photo-expand"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 1h4M1 1v4M11 1h-4M11 1v4M1 11h4M1 11v-4M11 11h-4M11 11v-4" stroke="white" stroke-width="1.3" stroke-linecap="round"/></svg></div>
-        </div>
-        <div class="photo-card landscape">
-          <div class="photo-img" style="background-image:url('https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1578625904959-1ZFJ0KJA114N91OZPVPE/DSC03194.jpg');background-position:center center;"></div>
-          <div class="photo-overlay"></div>
-          <div class="photo-expand"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 1h4M1 1v4M11 1h-4M11 1v4M1 11h4M1 11v-4M11 11h-4M11 11v-4" stroke="white" stroke-width="1.3" stroke-linecap="round"/></svg></div>
-        </div>
+      <div id="grid-nature" class="photos-grid photo-grid-panel reveal grid-collapsed" style="display:none">
       </div>
+
+      <!-- Events grid -->
+      <div id="grid-events" class="photos-grid photo-grid-panel reveal grid-collapsed" style="display:none">
+      </div>
+
+      <!-- Products grid -->
+      <div id="grid-products" class="photos-grid photo-grid-panel reveal grid-collapsed" style="display:none">
+      </div>
+      <button class="view-more-btn" id="photosViewMore" onclick="togglePhotosGrid(this)">View More</button>
     </div>
   </section>
 
@@ -1176,51 +1047,6 @@
     </div>
   </section>
 
-  <!-- ═══ TESTIMONIALS ══════════════════════════════════════════ -->
-  <section id="testimonials">
-    <div class="container">
-      <div class="test-header reveal">
-        <div class="section-label" style="margin-bottom:14px">What they say</div>
-        <h2 class="disp" style="font-size:clamp(40px,5vw,62px);letter-spacing:0.04em">TESTIMONIALS</h2>
-      </div>
-      <div class="test-grid">
-        <div class="test-card reveal">
-          <span class="test-quote-mark">"</span>
-          <p class="test-text">Botbox transformed our vision into something that exceeded all expectations. The cinematic quality they achieved for our commercial was simply exceptional.</p>
-          <div class="test-author">
-            <div class="test-avatar disp">P</div>
-            <div>
-              <div class="test-name">Carlos Mendoza</div>
-              <div class="test-role">Marketing Director · Pepsi Latin America</div>
-            </div>
-          </div>
-        </div>
-        <div class="test-card reveal reveal-delay-1">
-          <span class="test-quote-mark">"</span>
-          <p class="test-text">The Botbox team understood exactly what we needed for our documentary series. Professionalism and creativity at the highest level.</p>
-          <div class="test-author">
-            <div class="test-avatar disp">D</div>
-            <div>
-              <div class="test-name">Sarah Johnson</div>
-              <div class="test-role">Executive Producer · Discovery Channel</div>
-            </div>
-          </div>
-        </div>
-        <div class="test-card reveal reveal-delay-2">
-          <span class="test-quote-mark">"</span>
-          <p class="test-text">We've worked with Botbox for years on our product campaigns. Their ability to capture the essence of a brand is unmatched.</p>
-          <div class="test-author">
-            <div class="test-avatar disp">E</div>
-            <div>
-              <div class="test-name">Marie Dumont</div>
-              <div class="test-role">Brand Manager · Estée Lauder</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- ═══ CLIENTS WALL ═══════════════════════════════════════════ -->
   <section id="clients-wall">
     <div class="container">
@@ -1228,19 +1054,19 @@
         <div class="section-label" style="margin-bottom:14px">They trusted us</div>
         <h2 class="disp" style="font-size:clamp(40px,5vw,62px);letter-spacing:0.04em">OUR CLIENTS</h2>
       </div>
-      <div class="clients-grid reveal">
-        <div class="client-logo-card"><img class="client-logo-img" src="https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1460921652259-3M8XCUWRS5DYG4UZ6ZDD/Amc_logo.png" alt="AMC" /></div>
-        <div class="client-logo-card"><img class="client-logo-img" src="https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1460921653420-3N1YZWYX49PSGTSJSK4W/Pepsi.png" alt="Pepsi" /></div>
-        <div class="client-logo-card"><img class="client-logo-img" src="https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1460921652736-4TLCZZVDBEQ8B307I6YN/discovery_channel.png" alt="Discovery Channel" /></div>
-        <div class="client-logo-card"><img class="client-logo-img" src="https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1496177109055-RIWRBPXI5U0NM9EGALIN/NBC+UNI.png" alt="NBC Universal" /></div>
-        <div class="client-logo-card"><img class="client-logo-img" src="https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1460921657705-72YD5NHG2TIRNL7SCJ7V/Telemundo.png" alt="Telemundo" /></div>
-        <div class="client-logo-card"><img class="client-logo-img" src="https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1460921653216-3TMFFGFPEC9J692PTNMF/Metro_Goldwyn_Mayer.png" alt="MGM" /></div>
-        <div class="client-logo-card"><img class="client-logo-img" src="https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1496174649739-9X1FIYQU3R62T8BFN6XI/estee-lauder.png" alt="Estée Lauder" /></div>
-        <div class="client-logo-card"><img class="client-logo-img" src="https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1461018306817-3XE5AXOWBVKGM2U98CLY/Univision.png" alt="Univision" /></div>
-        <div class="client-logo-card"><img class="client-logo-img" src="https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1460921652206-X8S0KF7WKO8GXKA8JO0X/Animal_Planet_Logo.png" alt="Animal Planet" /></div>
-        <div class="client-logo-card"><img class="client-logo-img" src="https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1496174766550-22R4J4ZAX2VJLBX0BPHZ/Clinique.png" alt="Clinique" /></div>
-        <div class="client-logo-card"><img class="client-logo-img" src="https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1460922167603-H6PTUCZGLLMS3SZ7QR1E/telefutura_logo.png" alt="Telefutura" /></div>
-        <div class="client-logo-card"><img class="client-logo-img" src="https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1460921652888-F8XG99SUIYSQLQ3W8QWG/dr_brandt_logo.png" alt="Dr. Brandt" /></div>
+      <div class="clients-grid reveal" id="clientsGrid">
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ TESTIMONIALS ══════════════════════════════════════════ -->
+  <section id="testimonials">
+    <div class="container">
+      <div class="test-header reveal">
+        <div class="section-label" style="margin-bottom:14px">What they say</div>
+        <h2 class="disp" style="font-size:clamp(40px,5vw,62px);letter-spacing:0.04em">TESTIMONIALS</h2>
+      </div>
+      <div class="test-grid" id="testimonialsGrid">
       </div>
     </div>
   </section>
@@ -1251,10 +1077,10 @@
       <div class="cta-inner">
         <div class="reveal">
           <div class="section-label" style="margin-bottom:20px">Let's talk</div>
-          <h2 class="cta-title disp">READY TO CREATE SOMETHING<br>EXTRAORDINARY?</h2>
-          <p class="cta-subtitle">Tell us about your project. In less than 24 hours we'll get back to you with a personalized proposal.</p>
-          <a href="mailto:info@botboxp.com" class="btn btn-solid"><span>info@botboxp.com</span></a>
-          <div class="cta-contact">
+          <h2 class="cta-title disp" id="ctaTitle">READY TO CREATE SOMETHING<br>EXTRAORDINARY?</h2>
+          <p class="cta-subtitle" id="ctaSubtitle">Tell us about your project. In less than 24 hours we'll get back to you with a personalized proposal.</p>
+          <a href="mailto:info@botboxp.com" class="btn btn-solid" id="ctaEmail"><span>info@botboxp.com</span></a>
+          <div class="cta-contact" id="ctaContacts">
             <div class="cta-contact-item">
               <div class="cta-contact-icon">
                 <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M1.5 1.5h10v10h-10z" stroke="#888" stroke-width="1.1"/><path d="M1.5 4l5 3.5 5-3.5" stroke="#888" stroke-width="1.1"/></svg>
@@ -1410,8 +1236,30 @@
     </div>
   </div>
 
+  <!-- Photo Lightbox -->
+  <div class="lightbox" id="photoLightbox">
+    <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+    <button class="lightbox-nav lightbox-prev" onclick="navLightbox(-1)">‹</button>
+    <img class="lightbox-img" id="lightboxImg" src="" alt="">
+    <button class="lightbox-nav lightbox-next" onclick="navLightbox(1)">›</button>
+  </div>
+
   <!-- ═══ SCRIPTS ═══════════════════════════════════════════════ -->
   <script>
+    /* ── Hero Video: skip logo intro & outro ── */
+    (function(){
+      const hv = document.querySelector('.hero-video');
+      const START = 4;
+      const END_MARGIN = 4;
+      hv.removeAttribute('loop');
+      hv.currentTime = START;
+      hv.addEventListener('timeupdate', function(){
+        if(this.duration && this.currentTime >= this.duration - END_MARGIN){
+          this.currentTime = START;
+        }
+      });
+    })();
+
     /* ── Custom Cursor ── */
     const cursor = document.getElementById('cursor');
     const ring   = document.getElementById('cursor-ring');
@@ -1475,17 +1323,94 @@
     /* Showreel button */
     document.getElementById('openReel').addEventListener('click', e => { e.preventDefault(); openVideo('lfIq4rXrXF4'); });
 
-    /* Video cards click */
-    document.querySelectorAll('.video-card[data-videoid]').forEach(card => {
-      card.addEventListener('click', () => openVideo(card.dataset.videoid));
+
+
+    /* ── Photo Lightbox ── */
+    let lbPhotos = [];
+    let lbIndex = 0;
+    function openLightbox(img, card) {
+      const panel = card.closest('.photo-grid-panel');
+      lbPhotos = [...panel.querySelectorAll('.photo-card .photo-img')].map(el => {
+        const bg = el.style.backgroundImage;
+        return bg.slice(5, -2);
+      });
+      lbIndex = lbPhotos.indexOf(img);
+      document.getElementById('lightboxImg').src = img;
+      document.getElementById('photoLightbox').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox() {
+      document.getElementById('photoLightbox').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    function navLightbox(dir) {
+      lbIndex = (lbIndex + dir + lbPhotos.length) % lbPhotos.length;
+      document.getElementById('lightboxImg').src = lbPhotos[lbIndex];
+    }
+    document.getElementById('photoLightbox').addEventListener('click', e => { if(e.target === e.currentTarget) closeLightbox(); });
+    document.addEventListener('keydown', e => {
+      if(!document.getElementById('photoLightbox').classList.contains('open')) return;
+      if(e.key === 'Escape') closeLightbox();
+      if(e.key === 'ArrowLeft') navLightbox(-1);
+      if(e.key === 'ArrowRight') navLightbox(1);
     });
+
 
     /* ── Photo Tabs ── */
     function switchTab(btn, gridId) {
-      document.querySelectorAll('.photo-tab').forEach(b => b.classList.remove('active'));
+      const tabsContainer = btn.closest('.photo-tabs');
+      tabsContainer.querySelectorAll('.photo-tab').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      document.querySelectorAll('.photo-grid-panel').forEach(g => g.style.display='none');
+      document.querySelectorAll('.photo-grid-panel').forEach(g => { g.style.display='none'; g.classList.add('grid-collapsed'); });
       document.getElementById('grid-'+gridId).style.display='grid';
+      const vmBtn = document.getElementById('photosViewMore');
+      if(vmBtn) vmBtn.textContent = 'View More';
+    }
+
+    /* ── View More Toggle ── */
+    function toggleGrid(btn, gridId) {
+      const grid = document.getElementById(gridId);
+      const overflows = grid.querySelectorAll('.v-overflow');
+      if(overflows.length > 0) {
+        overflows.forEach(c => c.classList.remove('v-overflow'));
+        btn.textContent = 'View Less';
+      } else {
+        const visible = [...grid.querySelectorAll('.video-card:not(.v-hidden)')];
+        visible.forEach((c, i) => { if(i >= 6) c.classList.add('v-overflow'); });
+        btn.textContent = 'View More';
+      }
+    }
+    function togglePhotosGrid(btn) {
+      const panel = document.querySelector('.photo-grid-panel[style="display: grid;"], .photo-grid-panel:not([style*="display: none"])');
+      if(!panel) return;
+      const collapsed = panel.classList.toggle('grid-collapsed');
+      btn.textContent = collapsed ? 'View More' : 'View Less';
+    }
+
+    /* ── Video Filter ── */
+    function filterVideos(btn, category) {
+      const tabsContainer = btn.closest('.photo-tabs');
+      tabsContainer.querySelectorAll('.photo-tab').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const grid = document.getElementById('videosGrid');
+      const vmBtn = grid.nextElementSibling;
+      const cards = grid.querySelectorAll('.video-card');
+      grid.classList.remove('grid-collapsed');
+      cards.forEach(c => { c.classList.remove('v-hidden'); c.classList.remove('v-overflow'); });
+      if (category !== 'all') {
+        cards.forEach(c => {
+          if(c.dataset.vcategory !== category) c.classList.add('v-hidden');
+        });
+      }
+      const visible = [...cards].filter(c => !c.classList.contains('v-hidden'));
+      if(visible.length > 6) {
+        visible.forEach((c, i) => { if(i >= 6) c.classList.add('v-overflow'); });
+        if(vmBtn) { vmBtn.style.display = ''; vmBtn.textContent = 'View More'; }
+        grid._overflowActive = true;
+      } else {
+        if(vmBtn) vmBtn.style.display = 'none';
+        grid._overflowActive = false;
+      }
     }
 
     /* ── Form ── */
@@ -1517,6 +1442,149 @@
         if(target){ e.preventDefault(); target.scrollIntoView({behavior:'smooth',block:'start'}); }
       });
     });
+
+    /* ── Content Loader from JSON ── */
+    async function loadContent() {
+      const [videos, photos, about, services, clients, testimonials, contact] = await Promise.all([
+        fetch('content/videos.json').then(r => r.json()),
+        fetch('content/photos.json').then(r => r.json()),
+        fetch('content/about.json').then(r => r.json()),
+        fetch('content/services.json').then(r => r.json()),
+        fetch('content/clients.json').then(r => r.json()),
+        fetch('content/testimonials.json').then(r => r.json()),
+        fetch('content/contact.json').then(r => r.json())
+      ]);
+
+      // --- About ---
+      document.getElementById('about-p1').textContent = about.description_1;
+      document.getElementById('about-p2').textContent = about.description_2;
+      document.getElementById('about-emmy').textContent = about.emmy_text;
+      const aboutGal = document.getElementById('about-gallery');
+      aboutGal.innerHTML = about.gallery.map(g =>
+        `<img class="about-gallery-img" src="${g.image}" alt="Behind the scenes" />`
+      ).join('');
+
+      // --- Services ---
+      const svcGrid = document.querySelector('.services-grid');
+      svcGrid.innerHTML = services.items.map(s => `
+        <div class="service-card reveal">
+          <div class="service-bg" style="background-image:url('${s.background}')"></div>
+          <div class="service-content">
+            <div class="service-icon"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="5.5" stroke="currentColor" stroke-width="1.2"/><path d="M5.5 4.5l3 2-3 2v-4z" fill="currentColor"/></svg></div>
+            <h3 class="service-title disp">${s.title}</h3>
+            <p class="service-desc">${s.description}</p>
+            <a href="#cta" class="btn"><span>Get a Quote</span><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M1.5 6.5h10M6.5 1.5l5 5-5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </div>
+          <div class="service-number">${s.number} / ${s.label}</div>
+        </div>
+      `).join('');
+
+      // --- Videos ---
+      const vidGrid = document.getElementById('videosGrid');
+      vidGrid.innerHTML = videos.items.map(v => `
+        <div class="video-card" data-videoid="${v.youtube_id}" data-vcategory="${v.category}">
+          <div class="video-thumb" style="background-image:url('https://i.ytimg.com/vi/${v.youtube_id}/hqdefault.jpg')"></div>
+          <div class="video-overlay"></div>
+          <div class="video-play-btn"><svg width="13" height="15" viewBox="0 0 13 15" fill="none"><path d="M1 1l11 6.5L1 14V1z" fill="white"/></svg></div>
+          <div class="video-tag">${v.category}</div>
+          <div class="video-info"><div class="video-info-title disp">${v.title}</div></div>
+        </div>
+      `).join('');
+      // Apply initial collapse
+      const vidCards = vidGrid.querySelectorAll('.video-card');
+      vidCards.forEach((c, i) => { if(i >= 6) c.classList.add('v-overflow'); });
+      // Re-bind click handlers
+      vidGrid.querySelectorAll('.video-card[data-videoid]').forEach(card => {
+        card.addEventListener('click', () => openVideo(card.dataset.videoid));
+      });
+
+      // --- Photos ---
+      const photoSvg = '<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 1h4M1 1v4M11 1h-4M11 1v4M1 11h4M1 11v-4M11 11h-4M11 11v-4" stroke="white" stroke-width="1.3" stroke-linecap="round"/></svg>';
+      function renderPhotoGrid(containerId, images) {
+        const el = document.getElementById(containerId);
+        el.innerHTML = images.map(p => `
+          <div class="photo-card">
+            <div class="photo-img" style="background-image:url('${p.image}')"></div>
+            <div class="photo-overlay"></div>
+            <div class="photo-expand">${photoSvg}</div>
+          </div>
+        `).join('');
+      }
+      // Build "All" mix: interleave from each category
+      const categories = ['portraits','events','products','athletes','nature'];
+      const maxLen = Math.max(...categories.map(c => photos[c].length));
+      const allPhotos = [];
+      for(let i = 0; i < maxLen; i++) {
+        for(const cat of categories) {
+          if(photos[cat][i]) allPhotos.push(photos[cat][i]);
+        }
+      }
+      renderPhotoGrid('grid-all', allPhotos);
+      renderPhotoGrid('grid-portraits', photos.portraits);
+      renderPhotoGrid('grid-events', photos.events);
+      renderPhotoGrid('grid-products', photos.products);
+      renderPhotoGrid('grid-athletes', photos.athletes);
+      renderPhotoGrid('grid-nature', photos.nature);
+
+      // Re-bind photo lightbox click handlers
+      document.querySelectorAll('.photo-card').forEach(card => {
+        card.style.cursor = 'none';
+        card.addEventListener('click', () => {
+          const img = card.querySelector('.photo-img');
+          if(img) {
+            const bg = img.style.backgroundImage;
+            const src = bg.slice(5, -2);
+            openLightbox(src, card);
+          }
+        });
+      });
+
+      // --- Clients ---
+      const clientsGrid = document.getElementById('clientsGrid');
+      clientsGrid.innerHTML = clients.items.map(c =>
+        `<div class="client-logo-card"><img class="client-logo-img" src="${c.logo}" alt="${c.name}" /></div>`
+      ).join('');
+
+      // --- Testimonials ---
+      const testGrid = document.getElementById('testimonialsGrid');
+      testGrid.innerHTML = testimonials.items.map((t, i) => `
+        <div class="test-card reveal${i > 0 ? ' reveal-delay-'+i : ''}">
+          <span class="test-quote-mark">"</span>
+          <p class="test-text">${t.quote}</p>
+          <div class="test-author">
+            <div class="test-avatar disp">${t.avatar}</div>
+            <div>
+              <div class="test-name">${t.name}</div>
+              <div class="test-role">${t.role}</div>
+            </div>
+          </div>
+        </div>
+      `).join('');
+
+      // --- Contact ---
+      const ctaEmail = document.getElementById('ctaEmail');
+      ctaEmail.href = 'mailto:' + contact.email;
+      ctaEmail.querySelector('span').textContent = contact.email;
+      document.getElementById('ctaTitle').innerHTML = contact.cta_title.replace(/\\n/g, '<br>');
+      document.getElementById('ctaSubtitle').textContent = contact.cta_subtitle;
+      const ctaContacts = document.getElementById('ctaContacts');
+      ctaContacts.innerHTML = contact.contacts.map(c => `
+        <div class="cta-contact-item">
+          <div class="cta-contact-icon">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M1.5 1.5h10v10h-10z" stroke="#888" stroke-width="1.1"/><path d="M1.5 4l5 3.5 5-3.5" stroke="#888" stroke-width="1.1"/></svg>
+          </div>
+          <div>
+            <div class="cta-contact-label">${c.name} · ${c.role}</div>
+            <div class="cta-contact-value">${c.phone}</div>
+          </div>
+        </div>
+      `).join('');
+
+      // Re-initialize scroll reveal for dynamically added elements
+      document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+    }
+
+    loadContent();
   </script>
 </body>
 </html>

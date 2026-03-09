@@ -1,0 +1,176 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "assets/img/uploads"
+public_folder: "assets/img/uploads"
+
+collections:
+  - name: "sections"
+    label: "Secciones"
+    editor:
+      preview: false
+    files:
+      - name: "about"
+        label: "About Us"
+        file: "content/about.json"
+        fields:
+          - { name: "label", label: "Etiqueta", widget: "string" }
+          - { name: "title", label: "Título", widget: "string" }
+          - { name: "description_1", label: "Descripción (párrafo 1)", widget: "text" }
+          - { name: "description_2", label: "Descripción (párrafo 2)", widget: "text" }
+          - { name: "emmy_text", label: "Texto Emmy Awards", widget: "text" }
+          - name: "gallery"
+            label: "Galería de fotos"
+            widget: "list"
+            summary: "{{fields.image}}"
+            fields:
+              - { name: "image", label: "Imagen", widget: "image" }
+
+      - name: "contact"
+        label: "Contacto"
+        file: "content/contact.json"
+        fields:
+          - { name: "email", label: "Email", widget: "string" }
+          - { name: "cta_title", label: "Título CTA", widget: "string" }
+          - { name: "cta_subtitle", label: "Subtítulo CTA", widget: "text" }
+          - name: "contacts"
+            label: "Personas de contacto"
+            widget: "list"
+            summary: "{{fields.name}} - {{fields.role}}"
+            fields:
+              - { name: "name", label: "Nombre", widget: "string" }
+              - { name: "role", label: "Cargo", widget: "string" }
+              - { name: "phone", label: "Teléfono", widget: "string" }
+
+  - name: "videos"
+    label: "Videos"
+    editor:
+      preview: false
+    files:
+      - name: "videos"
+        label: "Lista de Videos"
+        file: "content/videos.json"
+        fields:
+          - name: "items"
+            label: "Videos"
+            widget: "list"
+            summary: "{{fields.title}} ({{fields.category}})"
+            allow_add: true
+            fields:
+              - { name: "title", label: "Título", widget: "string" }
+              - { name: "youtube_id", label: "YouTube ID", widget: "string", hint: "El ID del video de YouTube (lo que va después de v= en la URL)" }
+              - name: "category"
+                label: "Categoría"
+                widget: "select"
+                options:
+                  - { label: "Commercial", value: "commercial" }
+                  - { label: "Music Video", value: "music-video" }
+                  - { label: "Documentary", value: "documentary" }
+                  - { label: "Promo", value: "promo" }
+                  - { label: "Real Estate", value: "real-estate" }
+                  - { label: "Event", value: "event" }
+                  - { label: "Short Film", value: "short-film" }
+
+  - name: "photos"
+    label: "Fotografía"
+    editor:
+      preview: false
+    files:
+      - name: "photos"
+        label: "Fotos por Categoría"
+        file: "content/photos.json"
+        fields:
+          - name: "portraits"
+            label: "Portraits"
+            widget: "list"
+            summary: "{{fields.image}}"
+            allow_add: true
+            fields:
+              - { name: "image", label: "Imagen", widget: "image" }
+          - name: "events"
+            label: "Events"
+            widget: "list"
+            summary: "{{fields.image}}"
+            allow_add: true
+            fields:
+              - { name: "image", label: "Imagen", widget: "image" }
+          - name: "products"
+            label: "Products"
+            widget: "list"
+            summary: "{{fields.image}}"
+            allow_add: true
+            fields:
+              - { name: "image", label: "Imagen", widget: "image" }
+          - name: "athletes"
+            label: "Athletes"
+            widget: "list"
+            summary: "{{fields.image}}"
+            allow_add: true
+            fields:
+              - { name: "image", label: "Imagen", widget: "image" }
+          - name: "nature"
+            label: "Nature / Landscapes"
+            widget: "list"
+            summary: "{{fields.image}}"
+            allow_add: true
+            fields:
+              - { name: "image", label: "Imagen", widget: "image" }
+
+  - name: "services"
+    label: "Servicios"
+    editor:
+      preview: false
+    files:
+      - name: "services"
+        label: "Lista de Servicios"
+        file: "content/services.json"
+        fields:
+          - name: "items"
+            label: "Servicios"
+            widget: "list"
+            summary: "{{fields.title}}"
+            fields:
+              - { name: "title", label: "Título", widget: "string" }
+              - { name: "description", label: "Descripción", widget: "string" }
+              - { name: "number", label: "Número", widget: "string" }
+              - { name: "label", label: "Etiqueta", widget: "string" }
+              - { name: "background", label: "Imagen de fondo", widget: "image" }
+
+  - name: "clients"
+    label: "Clientes"
+    editor:
+      preview: false
+    files:
+      - name: "clients"
+        label: "Logos de Clientes"
+        file: "content/clients.json"
+        fields:
+          - name: "items"
+            label: "Clientes"
+            widget: "list"
+            summary: "{{fields.name}}"
+            allow_add: true
+            fields:
+              - { name: "name", label: "Nombre", widget: "string" }
+              - { name: "logo", label: "Logo", widget: "image" }
+
+  - name: "testimonials"
+    label: "Testimoniales"
+    editor:
+      preview: false
+    files:
+      - name: "testimonials"
+        label: "Lista de Testimoniales"
+        file: "content/testimonials.json"
+        fields:
+          - name: "items"
+            label: "Testimoniales"
+            widget: "list"
+            summary: "{{fields.name}} - {{fields.role}}"
+            allow_add: true
+            fields:
+              - { name: "quote", label: "Testimonio", widget: "text" }
+              - { name: "name", label: "Nombre", widget: "string" }
+              - { name: "role", label: "Cargo / Empresa", widget: "string" }
+              - { name: "avatar", label: "Letra del avatar", widget: "string", hint: "Una letra para el avatar (ej: la inicial)" }

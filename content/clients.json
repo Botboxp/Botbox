@@ -1,0 +1,16 @@
+{
+  "items": [
+    {"name": "AMC", "logo": "https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1460921652259-3M8XCUWRS5DYG4UZ6ZDD/Amc_logo.png"},
+    {"name": "Pepsi", "logo": "https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1460921653420-3N1YZWYX49PSGTSJSK4W/Pepsi.png"},
+    {"name": "Discovery Channel", "logo": "https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1460921652736-4TLCZZVDBEQ8B307I6YN/discovery_channel.png"},
+    {"name": "NBC Universal", "logo": "https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1496177109055-RIWRBPXI5U0NM9EGALIN/NBC+UNI.png"},
+    {"name": "Telemundo", "logo": "https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1460921657705-72YD5NHG2TIRNL7SCJ7V/Telemundo.png"},
+    {"name": "MGM", "logo": "https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1460921653216-3TMFFGFPEC9J692PTNMF/Metro_Goldwyn_Mayer.png"},
+    {"name": "Estée Lauder", "logo": "https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1496174649739-9X1FIYQU3R62T8BFN6XI/estee-lauder.png"},
+    {"name": "Univision", "logo": "https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1461018306817-3XE5AXOWBVKGM2U98CLY/Univision.png"},
+    {"name": "Animal Planet", "logo": "https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1460921652206-X8S0KF7WKO8GXKA8JO0X/Animal_Planet_Logo.png"},
+    {"name": "Clinique", "logo": "https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1496174766550-22R4J4ZAX2VJLBX0BPHZ/Clinique.png"},
+    {"name": "Telefutura", "logo": "https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1460922167603-H6PTUCZGLLMS3SZ7QR1E/telefutura_logo.png"},
+    {"name": "Dr. Brandt", "logo": "https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1460921652888-F8XG99SUIYSQLQ3W8QWG/dr_brandt_logo.png"}
+  ]
+}
