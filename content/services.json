@@ -5,28 +5,28 @@
       "description": "TV Commercials, Promotional Videos, Product Videos",
       "number": "01",
       "label": "COMMERCIALS",
-      "background": "https://i.ytimg.com/vi/lfIq4rXrXF4/hqdefault.jpg"
+      "background": "assets/img/services/service-01.jpg"
     },
     {
       "title": "MUSIC VIDEOS",
       "description": "Music Videos, Short Films, Sizzle Reels",
       "number": "02",
       "label": "ENTERTAINMENT",
-      "background": "https://i.ytimg.com/vi/XJTLHcif6UI/hqdefault.jpg"
+      "background": "assets/img/services/service-02.jpg"
     },
     {
       "title": "CORPORATE",
       "description": "Corporate Events, Profile Videos, Interviews",
       "number": "03",
       "label": "CORPORATE",
-      "background": "https://i.ytimg.com/vi/FlQkNbZRvNE/hqdefault.jpg"
+      "background": "assets/img/services/service-03.jpg"
     },
     {
       "title": "PHOTOGRAPHY",
       "description": "Portraits, Athletes & Events, Nature & Editorial",
       "number": "04",
       "label": "PHOTOGRAPHY",
-      "background": "https://images.squarespace-cdn.com/content/v1/549cfd67e4b037c1970b0fbc/1491923631567-9AVRYL5DSYSRN4U8182Z/8Z3A9834.jpg"
+      "background": "assets/img/services/service-04.jpg"
     }
   ]
 }
