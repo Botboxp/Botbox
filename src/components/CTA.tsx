@@ -65,9 +65,9 @@ export default function CTA() {
 
   const handleSubmit = () => {
     if (currentStep === 1) {
-      if (!name || !email) return
       setCurrentStep(2)
     } else if (currentStep === 2) {
+      if (!name || !email) return
       setCurrentStep(3)
     } else {
       const projectType = t(PROJECT_TYPES[selectedIdx].key)
@@ -127,52 +127,60 @@ export default function CTA() {
               <div className="form-step-label">{stepLabel}</div>
               <h3 className="form-title disp">{t('form.title')}</h3>
 
-              <div className="project-types">
-                {PROJECT_TYPES.map((pt, i) => (
-                  <button
-                    key={pt.key}
-                    type="button"
-                    className={`project-type-btn${selectedIdx === i ? ' selected' : ''}`}
-                    onClick={() => setSelectedIdx(i)}
-                  >
-                    {pt.icon}
-                    <span>{t(pt.key)}</span>
-                  </button>
-                ))}
-              </div>
+              {currentStep === 1 && (
+                <div className="project-types">
+                  {PROJECT_TYPES.map((pt, i) => (
+                    <button
+                      key={pt.key}
+                      type="button"
+                      className={`project-type-btn${selectedIdx === i ? ' selected' : ''}`}
+                      onClick={() => setSelectedIdx(i)}
+                    >
+                      {pt.icon}
+                      <span>{t(pt.key)}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
 
-              <div className="form-row">
-                <input
+              {currentStep === 2 && (
+                <>
+                  <div className="form-row">
+                    <input
+                      className="form-input"
+                      type="text"
+                      placeholder={t('form.ph.name')}
+                      value={name}
+                      onChange={e => setName(e.target.value)}
+                    />
+                    <input
+                      className="form-input"
+                      type="email"
+                      placeholder={t('form.ph.email')}
+                      value={email}
+                      onChange={e => setEmail(e.target.value)}
+                    />
+                  </div>
+                  <input
+                    className="form-input"
+                    type="text"
+                    placeholder={t('form.ph.company')}
+                    value={company}
+                    onChange={e => setCompany(e.target.value)}
+                  />
+                </>
+              )}
+
+              {currentStep === 3 && (
+                <textarea
                   className="form-input"
-                  type="text"
-                  placeholder={t('form.ph.name')}
-                  value={name}
-                  onChange={e => setName(e.target.value)}
-                  style={!name && currentStep === 1 ? {} : {}}
+                  rows={3}
+                  placeholder={t('form.ph.message')}
+                  style={{ resize: 'none' }}
+                  value={message}
+                  onChange={e => setMessage(e.target.value)}
                 />
-                <input
-                  className="form-input"
-                  type="email"
-                  placeholder={t('form.ph.email')}
-                  value={email}
-                  onChange={e => setEmail(e.target.value)}
-                />
-              </div>
-              <input
-                className="form-input"
-                type="text"
-                placeholder={t('form.ph.company')}
-                value={company}
-                onChange={e => setCompany(e.target.value)}
-              />
-              <textarea
-                className="form-input"
-                rows={3}
-                placeholder={t('form.ph.message')}
-                style={{ resize: 'none' }}
-                value={message}
-                onChange={e => setMessage(e.target.value)}
-              />
+              )}
 
               <button
                 type="button"
