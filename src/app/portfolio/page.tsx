@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { useI18n } from '@/i18n/context'
 import Navbar from '@/components/Navbar'
 import VideoModal from '@/components/VideoModal'
@@ -55,6 +55,7 @@ type Section = 'video' | 'photo'
 export default function PortfolioPage() {
   const { t } = useI18n()
   const [section, setSection] = useState<Section>('video')
+  const [showTop, setShowTop] = useState(false)
 
   /* ── Video state ── */
   const [videos, setVideos] = useState<Video[]>([])
@@ -79,6 +80,17 @@ export default function PortfolioPage() {
   /* Handle hash on load */
   useEffect(() => {
     if (window.location.hash === '#photos') setSection('photo')
+  }, [])
+
+  /* Show/hide back-to-top button */
+  useEffect(() => {
+    const handleScroll = () => setShowTop(window.scrollY > 400)
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  const scrollToTop = useCallback(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }, [])
 
   const filteredVideos = videos.filter(v => v.category === videoTab)
@@ -106,7 +118,7 @@ export default function PortfolioPage() {
       <main style={{ paddingTop: 'var(--nav-h)' }}>
         <section id="portfolio">
           <div className="container">
-            {/* Header + Toggle */}
+            {/* Header */}
             <div className="videos-header reveal">
               <div>
                 <div className="section-label" style={{ marginBottom: 14 }}>{t('portfolio.label')}</div>
@@ -114,8 +126,9 @@ export default function PortfolioPage() {
               </div>
             </div>
 
-            {/* Section toggle */}
-            <div className="tabs-wrapper reveal" style={{ marginBottom: 24 }}>
+            {/* Sticky bar: section toggle + category tabs */}
+            <div className="portfolio-sticky-bar">
+              {/* Section toggle */}
               <div className="photo-tabs">
                 <button
                   className={`photo-tab${section === 'video' ? ' active' : ''}`}
@@ -130,14 +143,11 @@ export default function PortfolioPage() {
                   {t('portfolio.photo')}
                 </button>
               </div>
-            </div>
 
-            {/* ── VIDEO ── */}
-            {section === 'video' && (
-              <>
-                <div className="tabs-wrapper reveal" style={{ marginBottom: 2 }}>
-                  <div className="photo-tabs">
-                    {VIDEO_TABS.map(tab => (
+              {/* Category tabs */}
+              <div className="photo-tabs">
+                {section === 'video'
+                  ? VIDEO_TABS.map(tab => (
                       <button
                         key={tab.key}
                         className={`photo-tab${videoTab === tab.key ? ' active' : ''}`}
@@ -145,43 +155,8 @@ export default function PortfolioPage() {
                       >
                         {t(tab.i18n)}
                       </button>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="videos-grid reveal" id="videosGrid">
-                  {filteredVideos.map((video, i) => (
-                    <div
-                      key={`${video.youtube_id}-${i}`}
-                      className="video-card"
-                      onClick={() => handleVideoClick(video.youtube_id)}
-                    >
-                      <div
-                        className="video-thumb"
-                        style={{ backgroundImage: `url('https://i.ytimg.com/vi/${video.youtube_id}/hqdefault.jpg')` }}
-                      />
-                      <div className="video-overlay" />
-                      <div className="video-play-btn">
-                        <svg width="13" height="15" viewBox="0 0 13 15" fill="none">
-                          <path d="M1 1l11 6.5L1 14V1z" fill="white" />
-                        </svg>
-                      </div>
-                      <div className="video-tag">{video.category}</div>
-                      <div className="video-info">
-                        <div className="video-info-title disp">{video.title}</div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </>
-            )}
-
-            {/* ── PHOTO ── */}
-            {section === 'photo' && (
-              <>
-                <div className="tabs-wrapper reveal">
-                  <div className="photo-tabs">
-                    {PHOTO_TABS.map(tab => (
+                    ))
+                  : PHOTO_TABS.map(tab => (
                       <button
                         key={tab.key}
                         className={`photo-tab${photoTab === tab.key ? ' active' : ''}`}
@@ -190,31 +165,71 @@ export default function PortfolioPage() {
                         {t(tab.i18n)}
                       </button>
                     ))}
-                  </div>
-                </div>
+              </div>
+            </div>
 
-                <div className="photos-grid reveal">
-                  {photoImages.map((src, i) => (
+            {/* ── VIDEO ── */}
+            {section === 'video' && (
+              <div className="videos-grid reveal" id="videosGrid">
+                {filteredVideos.map((video, i) => (
+                  <div
+                    key={`${video.youtube_id}-${i}`}
+                    className="video-card"
+                    onClick={() => handleVideoClick(video.youtube_id)}
+                  >
                     <div
-                      key={`${photoTab}-${i}`}
-                      className="photo-card"
-                      onClick={() => handlePhotoClick(i)}
-                    >
-                      <div className="photo-img" style={{ backgroundImage: `url('${src}')` }} />
-                      <div className="photo-overlay" />
-                      <div className="photo-expand">
-                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                          <path d="M1 1h4M1 1v4M11 1h-4M11 1v4M1 11h4M1 11v-4M11 11h-4M11 11v-4" stroke="white" strokeWidth="1.3" strokeLinecap="round" />
-                        </svg>
-                      </div>
+                      className="video-thumb"
+                      style={{ backgroundImage: `url('https://i.ytimg.com/vi/${video.youtube_id}/hqdefault.jpg')` }}
+                    />
+                    <div className="video-overlay" />
+                    <div className="video-play-btn">
+                      <svg width="13" height="15" viewBox="0 0 13 15" fill="none">
+                        <path d="M1 1l11 6.5L1 14V1z" fill="white" />
+                      </svg>
                     </div>
-                  ))}
-                </div>
-              </>
+                    <div className="video-tag">{video.category}</div>
+                    <div className="video-info">
+                      <div className="video-info-title disp">{video.title}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* ── PHOTO ── */}
+            {section === 'photo' && (
+              <div className="photos-grid reveal">
+                {photoImages.map((src, i) => (
+                  <div
+                    key={`${photoTab}-${i}`}
+                    className="photo-card"
+                    onClick={() => handlePhotoClick(i)}
+                  >
+                    <div className="photo-img" style={{ backgroundImage: `url('${src}')` }} />
+                    <div className="photo-overlay" />
+                    <div className="photo-expand">
+                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                        <path d="M1 1h4M1 1v4M11 1h-4M11 1v4M1 11h4M1 11v-4M11 11h-4M11 11v-4" stroke="white" strokeWidth="1.3" strokeLinecap="round" />
+                      </svg>
+                    </div>
+                  </div>
+                ))}
+              </div>
             )}
           </div>
         </section>
       </main>
+
+      {/* Back to top button */}
+      <button
+        className={`back-to-top${showTop ? ' visible' : ''}`}
+        onClick={scrollToTop}
+        aria-label="Scroll to top"
+      >
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M7 12V2M2 6l5-5 5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </button>
     </>
   )
 }
