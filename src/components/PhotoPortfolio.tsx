@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import Link from 'next/link'
 import { useI18n } from '@/i18n/context'
 
 interface Photo { image: string }
@@ -15,8 +16,7 @@ interface PhotoData {
 const CATEGORIES = ['portraits', 'events', 'products', 'athletes', 'nature'] as const
 type Category = (typeof CATEGORIES)[number]
 
-const TABS: { key: 'all' | Category; i18n: string }[] = [
-  { key: 'all', i18n: 'tab.all' },
+const TABS: { key: Category; i18n: string }[] = [
   { key: 'portraits', i18n: 'tab.portraits' },
   { key: 'events', i18n: 'tab.events' },
   { key: 'products', i18n: 'tab.products' },
@@ -28,31 +28,12 @@ function prefixPath(path: string): string {
   return path.startsWith('/') ? path : `/${path}`
 }
 
-function getLimit(): number {
-  if (typeof window === 'undefined') return 8
-  return window.innerWidth <= 768 ? 6 : 8
-}
-
-function interleave(data: PhotoData): string[] {
-  const arrays = CATEGORIES.map(cat => data[cat].map(p => prefixPath(p.image)))
-  const result: string[] = []
-  const maxLen = Math.max(...arrays.map(a => a.length))
-  for (let i = 0; i < maxLen; i++) {
-    for (const arr of arrays) {
-      if (i < arr.length) result.push(arr[i])
-    }
-  }
-  return result
-}
+const LIMIT = 6
 
 export default function PhotoPortfolio() {
   const { t } = useI18n()
   const [data, setData] = useState<PhotoData | null>(null)
-  const [activeTab, setActiveTab] = useState<'all' | Category>('all')
-  const [showAll, setShowAll] = useState(false)
-  const [limit, setLimit] = useState(8)
-
-  useEffect(() => { setLimit(getLimit()) }, [])
+  const [activeTab, setActiveTab] = useState<Category>('portraits')
 
   useEffect(() => {
     fetch('/content/photos.json')
@@ -63,21 +44,12 @@ export default function PhotoPortfolio() {
 
   if (!data) return null
 
-  const images: string[] =
-    activeTab === 'all'
-      ? interleave(data)
-      : data[activeTab].map(p => prefixPath(p.image))
-
-  const visible = showAll ? images : images.slice(0, limit)
-
-  function handleTabClick(key: 'all' | Category) {
-    setActiveTab(key)
-    setShowAll(false)
-  }
+  const images: string[] = data[activeTab].map(p => prefixPath(p.image))
+  const visible = images.slice(0, LIMIT)
 
   function handlePhotoClick(index: number) {
     window.dispatchEvent(
-      new CustomEvent('openLightbox', { detail: { images, index } })
+      new CustomEvent('openLightbox', { detail: { images: visible, index } })
     )
   }
 
@@ -97,7 +69,7 @@ export default function PhotoPortfolio() {
               <button
                 key={tab.key}
                 className={`photo-tab${activeTab === tab.key ? ' active' : ''}`}
-                onClick={() => handleTabClick(tab.key)}
+                onClick={() => setActiveTab(tab.key)}
               >
                 {t(tab.i18n)}
               </button>
@@ -123,15 +95,9 @@ export default function PhotoPortfolio() {
           ))}
         </div>
 
-        {images.length > limit && (
-          <button
-            className="view-more-btn"
-            id="photosViewMore"
-            onClick={() => setShowAll(prev => !prev)}
-          >
-            {showAll ? t('btn.showless') : t('btn.viewmore')}
-          </button>
-        )}
+        <Link href="/portfolio#photos" className="view-more-btn">
+          {t('btn.viewall')}
+        </Link>
       </div>
     </section>
   )

@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import Link from 'next/link'
 import { useI18n } from '@/i18n/context'
 
 interface Video {
@@ -10,7 +11,6 @@ interface Video {
 }
 
 const TABS = [
-  { key: 'all', i18n: 'tab.all' },
   { key: 'commercial', i18n: 'tab.commercial' },
   { key: 'music-video', i18n: 'tab.musicvideo' },
   { key: 'documentary', i18n: 'tab.documentary' },
@@ -20,19 +20,12 @@ const TABS = [
   { key: 'event', i18n: 'tab.event' },
 ]
 
-function getLimit(): number {
-  if (typeof window === 'undefined') return 6
-  return window.innerWidth <= 768 ? 4 : 6
-}
+const LIMIT = 6
 
 export default function VideoPortfolio() {
   const { t } = useI18n()
   const [videos, setVideos] = useState<Video[]>([])
-  const [activeCategory, setActiveCategory] = useState('all')
-  const [showAll, setShowAll] = useState(false)
-  const [limit, setLimit] = useState(6)
-
-  useEffect(() => { setLimit(getLimit()) }, [])
+  const [activeCategory, setActiveCategory] = useState('commercial')
 
   useEffect(() => {
     fetch('/content/videos.json')
@@ -41,16 +34,8 @@ export default function VideoPortfolio() {
       .catch(console.error)
   }, [])
 
-  const filtered = activeCategory === 'all'
-    ? videos
-    : videos.filter(v => v.category === activeCategory)
-
-  const visible = showAll ? filtered : filtered.slice(0, limit)
-
-  function handleTabClick(key: string) {
-    setActiveCategory(key)
-    setShowAll(false)
-  }
+  const filtered = videos.filter(v => v.category === activeCategory)
+  const visible = filtered.slice(0, LIMIT)
 
   function handleVideoClick(youtubeId: string) {
     window.dispatchEvent(new CustomEvent('openVideo', { detail: youtubeId }))
@@ -72,7 +57,7 @@ export default function VideoPortfolio() {
               <button
                 key={tab.key}
                 className={`photo-tab${activeCategory === tab.key ? ' active' : ''}`}
-                onClick={() => handleTabClick(tab.key)}
+                onClick={() => setActiveCategory(tab.key)}
               >
                 {t(tab.i18n)}
               </button>
@@ -85,8 +70,6 @@ export default function VideoPortfolio() {
             <div
               key={`${video.youtube_id}-${i}`}
               className="video-card"
-              data-videoid={video.youtube_id}
-              data-vcategory={video.category}
               onClick={() => handleVideoClick(video.youtube_id)}
             >
               <div
@@ -107,14 +90,9 @@ export default function VideoPortfolio() {
           ))}
         </div>
 
-        {filtered.length > limit && (
-          <button
-            className="view-more-btn"
-            onClick={() => setShowAll(prev => !prev)}
-          >
-            {showAll ? t('btn.showless') : t('btn.viewmore')}
-          </button>
-        )}
+        <Link href="/portfolio" className="view-more-btn">
+          {t('btn.viewall')}
+        </Link>
       </div>
     </section>
   )
