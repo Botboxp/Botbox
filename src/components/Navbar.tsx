@@ -56,10 +56,8 @@ export default function Navbar() {
         e.preventDefault()
         const el = document.querySelector(href)
         if (el) el.scrollIntoView({ behavior: 'smooth' })
-      } else {
-        e.preventDefault()
-        window.location.href = '/' + href
       }
+      // When not home, let the browser handle /#hash natively (don't preventDefault)
       setIsOpen(false)
     }
   }, [isHome])
@@ -85,7 +83,7 @@ export default function Navbar() {
           <ul className="nav-links">
             {NAV_LINKS.map(link => (
               <li key={link.key}>
-                <a href={link.href} onClick={handleNavClick}>{t(link.key)}</a>
+                <a href={isHome ? link.href : '/' + link.href} onClick={handleNavClick}>{t(link.key)}</a>
               </li>
             ))}
           </ul>
@@ -129,7 +127,7 @@ export default function Navbar() {
       {/* Mobile menu */}
       <div className={`mobile-menu${isOpen ? ' open' : ''}`}>
         {NAV_LINKS.map(link => (
-          <a key={link.key} href={link.href} onClick={handleNavClick}>
+          <a key={link.key} href={isHome ? link.href : '/' + link.href} onClick={handleNavClick}>
             {t(link.key)}
           </a>
         ))}
