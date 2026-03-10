@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useState, useCallback, useRef } from 'react'
-import Link from 'next/link'
 import { useI18n } from '@/i18n/context'
 import Navbar from '@/components/Navbar'
 import VideoModal from '@/components/VideoModal'
@@ -118,7 +117,11 @@ export default function PortfolioPage() {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }, [])
 
-  /* Auto-scroll active tab into view on mobile */
+  /* Reset tabs scroll to start when switching sections, auto-scroll active tab on tab click */
+  useEffect(() => {
+    if (tabsRef.current) tabsRef.current.scrollLeft = 0
+  }, [section])
+
   useEffect(() => {
     const container = tabsRef.current
     if (!container) return
@@ -126,7 +129,7 @@ export default function PortfolioPage() {
     if (activeBtn) {
       activeBtn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' })
     }
-  }, [videoTab, photoTab, section])
+  }, [videoTab, photoTab])
 
   const filteredVideos = videos.filter(v => v.category === videoTab)
 
@@ -151,18 +154,10 @@ export default function PortfolioPage() {
       <PhotoLightbox />
 
       <main style={{ paddingTop: 'var(--nav-h)' }}>
-        <section id="portfolio" style={{ paddingTop: 40 }}>
+        <section id="portfolio" style={{ paddingTop: 20 }}>
           <div className="container">
-            {/* Back button */}
-            <Link href="/" className="portfolio-back">
-              <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
-                <path d="M11.5 6.5h-10M6.5 1.5l-5 5 5 5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-              <span>{t('portfolio.back')}</span>
-            </Link>
-
             {/* Header */}
-            <h2 className="videos-title disp" style={{ marginTop: 12, marginBottom: 0, textAlign: 'center' }}>
+            <h2 className="videos-title disp" style={{ marginBottom: 0, textAlign: 'center' }}>
               {section === 'video' ? t('videos.title') : t('photos.title')}
             </h2>
           </div>
@@ -170,7 +165,7 @@ export default function PortfolioPage() {
           {/* Sticky category tabs — full width, centered */}
           <div className="portfolio-sticky-bar">
             <div className="container">
-              <div ref={tabsRef} className="photo-tabs" style={{ justifyContent: 'center' }}>
+              <div ref={tabsRef} className="photo-tabs portfolio-tabs">
                 {section === 'video'
                   ? VIDEO_TABS.map(tab => (
                       <button

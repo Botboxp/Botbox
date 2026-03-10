@@ -544,15 +544,16 @@ nav.scrolled {
   background: rgba(34,34,34,0.95); backdrop-filter: blur(12px);
   padding: 10px 0;
   border-bottom: 1px solid var(--border);
+  position: relative;
 }
-.portfolio-sticky-bar .photo-tabs { position: relative; }
+.portfolio-tabs { justify-content: center; }
 @media (max-width: 768px) {
+  .portfolio-tabs { justify-content: flex-start; }
   .portfolio-sticky-bar::after {
     content: ''; position: absolute; top: 0; right: 0; bottom: 0; width: 48px;
     background: linear-gradient(to right, transparent, rgba(34,34,34,0.95));
     pointer-events: none; z-index: 1;
   }
-  .portfolio-sticky-bar { position: relative; }
 }
 
 /* BACK TO TOP */
