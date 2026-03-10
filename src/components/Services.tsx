@@ -42,6 +42,9 @@ export default function Services() {
           </a>
         </div>
         <div className="services-grid">
+          {services.length === 0 && Array.from({ length: 4 }).map((_, i) => (
+            <div key={i} className="skeleton" style={{ aspectRatio: '3/4', minHeight: 300 }} />
+          ))}
           {services.map((s, i) => {
             const idx = i + 1
             const title = t(`svc.${idx}.title`)

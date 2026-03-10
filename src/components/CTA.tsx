@@ -57,6 +57,7 @@ export default function CTA() {
   const [sending, setSending] = useState(false)
   const [sent, setSent] = useState(false)
   const [error, setError] = useState(false)
+  const [touched, setTouched] = useState(false)
 
   useEffect(() => {
     fetch('/content/contact.json')
@@ -71,7 +72,10 @@ export default function CTA() {
       return
     }
     if (currentStep === 2) {
-      if (!name || !email) return
+      setTouched(true)
+      const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+      if (!name || !email || !emailValid) return
+      setTouched(false)
       setCurrentStep(3)
       return
     }
@@ -177,14 +181,14 @@ export default function CTA() {
                 <>
                   <div className="form-row">
                     <input
-                      className="form-input"
+                      className={`form-input${touched && !name ? ' input-error' : ''}`}
                       type="text"
                       placeholder={t('form.ph.name')}
                       value={name}
                       onChange={e => setName(e.target.value)}
                     />
                     <input
-                      className="form-input"
+                      className={`form-input${touched && (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) ? ' input-error' : ''}`}
                       type="email"
                       placeholder={t('form.ph.email')}
                       value={email}
@@ -217,6 +221,7 @@ export default function CTA() {
                 className="btn btn-solid"
                 style={{ width: '100%', justifyContent: 'center' }}
                 onClick={handleSubmit}
+                disabled={sending || sent}
               >
                 <span>{btnLabel}</span>
                 <svg width="13" height="13" viewBox="0 0 13 13" fill="none">

@@ -46,6 +46,7 @@ export default function Hero() {
           autoPlay
           muted
           playsInline
+          poster="/assets/img/logos/botbox-logo.png"
         >
           <source src="/assets/video/Botbox DemoReel.mp4" type="video/mp4" />
         </video>

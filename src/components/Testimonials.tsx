@@ -43,6 +43,9 @@ export default function Testimonials() {
         </div>
 
         <div className={`test-grid${showToggle && collapsed ? ' test-collapsed' : ''}`} id="testimonialsGrid">
+          {items.length === 0 && Array.from({ length: 3 }).map((_, i) => (
+            <div key={i} className="skeleton" style={{ height: 200, borderRadius: 2 }} />
+          ))}
           {items.map((item, i) => {
             const idx = i + 1
             return (

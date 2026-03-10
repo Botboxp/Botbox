@@ -66,6 +66,9 @@ export default function VideoPortfolio() {
         </div>
 
         <div className="videos-grid reveal" id="videosGrid">
+          {videos.length === 0 && Array.from({ length: LIMIT }).map((_, i) => (
+            <div key={i} className="skeleton skeleton-card" />
+          ))}
           {visible.map((video, i) => (
             <div
               key={`${video.youtube_id}-${i}`}

@@ -78,6 +78,9 @@ export default function PhotoPortfolio() {
         </div>
 
         <div className="photos-grid reveal">
+          {!data && Array.from({ length: LIMIT }).map((_, i) => (
+            <div key={i} className="skeleton skeleton-photo" />
+          ))}
           {visible.map((src, i) => (
             <div
               key={`${activeTab}-${i}`}

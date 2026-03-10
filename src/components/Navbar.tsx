@@ -157,6 +157,7 @@ export default function Navbar() {
               className={`hamburger${isOpen ? ' active' : ''}`}
               onClick={toggleMenu}
               aria-label="Menu"
+              aria-expanded={isOpen}
             >
               <span /><span /><span />
             </button>
