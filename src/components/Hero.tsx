@@ -1,6 +1,7 @@
 'use client'
 
 import { useRef, useEffect } from 'react'
+import Link from 'next/link'
 import { useI18n } from '@/i18n/context'
 
 export default function Hero() {
@@ -79,12 +80,12 @@ export default function Hero() {
             <span>{t('hero.showreel')}</span>
           </a>
 
-          <a href="#videos" className="btn" onClick={handleAnchorClick}>
+          <Link href="/portfolio" className="btn">
             <span>{t('hero.portfolio')}</span>
             <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
               <path d="M1.5 6.5h10M6.5 1.5l5 5-5 5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
-          </a>
+          </Link>
         </div>
       </div>
 

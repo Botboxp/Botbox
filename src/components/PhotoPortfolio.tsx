@@ -28,7 +28,7 @@ function prefixPath(path: string): string {
   return path.startsWith('/') ? path : `/${path}`
 }
 
-const LIMIT = 6
+const LIMIT = 8
 
 export default function PhotoPortfolio() {
   const { t } = useI18n()
@@ -95,9 +95,14 @@ export default function PhotoPortfolio() {
           ))}
         </div>
 
-        <Link href="/portfolio#photos" className="view-more-btn">
-          {t('btn.viewall')}
-        </Link>
+        <div style={{ textAlign: 'center', marginTop: 32 }}>
+          <Link href="/portfolio#photos" className="btn">
+            <span>{t('btn.viewall')}</span>
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+              <path d="M1.5 6.5h10M6.5 1.5l5 5-5 5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </Link>
+        </div>
       </div>
     </section>
   )
