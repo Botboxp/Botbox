@@ -150,6 +150,7 @@ nav.scrolled {
   text-decoration: none; transition: color 0.2s; cursor: none;
 }
 .nav-links a:hover { color: var(--accent-b); }
+.nav-links a.nav-active { color: var(--accent-a); }
 .nav-cta { display: flex; align-items: center; gap: 20px; }
 .nav-socials { display: none; }
 .nav-socials .social-btn { width: 30px; height: 30px; border-color: rgba(255,255,255,0.15); }
@@ -524,8 +525,7 @@ nav.scrolled {
 .portfolio-sticky-bar {
   position: sticky; top: var(--nav-h); z-index: 50;
   background: rgba(34,34,34,0.95); backdrop-filter: blur(12px);
-  padding: 12px 0; margin-bottom: 2px;
-  display: flex; flex-direction: column; gap: 8px;
+  padding: 10px 0;
   border-bottom: 1px solid var(--border);
 }
 

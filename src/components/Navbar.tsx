@@ -34,12 +34,22 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [logoError, setLogoError] = useState(false)
+  const [activeSection, setActiveSection] = useState<'video' | 'photo'>('video')
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50)
     handleScroll()
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  // Listen for portfolio section changes
+  useEffect(() => {
+    const handler = (e: Event) => {
+      setActiveSection((e as CustomEvent).detail)
+    }
+    window.addEventListener('portfolioSectionChanged', handler)
+    return () => window.removeEventListener('portfolioSectionChanged', handler)
   }, [])
 
   // Lock body scroll when mobile menu is open
@@ -102,12 +112,20 @@ export default function Navbar() {
           {isPortfolio && (
             <ul className="nav-links">
               <li>
-                <a href="#" onClick={(e) => { e.preventDefault(); handlePortfolioNav('video') }}>
+                <a
+                  href="#"
+                  className={activeSection === 'video' ? 'nav-active' : ''}
+                  onClick={(e) => { e.preventDefault(); handlePortfolioNav('video') }}
+                >
                   {t('portfolio.video')}
                 </a>
               </li>
               <li>
-                <a href="#" onClick={(e) => { e.preventDefault(); handlePortfolioNav('photo') }}>
+                <a
+                  href="#"
+                  className={activeSection === 'photo' ? 'nav-active' : ''}
+                  onClick={(e) => { e.preventDefault(); handlePortfolioNav('photo') }}
+                >
                   {t('portfolio.photo')}
                 </a>
               </li>
@@ -130,7 +148,7 @@ export default function Navbar() {
               <span className={lang === 'es' ? 'lang-active' : 'lang-inactive'}>ES</span>
             </button>
 
-            <a href={isPortfolio ? '/#cta' : '#cta'} className="btn" onClick={isHome ? handleNavClick : undefined}>
+            <a href="#cta" className="btn" onClick={handleNavClick}>
               <span>{t('nav.quote')}</span>
               <ArrowIcon />
             </a>
@@ -162,10 +180,18 @@ export default function Navbar() {
 
         {isPortfolio && (
           <>
-            <a href="#" onClick={(e) => { e.preventDefault(); handlePortfolioNav('video') }}>
+            <a
+              href="#"
+              className={activeSection === 'video' ? 'nav-active' : ''}
+              onClick={(e) => { e.preventDefault(); handlePortfolioNav('video') }}
+            >
               {t('portfolio.video')}
             </a>
-            <a href="#" onClick={(e) => { e.preventDefault(); handlePortfolioNav('photo') }}>
+            <a
+              href="#"
+              className={activeSection === 'photo' ? 'nav-active' : ''}
+              onClick={(e) => { e.preventDefault(); handlePortfolioNav('photo') }}
+            >
               {t('portfolio.photo')}
             </a>
           </>
@@ -182,9 +208,9 @@ export default function Navbar() {
         </button>
 
         <a
-          href={isPortfolio ? '/#cta' : '#cta'}
+          href="#cta"
           className="btn mobile-menu-cta"
-          onClick={isHome ? handleNavClick : undefined}
+          onClick={handleNavClick}
           style={{ marginTop: 16, textAlign: 'center', textDecoration: 'none' }}
         >
           <span>{t('nav.quote')}</span>

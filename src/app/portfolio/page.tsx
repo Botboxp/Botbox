@@ -8,6 +8,8 @@ import VideoModal from '@/components/VideoModal'
 import PhotoLightbox from '@/components/PhotoLightbox'
 import CustomCursor from '@/components/CustomCursor'
 import ScrollReveal from '@/components/ScrollReveal'
+import CTA from '@/components/CTA'
+import Footer from '@/components/Footer'
 
 /* ── Video ── */
 interface Video {
@@ -80,7 +82,10 @@ export default function PortfolioPage() {
 
   /* Handle hash on load */
   useEffect(() => {
-    if (window.location.hash === '#photos') setSection('photo')
+    if (window.location.hash === '#photos') {
+      setSection('photo')
+      window.dispatchEvent(new CustomEvent('portfolioSectionChanged', { detail: 'photo' }))
+    }
   }, [])
 
   /* Listen for nav section toggle */
@@ -92,6 +97,11 @@ export default function PortfolioPage() {
     window.addEventListener('portfolioSection', handler)
     return () => window.removeEventListener('portfolioSection', handler)
   }, [])
+
+  /* Notify nav of section changes */
+  useEffect(() => {
+    window.dispatchEvent(new CustomEvent('portfolioSectionChanged', { detail: section }))
+  }, [section])
 
   /* Show/hide back-to-top button */
   useEffect(() => {
@@ -127,10 +137,10 @@ export default function PortfolioPage() {
       <PhotoLightbox />
 
       <main style={{ paddingTop: 'var(--nav-h)' }}>
-        <section id="portfolio">
+        <section id="portfolio" style={{ paddingTop: 40 }}>
           <div className="container">
             {/* Back button */}
-            <Link href="/" className="portfolio-back reveal">
+            <Link href="/" className="portfolio-back">
               <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
                 <path d="M11.5 6.5h-10M6.5 1.5l-5 5 5 5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
@@ -138,16 +148,13 @@ export default function PortfolioPage() {
             </Link>
 
             {/* Header */}
-            <div className="videos-header reveal" style={{ marginTop: 8 }}>
-              <div>
-                <div className="section-label" style={{ marginBottom: 14 }}>{t('portfolio.label')}</div>
-                <h2 className="videos-title disp">{t('portfolio.title')}</h2>
-              </div>
-            </div>
+            <h2 className="videos-title disp" style={{ marginTop: 12, marginBottom: 0 }}>{t('portfolio.title')}</h2>
+          </div>
 
-            {/* Sticky category tabs */}
-            <div className="portfolio-sticky-bar">
-              <div className="photo-tabs">
+          {/* Sticky category tabs — full width, centered */}
+          <div className="portfolio-sticky-bar">
+            <div className="container">
+              <div className="photo-tabs" style={{ justifyContent: 'center' }}>
                 {section === 'video'
                   ? VIDEO_TABS.map(tab => (
                       <button
@@ -169,10 +176,12 @@ export default function PortfolioPage() {
                     ))}
               </div>
             </div>
+          </div>
 
+          <div className="container" style={{ marginTop: 2 }}>
             {/* ── VIDEO ── */}
             {section === 'video' && (
-              <div className="videos-grid reveal" id="videosGrid">
+              <div className="videos-grid" id="videosGrid">
                 {filteredVideos.map((video, i) => (
                   <div
                     key={`${video.youtube_id}-${i}`}
@@ -200,7 +209,7 @@ export default function PortfolioPage() {
 
             {/* ── PHOTO ── */}
             {section === 'photo' && (
-              <div className="photos-grid reveal">
+              <div className="photos-grid">
                 {photoImages.map((src, i) => (
                   <div
                     key={`${photoTab}-${i}`}
@@ -220,6 +229,9 @@ export default function PortfolioPage() {
             )}
           </div>
         </section>
+
+        <CTA />
+        <Footer />
       </main>
 
       {/* Back to top button */}
