@@ -190,12 +190,13 @@
       display: flex; flex-direction: column; gap: 8px;
     }
     .mobile-menu.open { right: 0; }
-    .mobile-menu a {
+    .mobile-menu a:not(.mobile-menu-cta) {
       font-size: 14px; letter-spacing: 0.12em; text-transform: uppercase;
       color: var(--grey-lt); text-decoration: none; padding: 12px 0;
       border-bottom: 1px solid var(--border); transition: color 0.2s;
     }
-    .mobile-menu a:hover { color: var(--accent-a); }
+    .mobile-menu a:not(.mobile-menu-cta):hover { color: var(--accent-a); }
+    .mobile-menu-cta { display: block; width: 100%; padding: 14px 0 !important; border: none !important; }
     .mobile-menu-socials { display: flex; gap: 10px; margin-top: 24px; }
     .mobile-overlay {
       position: fixed; inset: 0; background: rgba(0,0,0,0.5);
