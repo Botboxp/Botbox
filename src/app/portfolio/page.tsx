@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState, useCallback, useRef } from 'react'
 import Link from 'next/link'
 import { useI18n } from '@/i18n/context'
 import Navbar from '@/components/Navbar'
@@ -112,9 +112,21 @@ export default function PortfolioPage() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  const tabsRef = useRef<HTMLDivElement>(null)
+
   const scrollToTop = useCallback(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }, [])
+
+  /* Auto-scroll active tab into view on mobile */
+  useEffect(() => {
+    const container = tabsRef.current
+    if (!container) return
+    const activeBtn = container.querySelector('.photo-tab.active') as HTMLElement
+    if (activeBtn) {
+      activeBtn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' })
+    }
+  }, [videoTab, photoTab, section])
 
   const filteredVideos = videos.filter(v => v.category === videoTab)
 
@@ -158,7 +170,7 @@ export default function PortfolioPage() {
           {/* Sticky category tabs — full width, centered */}
           <div className="portfolio-sticky-bar">
             <div className="container">
-              <div className="photo-tabs" style={{ justifyContent: 'center' }}>
+              <div ref={tabsRef} className="photo-tabs" style={{ justifyContent: 'center' }}>
                 {section === 'video'
                   ? VIDEO_TABS.map(tab => (
                       <button

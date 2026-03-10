@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import Link from 'next/link'
 import { useI18n } from '@/i18n/context'
 
@@ -36,6 +36,15 @@ export default function PhotoPortfolio() {
   const [activeTab, setActiveTab] = useState<Category>('portraits')
   const [error, setError] = useState(false)
   const [loading, setLoading] = useState(true)
+  const tabsRef = useRef<HTMLDivElement>(null)
+
+  const handleTabClick = (key: Category) => {
+    setActiveTab(key)
+    requestAnimationFrame(() => {
+      const active = tabsRef.current?.querySelector('.photo-tab.active') as HTMLElement
+      active?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' })
+    })
+  }
 
   useEffect(() => {
     fetch('/content/photos.json')
@@ -65,12 +74,12 @@ export default function PhotoPortfolio() {
         </div>
 
         <div className="tabs-wrapper reveal">
-          <div className="photo-tabs">
+          <div ref={tabsRef} className="photo-tabs">
             {TABS.map(tab => (
               <button
                 key={tab.key}
                 className={`photo-tab${activeTab === tab.key ? ' active' : ''}`}
-                onClick={() => setActiveTab(tab.key)}
+                onClick={() => handleTabClick(tab.key)}
               >
                 {t(tab.i18n)}
               </button>

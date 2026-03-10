@@ -1,7 +1,8 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { usePathname } from 'next/navigation'
+import Link from 'next/link'
 import { useI18n } from '@/i18n/context'
 
 const NAV_LINKS = [
@@ -12,6 +13,21 @@ const NAV_LINKS = [
   { href: '#process', key: 'nav.process' },
   { href: '#clients-wall', key: 'nav.clients' },
 ]
+
+/* Map sections to which nav link should light up.
+   process & stats → #process, testimonials & clients-wall → #clients-wall */
+const SECTION_TO_NAV: Record<string, string> = {
+  about: '#about',
+  services: '#services',
+  videos: '#videos',
+  photos: '#photos',
+  process: '#process',
+  stats: '#process',
+  'clients-wall': '#clients-wall',
+  testimonials: '#clients-wall',
+}
+
+const OBSERVED_SECTIONS = Object.keys(SECTION_TO_NAV)
 
 const SOCIALS = [
   { href: 'https://www.instagram.com/botboxp/', label: 'Instagram', icon: <svg viewBox="0 0 24 24"><path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2m-.25 2A3.5 3.5 0 0 0 4 7.5v9A3.5 3.5 0 0 0 7.5 20h9a3.5 3.5 0 0 0 3.5-3.5v-9A3.5 3.5 0 0 0 16.5 4h-9m10.16 1.13a1.12 1.12 0 1 1 0 2.25 1.12 1.12 0 0 1 0-2.25M12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10m0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6"/></svg> },
@@ -35,6 +51,8 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [logoError, setLogoError] = useState(false)
   const [activeSection, setActiveSection] = useState<'video' | 'photo'>('video')
+  const [activeNav, setActiveNav] = useState<string>('')
+  const manualClickRef = useRef(false)
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50)
@@ -42,6 +60,37 @@ export default function Navbar() {
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+
+  /* ── Scroll spy for landing page ── */
+  useEffect(() => {
+    if (!isHome) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (manualClickRef.current) return
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            const id = entry.target.id
+            const navHref = SECTION_TO_NAV[id]
+            if (navHref) setActiveNav(navHref)
+          }
+        }
+      },
+      { rootMargin: '-40% 0px -40% 0px', threshold: 0 }
+    )
+
+    const timer = setTimeout(() => {
+      OBSERVED_SECTIONS.forEach(id => {
+        const el = document.getElementById(id)
+        if (el) observer.observe(el)
+      })
+    }, 500)
+
+    return () => {
+      clearTimeout(timer)
+      observer.disconnect()
+    }
+  }, [isHome])
 
   // Listen for portfolio section changes
   useEffect(() => {
@@ -65,7 +114,13 @@ export default function Navbar() {
     if (href?.startsWith('#')) {
       e.preventDefault()
       const el = document.querySelector(href)
-      if (el) el.scrollIntoView({ behavior: 'smooth' })
+      if (el) {
+        // Temporarily disable scroll spy to prevent flickering
+        manualClickRef.current = true
+        setActiveNav(href)
+        el.scrollIntoView({ behavior: 'smooth' })
+        setTimeout(() => { manualClickRef.current = false }, 1000)
+      }
       setIsOpen(false)
     }
   }, [])
@@ -102,7 +157,13 @@ export default function Navbar() {
             <ul className="nav-links">
               {NAV_LINKS.map(link => (
                 <li key={link.key}>
-                  <a href={link.href} onClick={handleNavClick}>{t(link.key)}</a>
+                  <a
+                    href={link.href}
+                    className={activeNav === link.href ? 'nav-active' : ''}
+                    onClick={handleNavClick}
+                  >
+                    {t(link.key)}
+                  </a>
                 </li>
               ))}
             </ul>
@@ -173,8 +234,26 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       <div className={`mobile-menu${isOpen ? ' open' : ''}`}>
+        {isPortfolio && (
+          <Link
+            href="/"
+            className="mobile-menu-back"
+            onClick={() => setIsOpen(false)}
+          >
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+              <path d="M11.5 6.5h-10M6.5 1.5l-5 5 5 5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            <span>{t('portfolio.back')}</span>
+          </Link>
+        )}
+
         {!isPortfolio && NAV_LINKS.map(link => (
-          <a key={link.key} href={link.href} onClick={handleNavClick}>
+          <a
+            key={link.key}
+            href={link.href}
+            className={activeNav === link.href ? 'nav-active' : ''}
+            onClick={handleNavClick}
+          >
             {t(link.key)}
           </a>
         ))}

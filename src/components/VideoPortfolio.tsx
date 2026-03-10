@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import Link from 'next/link'
 import { useI18n } from '@/i18n/context'
 
@@ -27,6 +27,15 @@ export default function VideoPortfolio() {
   const [videos, setVideos] = useState<Video[]>([])
   const [activeCategory, setActiveCategory] = useState('commercial')
   const [error, setError] = useState(false)
+  const tabsRef = useRef<HTMLDivElement>(null)
+
+  const handleTabClick = (key: string) => {
+    setActiveCategory(key)
+    requestAnimationFrame(() => {
+      const active = tabsRef.current?.querySelector('.photo-tab.active') as HTMLElement
+      active?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' })
+    })
+  }
 
   useEffect(() => {
     fetch('/content/videos.json')
@@ -53,12 +62,12 @@ export default function VideoPortfolio() {
         </div>
 
         <div className="tabs-wrapper reveal" style={{ marginBottom: 2 }}>
-          <div className="photo-tabs">
+          <div ref={tabsRef} className="photo-tabs">
             {TABS.map(tab => (
               <button
                 key={tab.key}
                 className={`photo-tab${activeCategory === tab.key ? ' active' : ''}`}
-                onClick={() => setActiveCategory(tab.key)}
+                onClick={() => handleTabClick(tab.key)}
               >
                 {t(tab.i18n)}
               </button>
