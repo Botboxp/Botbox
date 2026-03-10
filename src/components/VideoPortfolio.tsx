@@ -73,7 +73,10 @@ export default function VideoPortfolio() {
             <div
               key={`${video.youtube_id}-${i}`}
               className="video-card"
+              role="button"
+              tabIndex={0}
               onClick={() => handleVideoClick(video.youtube_id)}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleVideoClick(video.youtube_id) } }}
             >
               <div
                 className="video-thumb"

@@ -188,7 +188,10 @@ export default function PortfolioPage() {
                   <div
                     key={`${video.youtube_id}-${i}`}
                     className="video-card"
+                    role="button"
+                    tabIndex={0}
                     onClick={() => handleVideoClick(video.youtube_id)}
+                    onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleVideoClick(video.youtube_id) } }}
                   >
                     <div
                       className="video-thumb"
@@ -216,7 +219,10 @@ export default function PortfolioPage() {
                   <div
                     key={`${photoTab}-${i}`}
                     className="photo-card"
+                    role="button"
+                    tabIndex={0}
                     onClick={() => handlePhotoClick(i)}
+                    onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handlePhotoClick(i) } }}
                   >
                     <div className="photo-img" style={{ backgroundImage: `url('${src}')` }} />
                     <div className="photo-overlay" />

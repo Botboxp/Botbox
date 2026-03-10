@@ -85,7 +85,10 @@ export default function PhotoPortfolio() {
             <div
               key={`${activeTab}-${i}`}
               className="photo-card"
+              role="button"
+              tabIndex={0}
               onClick={() => handlePhotoClick(i)}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handlePhotoClick(i) } }}
             >
               <div className="photo-img" style={{ backgroundImage: `url('${src}')` }} />
               <div className="photo-overlay" />

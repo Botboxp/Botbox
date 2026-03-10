@@ -1,12 +1,13 @@
 'use client'
 
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useI18n } from '@/i18n/context'
 
 export default function Hero() {
   const { t } = useI18n()
   const videoRef = useRef<HTMLVideoElement>(null)
+  const [videoFailed, setVideoFailed] = useState(false)
 
   useEffect(() => {
     const video = videoRef.current
@@ -40,16 +41,21 @@ export default function Hero() {
   return (
     <section id="hero">
       <div className="hero-bg">
-        <video
-          ref={videoRef}
-          className="hero-video"
-          autoPlay
-          muted
-          playsInline
-          poster="/assets/img/logos/botbox-logo.png"
-        >
-          <source src="/assets/video/Botbox DemoReel.mp4" type="video/mp4" />
-        </video>
+        {!videoFailed ? (
+          <video
+            ref={videoRef}
+            className="hero-video"
+            autoPlay
+            muted
+            playsInline
+            poster="/assets/img/logos/botbox-logo.png"
+            onError={() => setVideoFailed(true)}
+          >
+            <source src="/assets/video/Botbox DemoReel.mp4" type="video/mp4" />
+          </video>
+        ) : (
+          <div className="hero-video-fallback" style={{ backgroundImage: "url('/assets/img/logos/botbox-logo.png')" }} />
+        )}
         <div className="hero-overlay" />
       </div>
 

@@ -207,6 +207,14 @@ nav.scrolled {
   opacity: 0.35;
   transition: opacity 0.5s;
 }
+.hero-video-fallback {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.25;
+}
 .hero-overlay {
   position: absolute; inset: 0;
   background: linear-gradient(to bottom, rgba(34,34,34,0.4) 0%, rgba(34,34,34,0.75) 70%, #222222 100%);
