@@ -1,8 +1,14 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Botbox Production is an award-winning audiovisual production studio in Miami, FL. Specializing in commercials, music videos, corporate events, photography and more." />
+  <meta property="og:title" content="Botbox Production — Miami Audiovisual Studio" />
+  <meta property="og:description" content="Award-winning film production and post-production creative studio specializing in digital media advertising." />
+  <meta property="og:image" content="assets/img/logos/botbox-logo.png" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
   <link rel="icon" type="image/svg+xml" href="assets/img/logos/favicon.svg" />
   <title>Botbox Production — Miami Audiovisual</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -42,6 +48,11 @@
       line-height: 1.6;
       overflow-x: hidden;
       cursor: none;
+    }
+    @media (pointer: coarse) {
+      body, a, button, .video-card, .photo-card, .nav-links a,
+      .footer-links a, .footer-contact-value a { cursor: auto; }
+      #cursor, #cursor-ring { display: none !important; }
     }
 
     /* ─── CUSTOM CURSOR ─────────────────────────────────────────── */
@@ -90,7 +101,7 @@
     /* ─── LAYOUT UTILS ──────────────────────────────────────────── */
     .container { max-width: var(--max-w); margin: 0 auto; padding: 0 40px; }
     section { padding: 120px 0; }
-    .gold { color: var(--gold); }
+    .gold { color: var(--accent-a); }
     .btn {
       display: inline-flex; align-items: center; gap: 10px;
       padding: 13px 30px;
@@ -163,8 +174,34 @@
     }
     .nav-links a:hover { color: var(--accent-b); }
     .nav-cta { display: flex; align-items: center; gap: 20px; }
-    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: none; background: none; border: none; padding: 4px; }
-    .hamburger span { display: block; width: 22px; height: 1.5px; background: var(--white); }
+    .nav-socials { display: flex; gap: 8px; }
+    .nav-socials .social-btn { width: 30px; height: 30px; border-color: rgba(255,255,255,0.15); }
+    .nav-socials .social-btn svg { width: 13px; height: 13px; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 10px; z-index: 1002; min-width: 44px; min-height: 44px; justify-content: center; align-items: center; }
+    .hamburger span { display: block; width: 22px; height: 1.5px; background: var(--white); transition: transform 0.3s, opacity 0.3s; }
+    .hamburger.active span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+    .mobile-menu {
+      position: fixed; top: 0; right: -100%; width: 280px; height: 100dvh; height: 100vh;
+      background: rgba(20,20,20,0.98); backdrop-filter: blur(20px);
+      z-index: 1001; padding: 100px 40px 40px;
+      transition: right 0.35s ease;
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .mobile-menu.open { right: 0; }
+    .mobile-menu a {
+      font-size: 14px; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--grey-lt); text-decoration: none; padding: 12px 0;
+      border-bottom: 1px solid var(--border); transition: color 0.2s;
+    }
+    .mobile-menu a:hover { color: var(--accent-a); }
+    .mobile-menu-socials { display: flex; gap: 10px; margin-top: 24px; }
+    .mobile-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+      z-index: 1000; opacity: 0; pointer-events: none; transition: opacity 0.3s;
+    }
+    .mobile-overlay.open { opacity: 1; pointer-events: auto; }
 
     /* ═══════════════════════════════════════════════════════════════
        HERO
@@ -223,7 +260,7 @@
       animation: fadeUp 0.8s 0.4s both;
     }
     .hero-logo {
-      width: clamp(320px, 50vw, 620px);
+      width: clamp(240px, 50vw, 620px);
       height: auto;
       display: block;
       margin: 0 auto;
@@ -377,7 +414,6 @@
     .video-card {
       position: relative; aspect-ratio: 16/9;
       overflow: hidden; cursor: none; background: #1a1a1a;
-      group: true;
     }
     .video-thumb {
       position: absolute; inset: 0;
@@ -421,6 +457,8 @@
       margin-bottom: 24px;
     }
     .about-highlight p { font-size: 14px; color: var(--grey-lt); line-height: 1.6; font-style: italic; }
+    .about-actions { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+    .about-socials { display: flex; gap: 8px; }
     .about-gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
     .about-gallery-img {
       width: 100%; aspect-ratio: 4/3; object-fit: cover;
@@ -438,11 +476,22 @@
     .photos-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 48px; }
     .photos-title { font-family: var(--font-disp); font-size: clamp(40px,5vw,62px); letter-spacing: 0.04em; }
     /* Tab nav */
-    .photo-tabs { display: flex; gap: 2px; margin-bottom: 2px; }
+    .photo-tabs { display: flex; gap: 2px; margin-bottom: 2px; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; position: relative; }
+    .photo-tabs::-webkit-scrollbar { display: none; }
+    .tabs-wrapper { position: relative; }
+    .tabs-wrapper::after {
+      content: ''; position: absolute; top: 0; right: 0; bottom: 0; width: 48px;
+      background: linear-gradient(to right, transparent, var(--bg));
+      pointer-events: none; z-index: 1; display: none;
+    }
+    #photos .tabs-wrapper::after { background: linear-gradient(to right, transparent, var(--surface)); }
+    @media (max-width: 768px) {
+      .tabs-wrapper::after { display: block; }
+    }
     .photo-tab {
       padding: 10px 22px; background: var(--surface); border: none;
       font-family: var(--font-body); font-size: 11px; letter-spacing: 0.18em;
-      text-transform: uppercase; color: var(--grey); cursor: none;
+      text-transform: uppercase; color: var(--grey); cursor: pointer; white-space: nowrap;
       transition: background 0.25s, color 0.25s;
     }
     .photo-tab.active, .photo-tab:hover { background: var(--gradient); color: var(--bg); border-color: transparent; }
@@ -478,6 +527,9 @@
 
     /* View More system */
     .grid-collapsed .photo-card:nth-child(n+9) { display: none; }
+    @media (max-width: 768px) {
+      .grid-collapsed .photo-card:nth-child(n+7) { display: none; }
+    }
     .view-more-btn {
       display: block; margin: 24px auto 0; padding: 12px 36px;
       background: transparent; border: 1px solid var(--border);
@@ -516,7 +568,7 @@
     .process-header { margin-bottom: 72px; }
     .process-steps { display: grid; grid-template-columns: repeat(4, 1fr); position: relative; }
     .process-steps::before {
-      content:''; position: absolute; top:28px; left: calc(12.5%); right: calc(12.5%);
+      content:''; position: absolute; top:28px; left: 76px; right: calc(25% - 20px);
       height:1px; background: var(--border);
     }
     .process-step { padding: 0 20px; }
@@ -559,6 +611,13 @@
     }
     .test-name { font-size: 14px; font-weight: 600; color: var(--white); }
     .test-role { font-size: 12px; color: var(--accent-a); letter-spacing: 0.06em; }
+    @media (max-width: 768px) {
+      .test-grid.test-collapsed .test-card:nth-child(n+3) { display: none; }
+      .test-card { padding: 22px 24px; }
+      .test-text { font-size: 14px; margin-bottom: 16px; }
+      .test-quote-mark { font-size: 52px; margin-bottom: 10px; }
+      #testimonials { padding: 50px 0; }
+    }
 
     /* ═══════════════════════════════════════════════════════════════
        CLIENTS WALL
@@ -646,11 +705,11 @@
     .footer-about { font-size: 14px; color: var(--grey); line-height: 1.8; max-width: 300px; margin-bottom: 28px; }
     .footer-socials { display: flex; gap: 10px; }
     .social-btn {
-      width: 36px; height: 36px; border: 1px solid var(--border);
+      width: 38px; height: 38px; border: 1px solid var(--border); border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
-      color: var(--grey); text-decoration: none; font-size: 11px; font-weight: 600;
-      letter-spacing: 0.04em; transition: border-color 0.25s, color 0.25s; cursor: none;
+      color: var(--grey); text-decoration: none; transition: border-color 0.25s, color 0.25s, background 0.25s; cursor: pointer;
     }
+    .social-btn svg { width: 16px; height: 16px; fill: currentColor; }
     .social-btn:hover { border-color: var(--accent-a); color: var(--accent-a); }
     .footer-col-title { font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--accent-a); margin-bottom: 22px; }
     .footer-links { list-style: none; display: flex; flex-direction: column; gap: 12px; }
@@ -697,10 +756,10 @@
     .modal-play-big svg { margin-left: 5px; }
     .modal-placeholder p { font-size: 13px; color: var(--grey); letter-spacing: 0.1em; text-transform: uppercase; }
     .modal-close {
-      position: absolute; top: -44px; right: 0;
-      width: 34px; height: 34px; background: transparent;
-      border: 1px solid var(--border); color: var(--white); font-size: 16px;
-      cursor: none; display: flex; align-items: center; justify-content: center;
+      position: absolute; top: -50px; right: 0;
+      width: 44px; height: 44px; background: transparent;
+      border: 1px solid var(--border); border-radius: 50%; color: var(--white); font-size: 16px;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
       transition: border-color 0.2s;
     }
     .modal-close:hover { border-color: var(--accent-a); color: var(--accent-a); }
@@ -720,9 +779,9 @@
     .lightbox.open .lightbox-img { transform: scale(1); }
     .lightbox-close {
       position: absolute; top: 24px; right: 28px;
-      width: 34px; height: 34px; background: transparent;
-      border: 1px solid var(--border); color: var(--white); font-size: 16px;
-      cursor: none; display: flex; align-items: center; justify-content: center;
+      width: 44px; height: 44px; background: transparent;
+      border: 1px solid var(--border); border-radius: 50%; color: var(--white); font-size: 16px;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
       transition: border-color 0.2s;
     }
     .lightbox-close:hover { border-color: var(--accent-a); color: var(--accent-a); }
@@ -741,7 +800,7 @@
        RESPONSIVE
     ═══════════════════════════════════════════════════════════════ */
     @media (max-width: 1100px) {
-      .services-grid { grid-template-columns: repeat(2, 1fr); }
+      .services-grid { grid-template-columns: repeat(3, 1fr); }
       .stats-grid { grid-template-columns: repeat(2, 1fr); }
       .clients-grid { grid-template-columns: repeat(3, 1fr); }
       .process-steps { grid-template-columns: repeat(2, 1fr); gap: 40px; }
@@ -754,22 +813,50 @@
     }
     @media (max-width: 768px) {
       .container { padding: 0 24px; }
+      .nav-inner { padding: 0 24px; }
       section { padding: 80px 0; }
-      .services-grid { grid-template-columns: 1fr; }
+      #cta { padding: 80px 0; }
+      .services-grid { grid-template-columns: 1fr 1fr; }
+      .service-card { aspect-ratio: 3/4; }
+      .about-gallery { grid-template-columns: repeat(3, 1fr); }
+      .about-gallery-img { aspect-ratio: 1/1; }
       .services-header, .videos-header, .photos-header { flex-direction: column; gap: 20px; align-items: flex-start; }
       .stats-grid { grid-template-columns: 1fr 1fr; }
-      .clients-grid { grid-template-columns: repeat(2, 1fr); }
-      .process-steps { grid-template-columns: 1fr; gap: 28px; }
+      .stat-card { padding: 32px 24px; }
+      .stat-number { font-size: 52px; }
+      .clients-grid { grid-template-columns: repeat(3, 1fr); }
+      .client-logo-card { padding: 28px 20px; min-height: 100px; }
+      .process-steps { grid-template-columns: 1fr; gap: 0; }
+      .process-steps::before { display: block; top: 0; bottom: 0; left: 27px; right: auto; width: 1px; height: auto; }
+      .process-step { display: flex; gap: 20px; align-items: flex-start; padding: 24px 0 24px 0; }
+      .step-number { margin-bottom: 0; }
+      .step-content { flex: 1; }
+      .step-number.step-active { background: var(--gradient); color: var(--bg); border-color: transparent; }
       .test-grid { grid-template-columns: 1fr; }
       .footer-grid { grid-template-columns: 1fr; gap: 32px; }
       .footer-bottom { flex-direction: column; gap: 10px; text-align: center; }
-      .nav-links, .nav-cta .btn { display: none; }
+      footer { padding: 60px 0 32px; }
+      .nav-links, .nav-cta .btn, .nav-socials { display: none; }
       .hamburger { display: flex; }
       .photos-grid { grid-template-columns: repeat(2, 1fr); }
       .videos-grid { grid-template-columns: 1fr; }
       .videos-feature { grid-template-columns: 1fr; }
       .project-types { grid-template-columns: 1fr; }
       .form-row { grid-template-columns: 1fr; }
+      .quote-form { padding: 24px; }
+    }
+    @media (max-width: 480px) {
+      .container { padding: 0 16px; }
+      .nav-inner { padding: 0 16px; }
+      section { padding: 60px 0; }
+      #cta { padding: 60px 0; }
+      .quote-form { padding: 20px; }
+      .form-title { font-size: 22px; }
+      .hero-subtitle { font-size: 14px; }
+      .modal-close { top: -48px; }
+      .stat-card { padding: 24px 16px; }
+      .stat-number { font-size: 44px; }
+      .stat-label { font-size: 11px; }
     }
   </style>
 </head>
@@ -781,7 +868,7 @@
   <!-- ═══ NAV ═══════════════════════════════════════════════════ -->
   <nav id="navbar">
     <div class="nav-inner">
-      <a href="#" class="nav-logo">
+      <a href="#hero" class="nav-logo">
         <img src="assets/img/logos/botbox-logo.png"
              alt="Botbox Production"
              onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
@@ -797,6 +884,12 @@
         <li><a href="#cta">Contact</a></li>
       </ul>
       <div class="nav-cta">
+        <div class="nav-socials">
+          <a href="https://www.instagram.com/botboxp/" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2m-.25 2A3.5 3.5 0 0 0 4 7.5v9A3.5 3.5 0 0 0 7.5 20h9a3.5 3.5 0 0 0 3.5-3.5v-9A3.5 3.5 0 0 0 16.5 4h-9m10.16 1.13a1.12 1.12 0 1 1 0 2.25 1.12 1.12 0 0 1 0-2.25M12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10m0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6"/></svg></a>
+          <a href="https://www.facebook.com/botboxp/?checkpoint_src=any" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95"/></svg></a>
+          <a href="https://youtube.com/@botboxproduction5632?si=a-tymoCWaScnibaw" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M21.58 7.19a2.51 2.51 0 0 0-1.77-1.77C18.25 5 12 5 12 5s-6.25 0-7.81.42A2.51 2.51 0 0 0 2.42 7.19 26.4 26.4 0 0 0 2 12a26.4 26.4 0 0 0 .42 4.81 2.51 2.51 0 0 0 1.77 1.77C5.75 19 12 19 12 19s6.25 0 7.81-.42a2.51 2.51 0 0 0 1.77-1.77A26.4 26.4 0 0 0 22 12a26.4 26.4 0 0 0-.42-4.81M10 15V9l5.2 3L10 15"/></svg></a>
+          <a href="https://www.linkedin.com/company/botbox-productions/" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77"/></svg></a>
+        </div>
         <a href="#cta" class="btn"><span>Get a Quote</span><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M1.5 6.5h10M6.5 1.5l5 5-5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
           <span></span><span></span><span></span>
@@ -804,6 +897,24 @@
       </div>
     </div>
   </nav>
+
+  <!-- ═══ MOBILE MENU ═════════════════════════════════════════ -->
+  <div class="mobile-overlay" id="mobileOverlay" onclick="toggleMenu()"></div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#about" onclick="toggleMenu()">About</a>
+    <a href="#services" onclick="toggleMenu()">Services</a>
+    <a href="#videos" onclick="toggleMenu()">Video</a>
+    <a href="#photos" onclick="toggleMenu()">Photography</a>
+    <a href="#process" onclick="toggleMenu()">Process</a>
+    <a href="#clients-wall" onclick="toggleMenu()">Clients</a>
+    <a href="#cta" onclick="toggleMenu()">Contact</a>
+    <div class="mobile-menu-socials">
+      <a href="https://www.instagram.com/botboxp/" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2m-.25 2A3.5 3.5 0 0 0 4 7.5v9A3.5 3.5 0 0 0 7.5 20h9a3.5 3.5 0 0 0 3.5-3.5v-9A3.5 3.5 0 0 0 16.5 4h-9m10.16 1.13a1.12 1.12 0 1 1 0 2.25 1.12 1.12 0 0 1 0-2.25M12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10m0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6"/></svg></a>
+      <a href="https://www.facebook.com/botboxp/?checkpoint_src=any" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95"/></svg></a>
+      <a href="https://youtube.com/@botboxproduction5632?si=a-tymoCWaScnibaw" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M21.58 7.19a2.51 2.51 0 0 0-1.77-1.77C18.25 5 12 5 12 5s-6.25 0-7.81.42A2.51 2.51 0 0 0 2.42 7.19 26.4 26.4 0 0 0 2 12a26.4 26.4 0 0 0 .42 4.81 2.51 2.51 0 0 0 1.77 1.77C5.75 19 12 19 12 19s6.25 0 7.81-.42a2.51 2.51 0 0 0 1.77-1.77A26.4 26.4 0 0 0 22 12a26.4 26.4 0 0 0-.42-4.81M10 15V9l5.2 3L10 15"/></svg></a>
+      <a href="https://www.linkedin.com/company/botbox-productions/" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77"/></svg></a>
+    </div>
+  </div>
 
   <!-- ═══ HERO ══════════════════════════════════════════════════ -->
   <section id="hero">
@@ -889,7 +1000,15 @@
           <div class="about-highlight">
             <p id="about-emmy">We have built entertainment brands for television networks, films and advertising agencies, receiving recognition through various Academy of Television Arts &amp; Sciences awards (Emmy Awards).</p>
           </div>
-          <a href="#cta" class="btn"><span>Work With Us</span><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M1.5 6.5h10M6.5 1.5l5 5-5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <div class="about-actions">
+            <a href="#cta" class="btn"><span>Work With Us</span><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M1.5 6.5h10M6.5 1.5l5 5-5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            <div class="about-socials">
+              <a href="https://www.instagram.com/botboxp/" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2m-.25 2A3.5 3.5 0 0 0 4 7.5v9A3.5 3.5 0 0 0 7.5 20h9a3.5 3.5 0 0 0 3.5-3.5v-9A3.5 3.5 0 0 0 16.5 4h-9m10.16 1.13a1.12 1.12 0 1 1 0 2.25 1.12 1.12 0 0 1 0-2.25M12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10m0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6"/></svg></a>
+              <a href="https://www.facebook.com/botboxp/?checkpoint_src=any" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95"/></svg></a>
+              <a href="https://youtube.com/@botboxproduction5632?si=a-tymoCWaScnibaw" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M21.58 7.19a2.51 2.51 0 0 0-1.77-1.77C18.25 5 12 5 12 5s-6.25 0-7.81.42A2.51 2.51 0 0 0 2.42 7.19 26.4 26.4 0 0 0 2 12a26.4 26.4 0 0 0 .42 4.81 2.51 2.51 0 0 0 1.77 1.77C5.75 19 12 19 12 19s6.25 0 7.81-.42a2.51 2.51 0 0 0 1.77-1.77A26.4 26.4 0 0 0 22 12a26.4 26.4 0 0 0-.42-4.81M10 15V9l5.2 3L10 15"/></svg></a>
+              <a href="https://www.linkedin.com/company/botbox-productions/" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77"/></svg></a>
+            </div>
+          </div>
         </div>
         <div class="about-gallery reveal reveal-delay-2" id="about-gallery">
           <img class="about-gallery-img" src="assets/img/about/about-01.webp" alt="Behind the scenes" />
@@ -929,14 +1048,17 @@
       </div>
 
       <!-- Video Tabs -->
-      <div class="photo-tabs reveal" style="margin-bottom:2px">
-        <button class="photo-tab active" onclick="filterVideos(this,'all')">All</button>
-        <button class="photo-tab" onclick="filterVideos(this,'commercial')">Commercial</button>
-        <button class="photo-tab" onclick="filterVideos(this,'music-video')">Music Video</button>
-        <button class="photo-tab" onclick="filterVideos(this,'documentary')">Documentary</button>
-        <button class="photo-tab" onclick="filterVideos(this,'promo')">Promo</button>
-        <button class="photo-tab" onclick="filterVideos(this,'real-estate')">Real Estate</button>
-        <button class="photo-tab" onclick="filterVideos(this,'event')">Event</button>
+      <div class="tabs-wrapper reveal" style="margin-bottom:2px">
+        <div class="photo-tabs">
+          <button class="photo-tab active" onclick="filterVideos(this,'all')">All</button>
+          <button class="photo-tab" onclick="filterVideos(this,'commercial')">Commercial</button>
+          <button class="photo-tab" onclick="filterVideos(this,'music-video')">Music Video</button>
+          <button class="photo-tab" onclick="filterVideos(this,'documentary')">Documentary</button>
+          <button class="photo-tab" onclick="filterVideos(this,'promo')">Promo</button>
+          <button class="photo-tab" onclick="filterVideos(this,'short-film')">Short Film</button>
+          <button class="photo-tab" onclick="filterVideos(this,'real-estate')">Real Estate</button>
+          <button class="photo-tab" onclick="filterVideos(this,'event')">Event</button>
+        </div>
       </div>
 
       <div class="videos-grid reveal" id="videosGrid">
@@ -956,13 +1078,15 @@
 
       </div>
       <!-- Tabs -->
-      <div class="photo-tabs reveal">
-        <button class="photo-tab active" onclick="switchTab(this,'all')">All</button>
-        <button class="photo-tab" onclick="switchTab(this,'portraits')">Portraits</button>
-        <button class="photo-tab" onclick="switchTab(this,'events')">Events</button>
-        <button class="photo-tab" onclick="switchTab(this,'products')">Products</button>
-        <button class="photo-tab" onclick="switchTab(this,'athletes')">Athletes</button>
-        <button class="photo-tab" onclick="switchTab(this,'nature')">Nature / Landscapes</button>
+      <div class="tabs-wrapper reveal">
+        <div class="photo-tabs">
+          <button class="photo-tab active" onclick="switchTab(this,'all')">All</button>
+          <button class="photo-tab" onclick="switchTab(this,'portraits')">Portraits</button>
+          <button class="photo-tab" onclick="switchTab(this,'events')">Events</button>
+          <button class="photo-tab" onclick="switchTab(this,'products')">Products</button>
+          <button class="photo-tab" onclick="switchTab(this,'athletes')">Athletes</button>
+          <button class="photo-tab" onclick="switchTab(this,'nature')">Nature / Landscapes</button>
+        </div>
       </div>
 
       <!-- All grid (mix) -->
@@ -1026,23 +1150,31 @@
       <div class="process-steps">
         <div class="process-step reveal">
           <div class="step-number disp">01</div>
-          <h3 class="step-title disp">BRIEF & CONCEPT</h3>
-          <p class="step-desc">We listen to your vision, understand your brand and define the creative goals. Every production starts with a story.</p>
+          <div class="step-content">
+            <h3 class="step-title disp">BRIEF & CONCEPT</h3>
+            <p class="step-desc">We listen to your vision, understand your brand and define the creative goals. Every production starts with a story.</p>
+          </div>
         </div>
         <div class="process-step reveal reveal-delay-1">
           <div class="step-number disp">02</div>
-          <h3 class="step-title disp">PRE-PRODUCTION</h3>
-          <p class="step-desc">We plan every detail: locations, casting, technical team, storyboard and logistics. Nothing is left to chance.</p>
+          <div class="step-content">
+            <h3 class="step-title disp">PRE-PRODUCTION</h3>
+            <p class="step-desc">We plan every detail: locations, casting, technical team, storyboard and logistics. Nothing is left to chance.</p>
+          </div>
         </div>
         <div class="process-step reveal reveal-delay-2">
           <div class="step-number disp">03</div>
-          <h3 class="step-title disp">PRODUCTION</h3>
-          <p class="step-desc">We capture images with state-of-the-art cinematic equipment. Art direction, lighting and first-class camera operation.</p>
+          <div class="step-content">
+            <h3 class="step-title disp">PRODUCTION</h3>
+            <p class="step-desc">We capture images with state-of-the-art cinematic equipment. Art direction, lighting and first-class camera operation.</p>
+          </div>
         </div>
         <div class="process-step reveal reveal-delay-3">
           <div class="step-number disp">04</div>
-          <h3 class="step-title disp">POST & DELIVERY</h3>
-          <p class="step-desc">Editing, color grading, visual effects and audio mixing. We deliver in all formats you need, ready for broadcast.</p>
+          <div class="step-content">
+            <h3 class="step-title disp">POST & DELIVERY</h3>
+            <p class="step-desc">Editing, color grading, visual effects and audio mixing. We deliver in all formats you need, ready for broadcast.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -1067,8 +1199,9 @@
         <div class="section-label" style="margin-bottom:14px">What they say</div>
         <h2 class="disp" style="font-size:clamp(40px,5vw,62px);letter-spacing:0.04em">TESTIMONIALS</h2>
       </div>
-      <div class="test-grid" id="testimonialsGrid">
+      <div class="test-grid test-collapsed" id="testimonialsGrid">
       </div>
+      <button class="view-more-btn" id="testViewMore" onclick="toggleTestimonials(this)" style="display:none">View More</button>
     </div>
   </section>
 
@@ -1168,27 +1301,26 @@
           <div class="footer-tagline">Miami Audiovisual Production</div>
           <p class="footer-about">Professional audiovisual production for film, television and commercials. Over 15 years creating images that connect brands with the world.</p>
           <div class="footer-socials">
-            <a href="https://www.instagram.com/botboxp/" target="_blank" class="social-btn">IG</a>
-            <a href="https://www.facebook.com/botboxp/" target="_blank" class="social-btn">FB</a>
-            <a href="#" class="social-btn">YT</a>
-            <a href="#" class="social-btn">LN</a>
+            <a href="https://www.instagram.com/botboxp/" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2m-.25 2A3.5 3.5 0 0 0 4 7.5v9A3.5 3.5 0 0 0 7.5 20h9a3.5 3.5 0 0 0 3.5-3.5v-9A3.5 3.5 0 0 0 16.5 4h-9m10.16 1.13a1.12 1.12 0 1 1 0 2.25 1.12 1.12 0 0 1 0-2.25M12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10m0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6"/></svg></a>
+            <a href="https://www.facebook.com/botboxp/?checkpoint_src=any" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95"/></svg></a>
+            <a href="https://youtube.com/@botboxproduction5632?si=a-tymoCWaScnibaw" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M21.58 7.19a2.51 2.51 0 0 0-1.77-1.77C18.25 5 12 5 12 5s-6.25 0-7.81.42A2.51 2.51 0 0 0 2.42 7.19 26.4 26.4 0 0 0 2 12a26.4 26.4 0 0 0 .42 4.81 2.51 2.51 0 0 0 1.77 1.77C5.75 19 12 19 12 19s6.25 0 7.81-.42a2.51 2.51 0 0 0 1.77-1.77A26.4 26.4 0 0 0 22 12a26.4 26.4 0 0 0-.42-4.81M10 15V9l5.2 3L10 15"/></svg></a>
+            <a href="https://www.linkedin.com/company/botbox-productions/" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77"/></svg></a>
           </div>
         </div>
         <div>
           <div class="footer-col-title">Services</div>
           <ul class="footer-links">
-            <li><a href="#">Video Commercials</a></li>
-            <li><a href="#">Music Videos</a></li>
-            <li><a href="#">Documentaries</a></li>
-            <li><a href="#">Corporate Events</a></li>
-            <li><a href="#">Professional Photography</a></li>
-            <li><a href="#">Sizzle Reels</a></li>
+            <li><a href="#services">Video Commercials</a></li>
+            <li><a href="#services">Music Videos</a></li>
+            <li><a href="#services">Corporate Events</a></li>
+            <li><a href="#services">Photography</a></li>
+            <li><a href="#services">Events</a></li>
           </ul>
         </div>
         <div>
           <div class="footer-col-title">Navigation</div>
           <ul class="footer-links">
-            <li><a href="#">Home</a></li>
+            <li><a href="#hero">Home</a></li>
             <li><a href="#videos">Video Portfolio</a></li>
             <li><a href="#photos">Photography</a></li>
             <li><a href="#clients-wall">Clients</a></li>
@@ -1217,7 +1349,7 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <div class="footer-copy">© 2025 Botbox Production. All rights reserved.</div>
+        <div class="footer-copy">© 2026 Botbox Production. All rights reserved.</div>
         <div class="footer-location">Miami, Florida · United States</div>
       </div>
     </div>
@@ -1232,7 +1364,6 @@
           <svg width="26" height="30" viewBox="0 0 26 30" fill="none"><path d="M1 1.5l24 13L1 28V1.5z" fill="white"/></svg>
         </div>
         <p>Botbox Production Showreel</p>
-        <p style="font-size:11px;color:#555;margin-top:4px">Replace with Vimeo / YouTube embed</p>
       </div>
     </div>
   </div>
@@ -1303,6 +1434,17 @@
     }, { threshold: 0.5 });
     document.querySelectorAll('.count').forEach(el => countObs.observe(el));
 
+    /* ── Process step scroll highlight (mobile) ── */
+    if(window.innerWidth <= 768) {
+      const stepObs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          const num = e.target.querySelector('.step-number');
+          if(num) num.classList.toggle('step-active', e.isIntersecting);
+        });
+      }, { threshold: 0.5, rootMargin: '-30% 0px -30% 0px' });
+      document.querySelectorAll('.process-step').forEach(el => stepObs.observe(el));
+    }
+
     /* ── Video Modal ── */
     function openVideo(videoId) {
       const modal = document.getElementById('videoModal');
@@ -1315,11 +1457,11 @@
     }
     function closeModal() {
       document.getElementById('videoModal').classList.remove('open');
-      document.getElementById('modalContent').innerHTML = `<div class="modal-play-big"><svg width="26" height="30" viewBox="0 0 26 30" fill="none"><path d="M1 1.5l24 13L1 28V1.5z" fill="white"/></svg></div><p>Loading...</p>`;
+      document.getElementById('modalContent').innerHTML = `<div class="modal-play-big"><svg width="26" height="30" viewBox="0 0 26 30" fill="none"><path d="M1 1.5l24 13L1 28V1.5z" fill="white"/></svg></div><p>Botbox Production Showreel</p>`;
       document.body.style.overflow = '';
     }
     document.getElementById('videoModal').addEventListener('click', e => { if(e.target===e.currentTarget) closeModal(); });
-    document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); });
+    document.addEventListener('keydown', e => { if(e.key==='Escape' && document.getElementById('videoModal').classList.contains('open')) closeModal(); });
 
     /* Showreel button */
     document.getElementById('openReel').addEventListener('click', e => { e.preventDefault(); openVideo('lfIq4rXrXF4'); });
@@ -1333,7 +1475,7 @@
       const panel = card.closest('.photo-grid-panel');
       lbPhotos = [...panel.querySelectorAll('.photo-card .photo-img')].map(el => {
         const bg = el.style.backgroundImage;
-        return bg.slice(5, -2);
+        return bg.replace(/^url\(["']?/, '').replace(/["']?\)$/, '');
       });
       lbIndex = lbPhotos.indexOf(img);
       document.getElementById('lightboxImg').src = img;
@@ -1369,23 +1511,31 @@
       const vmBtn = document.getElementById('photosViewMore');
       if(vmBtn) {
         const count = document.getElementById('grid-'+gridId).querySelectorAll('.photo-card').length;
+        const photoLim = window.innerWidth <= 768 ? 6 : 8;
         vmBtn.textContent = 'View More';
-        vmBtn.style.display = count > 8 ? '' : 'none';
+        vmBtn.style.display = count > photoLim ? '' : 'none';
       }
     }
 
     /* ── View More Toggle ── */
+    function vidLimit() { return window.innerWidth <= 768 ? 4 : 6; }
     function toggleGrid(btn, gridId) {
       const grid = document.getElementById(gridId);
       const overflows = grid.querySelectorAll('.v-overflow');
+      const lim = vidLimit();
       if(overflows.length > 0) {
         overflows.forEach(c => c.classList.remove('v-overflow'));
         btn.textContent = 'View Less';
       } else {
         const visible = [...grid.querySelectorAll('.video-card:not(.v-hidden)')];
-        visible.forEach((c, i) => { if(i >= 6) c.classList.add('v-overflow'); });
+        visible.forEach((c, i) => { if(i >= lim) c.classList.add('v-overflow'); });
         btn.textContent = 'View More';
       }
+    }
+    function toggleTestimonials(btn) {
+      const grid = document.getElementById('testimonialsGrid');
+      const collapsed = grid.classList.toggle('test-collapsed');
+      btn.textContent = collapsed ? 'View More' : 'View Less';
     }
     function togglePhotosGrid(btn) {
       const panel = document.getElementById('grid-' + activePhotoGrid);
@@ -1410,8 +1560,9 @@
         });
       }
       const visible = [...cards].filter(c => !c.classList.contains('v-hidden'));
-      if(visible.length > 6) {
-        visible.forEach((c, i) => { if(i >= 6) c.classList.add('v-overflow'); });
+      const lim = vidLimit();
+      if(visible.length > lim) {
+        visible.forEach((c, i) => { if(i >= lim) c.classList.add('v-overflow'); });
         if(vmBtn) { vmBtn.style.display = ''; vmBtn.textContent = 'View More'; }
         grid._overflowActive = true;
       } else {
@@ -1427,18 +1578,67 @@
     }
     let currentStep = 1;
     function nextFormStep() {
-      if(currentStep < 3) {
-        currentStep++;
+      const form = document.querySelector('.quote-form');
+      const inputs = form.querySelectorAll('.form-input');
+      const nameVal = inputs[0].value.trim();
+      const emailVal = inputs[1].value.trim();
+      const companyVal = inputs[2].value.trim();
+      const msgVal = inputs[3].value.trim();
+
+      if(currentStep === 1) {
+        // Validate step 1: project type selected (always is) + name & email
+        if(!nameVal || !emailVal) {
+          if(!nameVal) inputs[0].style.borderColor = 'var(--accent-a)';
+          if(!emailVal) inputs[1].style.borderColor = 'var(--accent-a)';
+          return;
+        }
+        inputs[0].style.borderColor = '';
+        inputs[1].style.borderColor = '';
+        currentStep = 2;
         const segs = document.querySelectorAll('.form-step-seg');
         segs.forEach((s,i) => s.classList.toggle('active', i < currentStep));
-        const labels = ['', 'Project Type', 'Details', 'Final Message'];
-        document.getElementById('formStepLabel').textContent = `Step ${currentStep} of 3 · ${labels[currentStep]}`;
-        if(currentStep === 3) document.getElementById('formBtnLabel').textContent = 'Send Project';
+        document.getElementById('formStepLabel').textContent = 'Step 2 of 3 \u00b7 Details';
+      } else if(currentStep === 2) {
+        currentStep = 3;
+        const segs = document.querySelectorAll('.form-step-seg');
+        segs.forEach((s,i) => s.classList.toggle('active', i < currentStep));
+        document.getElementById('formStepLabel').textContent = 'Step 3 of 3 \u00b7 Send';
+        document.getElementById('formBtnLabel').textContent = 'Send Project';
+      } else {
+        // Step 3: send via mailto
+        const projectType = document.querySelector('.project-type-btn.selected')?.textContent.trim() || 'Not specified';
+        const subject = encodeURIComponent('New Project Inquiry - ' + projectType);
+        const body = encodeURIComponent(
+          'Name: ' + nameVal + '\n' +
+          'Email: ' + emailVal + '\n' +
+          'Company: ' + (companyVal || 'N/A') + '\n' +
+          'Project Type: ' + projectType + '\n\n' +
+          'Message:\n' + (msgVal || 'No message provided.')
+        );
+        window.location.href = 'mailto:info@botboxp.com?subject=' + subject + '&body=' + body;
+        // Show confirmation
+        document.getElementById('formBtnLabel').textContent = 'Sent!';
+        setTimeout(() => {
+          currentStep = 1;
+          form.reset();
+          document.querySelectorAll('.form-step-seg').forEach((s,i) => s.classList.toggle('active', i < 1));
+          document.getElementById('formStepLabel').textContent = 'Step 1 of 3 \u00b7 Project Type';
+          document.getElementById('formBtnLabel').textContent = 'Next Step';
+          document.querySelectorAll('.project-type-btn').forEach((b,i) => b.classList.toggle('selected', i===0));
+        }, 2000);
       }
     }
 
     /* ── Mobile menu ── */
-    function toggleMenu() { alert('Mobile navigation — full implementation on build.'); }
+    function toggleMenu() {
+      const menu = document.getElementById('mobileMenu');
+      const overlay = document.getElementById('mobileOverlay');
+      const hamburger = document.querySelector('.hamburger');
+      const isOpen = menu.classList.toggle('open');
+      overlay.classList.toggle('open', isOpen);
+      hamburger.classList.toggle('active', isOpen);
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    }
 
     /* ── Smooth scroll ── */
     document.querySelectorAll('a[href^="#"]').forEach(a => {
@@ -1452,15 +1652,21 @@
 
     /* ── Content Loader from JSON ── */
     async function loadContent() {
-      const [videos, photos, about, services, clients, testimonials, contact] = await Promise.all([
-        fetch('content/videos.json').then(r => r.json()),
-        fetch('content/photos.json').then(r => r.json()),
-        fetch('content/about.json').then(r => r.json()),
-        fetch('content/services.json').then(r => r.json()),
-        fetch('content/clients.json').then(r => r.json()),
-        fetch('content/testimonials.json').then(r => r.json()),
-        fetch('content/contact.json').then(r => r.json())
-      ]);
+      let videos, photos, about, services, clients, testimonials, contact;
+      try {
+        [videos, photos, about, services, clients, testimonials, contact] = await Promise.all([
+          fetch('content/videos.json').then(r => r.json()),
+          fetch('content/photos.json').then(r => r.json()),
+          fetch('content/about.json').then(r => r.json()),
+          fetch('content/services.json').then(r => r.json()),
+          fetch('content/clients.json').then(r => r.json()),
+          fetch('content/testimonials.json').then(r => r.json()),
+          fetch('content/contact.json').then(r => r.json())
+        ]);
+      } catch(err) {
+        console.error('Failed to load content:', err);
+        return;
+      }
 
       // --- About ---
       document.getElementById('about-p1').textContent = about.description_1;
@@ -1501,7 +1707,8 @@
       `).join('');
       // Apply initial collapse
       const vidCards = vidGrid.querySelectorAll('.video-card');
-      vidCards.forEach((c, i) => { if(i >= 6) c.classList.add('v-overflow'); });
+      const vLim = vidLimit();
+      vidCards.forEach((c, i) => { if(i >= vLim) c.classList.add('v-overflow'); });
       // Re-bind click handlers
       vidGrid.querySelectorAll('.video-card[data-videoid]').forEach(card => {
         card.addEventListener('click', () => openVideo(card.dataset.videoid));
@@ -1569,6 +1776,11 @@
           </div>
         </div>
       `).join('');
+      // Show testimonials "View More" on mobile if >2
+      const testVm = document.getElementById('testViewMore');
+      if(testVm && window.innerWidth <= 768 && testimonials.items.length > 2) {
+        testVm.style.display = '';
+      }
 
       // --- Contact ---
       const ctaEmail = document.getElementById('ctaEmail');
