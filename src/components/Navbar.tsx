@@ -52,12 +52,13 @@ export default function Navbar() {
   const handleNavClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>) => {
     const href = e.currentTarget.getAttribute('href')
     if (href?.startsWith('#')) {
+      e.preventDefault()
       if (isHome) {
-        e.preventDefault()
         const el = document.querySelector(href)
         if (el) el.scrollIntoView({ behavior: 'smooth' })
+      } else {
+        window.location.assign('/' + href)
       }
-      // When not home, let the browser handle /#hash natively (don't preventDefault)
       setIsOpen(false)
     }
   }, [isHome])
@@ -83,7 +84,7 @@ export default function Navbar() {
           <ul className="nav-links">
             {NAV_LINKS.map(link => (
               <li key={link.key}>
-                <a href={isHome ? link.href : '/' + link.href} onClick={handleNavClick}>{t(link.key)}</a>
+                <a href={link.href} onClick={handleNavClick}>{t(link.key)}</a>
               </li>
             ))}
           </ul>
@@ -102,7 +103,7 @@ export default function Navbar() {
               <span className={lang === 'es' ? 'lang-active' : 'lang-inactive'}>ES</span>
             </button>
 
-            <a href={isHome ? '#cta' : '/#cta'} className="btn" onClick={isHome ? handleNavClick : undefined}>
+            <a href="#cta" className="btn" onClick={handleNavClick}>
               <span>{t('nav.quote')}</span>
               <ArrowIcon />
             </a>
@@ -127,7 +128,7 @@ export default function Navbar() {
       {/* Mobile menu */}
       <div className={`mobile-menu${isOpen ? ' open' : ''}`}>
         {NAV_LINKS.map(link => (
-          <a key={link.key} href={isHome ? link.href : '/' + link.href} onClick={handleNavClick}>
+          <a key={link.key} href={link.href} onClick={handleNavClick}>
             {t(link.key)}
           </a>
         ))}
@@ -143,9 +144,9 @@ export default function Navbar() {
         </button>
 
         <a
-          href={isHome ? '#cta' : '/#cta'}
+          href="#cta"
           className="btn mobile-menu-cta"
-          onClick={isHome ? handleNavClick : undefined}
+          onClick={handleNavClick}
           style={{ marginTop: 16, textAlign: 'center', textDecoration: 'none' }}
         >
           <span>{t('nav.quote')}</span>
