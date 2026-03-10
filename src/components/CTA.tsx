@@ -54,7 +54,9 @@ export default function CTA() {
   const [email, setEmail] = useState('')
   const [company, setCompany] = useState('')
   const [message, setMessage] = useState('')
+  const [sending, setSending] = useState(false)
   const [sent, setSent] = useState(false)
+  const [error, setError] = useState(false)
 
   useEffect(() => {
     fetch('/content/contact.json')
@@ -63,35 +65,63 @@ export default function CTA() {
       .catch(console.error)
   }, [])
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (currentStep === 1) {
       setCurrentStep(2)
-    } else if (currentStep === 2) {
+      return
+    }
+    if (currentStep === 2) {
       if (!name || !email) return
       setCurrentStep(3)
-    } else {
-      const projectType = t(PROJECT_TYPES[selectedIdx].key)
-      const subject = encodeURIComponent('New Project Inquiry - ' + projectType)
-      const body = encodeURIComponent(
-        'Name: ' + name + '\n' +
-        'Email: ' + email + '\n' +
-        'Company: ' + (company || 'N/A') + '\n' +
-        'Project Type: ' + projectType + '\n\n' +
-        'Message:\n' + (message || 'No message provided.')
-      )
-      window.location.href = 'mailto:info@botboxp.com?subject=' + subject + '&body=' + body
-      setSent(true)
-      setTimeout(() => {
-        setCurrentStep(1)
-        setName(''); setEmail(''); setCompany(''); setMessage('')
-        setSelectedIdx(0)
-        setSent(false)
-      }, 2000)
+      return
+    }
+
+    setSending(true)
+    setError(false)
+
+    const projectType = t(PROJECT_TYPES[selectedIdx].key)
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name,
+          email,
+          company: company || 'N/A',
+          projectType,
+          message: message || 'No message provided.',
+        }),
+      })
+
+      if (res.ok) {
+        setSent(true)
+        setTimeout(() => {
+          setCurrentStep(1)
+          setName(''); setEmail(''); setCompany(''); setMessage('')
+          setSelectedIdx(0)
+          setSent(false)
+        }, 3000)
+      } else {
+        setError(true)
+      }
+    } catch {
+      setError(true)
+    } finally {
+      setSending(false)
     }
   }
 
   const stepLabel = currentStep === 1 ? t('form.step1') : currentStep === 2 ? t('form.step2') : t('form.step3')
-  const btnLabel = sent ? t('form.sent') : currentStep < 3 ? t('form.next') : t('form.send')
+  const btnLabel = sent
+    ? t('form.sent')
+    : sending
+      ? '...'
+      : error
+        ? t('form.error')
+        : currentStep < 3
+          ? t('form.next')
+          : t('form.send')
 
   return (
     <section id="cta">
