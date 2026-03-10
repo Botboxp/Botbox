@@ -148,7 +148,9 @@ export default function PortfolioPage() {
             </Link>
 
             {/* Header */}
-            <h2 className="videos-title disp" style={{ marginTop: 12, marginBottom: 0 }}>{t('portfolio.title')}</h2>
+            <h2 className="videos-title disp" style={{ marginTop: 12, marginBottom: 0, textAlign: 'center' }}>
+              {section === 'video' ? t('videos.title') : t('photos.title')}
+            </h2>
           </div>
 
           {/* Sticky category tabs — full width, centered */}
