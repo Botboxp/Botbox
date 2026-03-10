@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState, useCallback } from 'react'
+import Link from 'next/link'
 import { useI18n } from '@/i18n/context'
 import Navbar from '@/components/Navbar'
 import VideoModal from '@/components/VideoModal'
@@ -82,6 +83,16 @@ export default function PortfolioPage() {
     if (window.location.hash === '#photos') setSection('photo')
   }, [])
 
+  /* Listen for nav section toggle */
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const detail = (e as CustomEvent<Section>).detail
+      setSection(detail)
+    }
+    window.addEventListener('portfolioSection', handler)
+    return () => window.removeEventListener('portfolioSection', handler)
+  }, [])
+
   /* Show/hide back-to-top button */
   useEffect(() => {
     const handleScroll = () => setShowTop(window.scrollY > 400)
@@ -118,33 +129,24 @@ export default function PortfolioPage() {
       <main style={{ paddingTop: 'var(--nav-h)' }}>
         <section id="portfolio">
           <div className="container">
+            {/* Back button */}
+            <Link href="/" className="portfolio-back reveal">
+              <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+                <path d="M11.5 6.5h-10M6.5 1.5l-5 5 5 5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              <span>{t('portfolio.back')}</span>
+            </Link>
+
             {/* Header */}
-            <div className="videos-header reveal">
+            <div className="videos-header reveal" style={{ marginTop: 8 }}>
               <div>
                 <div className="section-label" style={{ marginBottom: 14 }}>{t('portfolio.label')}</div>
                 <h2 className="videos-title disp">{t('portfolio.title')}</h2>
               </div>
             </div>
 
-            {/* Sticky bar: section toggle + category tabs */}
+            {/* Sticky category tabs */}
             <div className="portfolio-sticky-bar">
-              {/* Section toggle */}
-              <div className="photo-tabs">
-                <button
-                  className={`photo-tab${section === 'video' ? ' active' : ''}`}
-                  onClick={() => setSection('video')}
-                >
-                  {t('portfolio.video')}
-                </button>
-                <button
-                  className={`photo-tab${section === 'photo' ? ' active' : ''}`}
-                  onClick={() => setSection('photo')}
-                >
-                  {t('portfolio.photo')}
-                </button>
-              </div>
-
-              {/* Category tabs */}
               <div className="photo-tabs">
                 {section === 'video'
                   ? VIDEO_TABS.map(tab => (

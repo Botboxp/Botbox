@@ -30,6 +30,7 @@ export default function Navbar() {
   const { lang, t, toggleLang } = useI18n()
   const pathname = usePathname()
   const isHome = pathname === '/'
+  const isPortfolio = pathname === '/portfolio'
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [logoError, setLogoError] = useState(false)
@@ -53,21 +54,26 @@ export default function Navbar() {
     const href = e.currentTarget.getAttribute('href')
     if (href?.startsWith('#')) {
       e.preventDefault()
-      if (isHome) {
-        const el = document.querySelector(href)
-        if (el) el.scrollIntoView({ behavior: 'smooth' })
-      } else {
-        window.location.assign('/' + href)
-      }
+      const el = document.querySelector(href)
+      if (el) el.scrollIntoView({ behavior: 'smooth' })
       setIsOpen(false)
     }
-  }, [isHome])
+  }, [])
+
+  /* Portfolio nav: dispatch event to toggle section */
+  const handlePortfolioNav = useCallback((section: 'video' | 'photo') => {
+    window.dispatchEvent(new CustomEvent('portfolioSection', { detail: section }))
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+    setIsOpen(false)
+  }, [])
+
+  const logoLink = isHome ? '#hero' : '/'
 
   return (
     <>
       <nav id="navbar" className={scrolled ? 'scrolled' : ''}>
         <div className="nav-inner">
-          <a href={isHome ? '#hero' : '/'} className="nav-logo" onClick={isHome ? handleNavClick : undefined}>
+          <a href={logoLink} className="nav-logo" onClick={isHome ? handleNavClick : undefined}>
             {!logoError ? (
               <img
                 src="/assets/img/logos/botbox-logo.png"
@@ -81,29 +87,50 @@ export default function Navbar() {
             )}
           </a>
 
-          <ul className="nav-links">
-            {NAV_LINKS.map(link => (
-              <li key={link.key}>
-                <a href={link.href} onClick={handleNavClick}>{t(link.key)}</a>
+          {/* Landing nav links */}
+          {!isPortfolio && (
+            <ul className="nav-links">
+              {NAV_LINKS.map(link => (
+                <li key={link.key}>
+                  <a href={link.href} onClick={handleNavClick}>{t(link.key)}</a>
+                </li>
+              ))}
+            </ul>
+          )}
+
+          {/* Portfolio nav links */}
+          {isPortfolio && (
+            <ul className="nav-links">
+              <li>
+                <a href="#" onClick={(e) => { e.preventDefault(); handlePortfolioNav('video') }}>
+                  {t('portfolio.video')}
+                </a>
               </li>
-            ))}
-          </ul>
+              <li>
+                <a href="#" onClick={(e) => { e.preventDefault(); handlePortfolioNav('photo') }}>
+                  {t('portfolio.photo')}
+                </a>
+              </li>
+            </ul>
+          )}
 
           <div className="nav-cta">
-            <div className="nav-socials">
-              {SOCIALS.map(s => (
-                <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" className="social-btn" aria-label={s.label}>
-                  {s.icon}
-                </a>
-              ))}
-            </div>
+            {!isPortfolio && (
+              <div className="nav-socials">
+                {SOCIALS.map(s => (
+                  <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" className="social-btn" aria-label={s.label}>
+                    {s.icon}
+                  </a>
+                ))}
+              </div>
+            )}
 
             <button className="lang-toggle" onClick={toggleLang} aria-label="Change language">
               <span className={lang === 'en' ? 'lang-active' : 'lang-inactive'}>EN</span>
               <span className={lang === 'es' ? 'lang-active' : 'lang-inactive'}>ES</span>
             </button>
 
-            <a href="#cta" className="btn" onClick={handleNavClick}>
+            <a href={isPortfolio ? '/#cta' : '#cta'} className="btn" onClick={isHome ? handleNavClick : undefined}>
               <span>{t('nav.quote')}</span>
               <ArrowIcon />
             </a>
@@ -127,11 +154,22 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       <div className={`mobile-menu${isOpen ? ' open' : ''}`}>
-        {NAV_LINKS.map(link => (
+        {!isPortfolio && NAV_LINKS.map(link => (
           <a key={link.key} href={link.href} onClick={handleNavClick}>
             {t(link.key)}
           </a>
         ))}
+
+        {isPortfolio && (
+          <>
+            <a href="#" onClick={(e) => { e.preventDefault(); handlePortfolioNav('video') }}>
+              {t('portfolio.video')}
+            </a>
+            <a href="#" onClick={(e) => { e.preventDefault(); handlePortfolioNav('photo') }}>
+              {t('portfolio.photo')}
+            </a>
+          </>
+        )}
 
         <button
           className="lang-toggle"
@@ -144,21 +182,23 @@ export default function Navbar() {
         </button>
 
         <a
-          href="#cta"
+          href={isPortfolio ? '/#cta' : '#cta'}
           className="btn mobile-menu-cta"
-          onClick={handleNavClick}
+          onClick={isHome ? handleNavClick : undefined}
           style={{ marginTop: 16, textAlign: 'center', textDecoration: 'none' }}
         >
           <span>{t('nav.quote')}</span>
         </a>
 
-        <div className="mobile-menu-socials">
-          {SOCIALS.map(s => (
-            <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" className="social-btn" aria-label={s.label}>
-              {s.icon}
-            </a>
-          ))}
-        </div>
+        {!isPortfolio && (
+          <div className="mobile-menu-socials">
+            {SOCIALS.map(s => (
+              <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" className="social-btn" aria-label={s.label}>
+                {s.icon}
+              </a>
+            ))}
+          </div>
+        )}
       </div>
     </>
   )

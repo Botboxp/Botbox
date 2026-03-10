@@ -508,6 +508,18 @@ nav.scrolled {
 }
 .view-more-btn:hover { border-color: var(--accent-a); color: var(--accent-a); }
 
+/* PORTFOLIO BACK */
+.portfolio-back {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--grey); text-decoration: none;
+  transition: color 0.25s;
+  cursor: none;
+}
+.portfolio-back:hover { color: var(--accent-a); }
+.portfolio-back svg { transition: transform 0.25s; }
+.portfolio-back:hover svg { transform: translateX(-4px); }
+
 /* PORTFOLIO STICKY BAR */
 .portfolio-sticky-bar {
   position: sticky; top: var(--nav-h); z-index: 50;
