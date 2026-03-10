@@ -624,13 +624,12 @@
     ═══════════════════════════════════════════════════════════════ */
     #clients-wall { background: var(--bg); padding: 70px 0; }
     .clients-wall-header { margin-bottom: 56px; }
-    .clients-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 2px; }
+    .clients-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 24px 32px; }
     .client-logo-card {
-      background: var(--surface); padding: 44px 32px;
+      background: transparent; padding: 44px 32px;
       display: flex; align-items: center; justify-content: center;
-      transition: background 0.3s; cursor: default; min-height: 130px;
+      cursor: default; min-height: 130px;
     }
-    .client-logo-card:hover { background: var(--surface2); }
     .client-logo-img {
       max-width: 150px; max-height: 64px;
       width: auto; height: auto;
