@@ -18,12 +18,13 @@ function prefixPath(path: string): string {
 export default function Services() {
   const { t } = useI18n()
   const [services, setServices] = useState<Service[]>([])
+  const [error, setError] = useState(false)
 
   useEffect(() => {
     fetch('/content/services.json')
-      .then(r => r.json())
+      .then(r => { if (!r.ok) throw new Error(); return r.json() })
       .then(data => setServices(data.items))
-      .catch(console.error)
+      .catch(() => setError(true))
   }, [])
 
   return (
@@ -42,9 +43,10 @@ export default function Services() {
           </a>
         </div>
         <div className="services-grid">
-          {services.length === 0 && Array.from({ length: 4 }).map((_, i) => (
+          {!error && services.length === 0 && Array.from({ length: 4 }).map((_, i) => (
             <div key={i} className="skeleton" style={{ aspectRatio: '3/4', minHeight: 300 }} />
           ))}
+          {error && <p className="fetch-error">{t('error.load')}</p>}
           {services.map((s, i) => {
             const idx = i + 1
             const title = t(`svc.${idx}.title`)

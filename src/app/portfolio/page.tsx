@@ -63,21 +63,23 @@ export default function PortfolioPage() {
   /* ── Video state ── */
   const [videos, setVideos] = useState<Video[]>([])
   const [videoTab, setVideoTab] = useState('commercial')
+  const [videoError, setVideoError] = useState(false)
 
   /* ── Photo state ── */
   const [photoData, setPhotoData] = useState<PhotoData | null>(null)
   const [photoTab, setPhotoTab] = useState<PhotoCategory>('portraits')
+  const [photoError, setPhotoError] = useState(false)
 
   useEffect(() => {
     fetch('/content/videos.json')
-      .then(r => r.json())
+      .then(r => { if (!r.ok) throw new Error(); return r.json() })
       .then(data => setVideos(data.items))
-      .catch(console.error)
+      .catch(() => setVideoError(true))
 
     fetch('/content/photos.json')
-      .then(r => r.json())
+      .then(r => { if (!r.ok) throw new Error(); return r.json() })
       .then((d: PhotoData) => setPhotoData(d))
-      .catch(console.error)
+      .catch(() => setPhotoError(true))
   }, [])
 
   /* Handle hash on load */
@@ -184,6 +186,10 @@ export default function PortfolioPage() {
             {/* ── VIDEO ── */}
             {section === 'video' && (
               <div className="videos-grid" id="videosGrid">
+                {!videoError && videos.length === 0 && Array.from({ length: 6 }).map((_, i) => (
+                  <div key={i} className="skeleton skeleton-card" />
+                ))}
+                {videoError && <p className="fetch-error">{t('error.load')}</p>}
                 {filteredVideos.map((video, i) => (
                   <div
                     key={`${video.youtube_id}-${i}`}
@@ -215,6 +221,10 @@ export default function PortfolioPage() {
             {/* ── PHOTO ── */}
             {section === 'photo' && (
               <div className="photos-grid">
+                {!photoError && !photoData && Array.from({ length: 8 }).map((_, i) => (
+                  <div key={i} className="skeleton skeleton-photo" />
+                ))}
+                {photoError && <p className="fetch-error">{t('error.load')}</p>}
                 {photoImages.map((src, i) => (
                   <div
                     key={`${photoTab}-${i}`}

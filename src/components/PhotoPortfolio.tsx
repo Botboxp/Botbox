@@ -34,17 +34,18 @@ export default function PhotoPortfolio() {
   const { t } = useI18n()
   const [data, setData] = useState<PhotoData | null>(null)
   const [activeTab, setActiveTab] = useState<Category>('portraits')
+  const [error, setError] = useState(false)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     fetch('/content/photos.json')
-      .then(r => r.json())
+      .then(r => { if (!r.ok) throw new Error(); return r.json() })
       .then((d: PhotoData) => setData(d))
-      .catch(console.error)
+      .catch(() => setError(true))
+      .finally(() => setLoading(false))
   }, [])
 
-  if (!data) return null
-
-  const images: string[] = data[activeTab].map(p => prefixPath(p.image))
+  const images: string[] = data ? data[activeTab].map(p => prefixPath(p.image)) : []
   const visible = images.slice(0, LIMIT)
 
   function handlePhotoClick(index: number) {
@@ -78,9 +79,10 @@ export default function PhotoPortfolio() {
         </div>
 
         <div className="photos-grid reveal">
-          {!data && Array.from({ length: LIMIT }).map((_, i) => (
+          {loading && Array.from({ length: LIMIT }).map((_, i) => (
             <div key={i} className="skeleton skeleton-photo" />
           ))}
+          {error && <p className="fetch-error">{t('error.load')}</p>}
           {visible.map((src, i) => (
             <div
               key={`${activeTab}-${i}`}

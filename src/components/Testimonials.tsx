@@ -15,12 +15,13 @@ export default function Testimonials() {
   const [items, setItems] = useState<TestimonialItem[]>([])
   const [collapsed, setCollapsed] = useState(true)
   const [isMobile, setIsMobile] = useState(false)
+  const [error, setError] = useState(false)
 
   useEffect(() => {
     fetch('/content/testimonials.json')
-      .then(res => res.json())
+      .then(res => { if (!res.ok) throw new Error(); return res.json() })
       .then((data: { items: TestimonialItem[] }) => setItems(data.items))
-      .catch(() => {})
+      .catch(() => setError(true))
   }, [])
 
   useEffect(() => {
@@ -43,9 +44,10 @@ export default function Testimonials() {
         </div>
 
         <div className={`test-grid${showToggle && collapsed ? ' test-collapsed' : ''}`} id="testimonialsGrid">
-          {items.length === 0 && Array.from({ length: 3 }).map((_, i) => (
+          {!error && items.length === 0 && Array.from({ length: 3 }).map((_, i) => (
             <div key={i} className="skeleton" style={{ height: 200, borderRadius: 2 }} />
           ))}
+          {error && <p className="fetch-error">{t('error.load')}</p>}
           {items.map((item, i) => {
             const idx = i + 1
             return (

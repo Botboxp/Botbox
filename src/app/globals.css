@@ -894,6 +894,21 @@ a:focus-visible, button:focus-visible {
   pointer-events: none;
 }
 
+/* FETCH ERROR */
+.fetch-error {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: var(--grey);
+  font-size: 15px;
+  padding: 40px 20px;
+}
+
+/* LAZY RENDERING — offscreen cards skip paint until near viewport */
+.video-card, .photo-card, .service-card {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 300px;
+}
+
 /* REDUCED MOTION */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

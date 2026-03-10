@@ -26,12 +26,13 @@ export default function VideoPortfolio() {
   const { t } = useI18n()
   const [videos, setVideos] = useState<Video[]>([])
   const [activeCategory, setActiveCategory] = useState('commercial')
+  const [error, setError] = useState(false)
 
   useEffect(() => {
     fetch('/content/videos.json')
-      .then(r => r.json())
+      .then(r => { if (!r.ok) throw new Error(); return r.json() })
       .then(data => setVideos(data.items))
-      .catch(console.error)
+      .catch(() => setError(true))
   }, [])
 
   const filtered = videos.filter(v => v.category === activeCategory)
@@ -66,9 +67,10 @@ export default function VideoPortfolio() {
         </div>
 
         <div className="videos-grid reveal" id="videosGrid">
-          {videos.length === 0 && Array.from({ length: LIMIT }).map((_, i) => (
+          {!error && videos.length === 0 && Array.from({ length: LIMIT }).map((_, i) => (
             <div key={i} className="skeleton skeleton-card" />
           ))}
+          {error && <p className="fetch-error">{t('error.load')}</p>}
           {visible.map((video, i) => (
             <div
               key={`${video.youtube_id}-${i}`}
