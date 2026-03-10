@@ -1,0 +1,39 @@
+{
+  "items": [
+    {
+      "title": "VIDEO ADS",
+      "description": "TV Commercials, Promotional Videos, Product Videos",
+      "number": "01",
+      "label": "COMMERCIALS",
+      "background": "assets/img/services/service-01.jpg"
+    },
+    {
+      "title": "MUSIC VIDEOS",
+      "description": "Music Videos, Short Films, Sizzle Reels",
+      "number": "02",
+      "label": "ENTERTAINMENT",
+      "background": "assets/img/services/service-02.jpg"
+    },
+    {
+      "title": "CORPORATE",
+      "description": "Corporate Events, Profile Videos, Interviews",
+      "number": "03",
+      "label": "CORPORATE",
+      "background": "assets/img/services/service-03.jpg"
+    },
+    {
+      "title": "PHOTOGRAPHY",
+      "description": "Portraits, Athletes & Events, Nature & Editorial",
+      "number": "04",
+      "label": "PHOTOGRAPHY",
+      "background": "assets/img/services/service-04.jpg"
+    },
+    {
+      "title": "EVENTS",
+      "description": "Live Events, Weddings, Festivals",
+      "number": "05",
+      "label": "EVENTS",
+      "background": "assets/img/services/service-05.webp"
+    }
+  ]
+}

@@ -3,4 +3,8 @@ node_modules/
 .DS_Store
 Thumbs.db
 
+# Next.js
+.next/
+out/
+
 .vercel
