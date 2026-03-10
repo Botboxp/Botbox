@@ -17,7 +17,6 @@ const NAV_LINKS = [
 /* Map sections to which nav link should light up.
    process & stats → #process, testimonials & clients-wall → #clients-wall */
 const SECTION_TO_NAV: Record<string, string> = {
-  hero: '#about',
   about: '#about',
   services: '#services',
   videos: '#videos',
@@ -26,7 +25,6 @@ const SECTION_TO_NAV: Record<string, string> = {
   stats: '#process',
   'clients-wall': '#clients-wall',
   testimonials: '#clients-wall',
-  cta: '#clients-wall',
 }
 
 const OBSERVED_SECTIONS = Object.keys(SECTION_TO_NAV)

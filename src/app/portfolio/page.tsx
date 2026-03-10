@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState, useCallback, useRef } from 'react'
+import Link from 'next/link'
 import { useI18n } from '@/i18n/context'
 import Navbar from '@/components/Navbar'
 import VideoModal from '@/components/VideoModal'
@@ -156,8 +157,16 @@ export default function PortfolioPage() {
       <main style={{ paddingTop: 'var(--nav-h)' }}>
         <section id="portfolio" style={{ paddingTop: 20 }}>
           <div className="container">
+            {/* Back button — desktop only */}
+            <Link href="/" className="portfolio-back portfolio-back-desktop">
+              <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+                <path d="M11.5 6.5h-10M6.5 1.5l-5 5 5 5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              <span>{t('portfolio.back')}</span>
+            </Link>
+
             {/* Header */}
-            <h2 className="videos-title disp" style={{ marginBottom: 0, textAlign: 'center' }}>
+            <h2 className="videos-title disp" style={{ marginTop: 12, marginBottom: 0, textAlign: 'center' }}>
               {section === 'video' ? t('videos.title') : t('photos.title')}
             </h2>
           </div>

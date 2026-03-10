@@ -542,14 +542,16 @@ nav.scrolled {
 .portfolio-sticky-bar {
   position: sticky; top: var(--nav-h); z-index: 50;
   background: rgba(34,34,34,0.95); backdrop-filter: blur(12px);
-  padding: 10px 0;
+  padding: 10px 0; margin-top: 12px;
   border-bottom: 1px solid var(--border);
-  position: relative;
 }
+.portfolio-sticky-bar > .container { position: relative; }
 .portfolio-tabs { justify-content: center; }
+.portfolio-back-desktop { display: flex; }
 @media (max-width: 768px) {
+  .portfolio-back-desktop { display: none; }
   .portfolio-tabs { justify-content: flex-start; }
-  .portfolio-sticky-bar::after {
+  .portfolio-sticky-bar > .container::after {
     content: ''; position: absolute; top: 0; right: 0; bottom: 0; width: 48px;
     background: linear-gradient(to right, transparent, rgba(34,34,34,0.95));
     pointer-events: none; z-index: 1;
