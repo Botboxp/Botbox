@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
+import { usePathname } from 'next/navigation'
 import { useI18n } from '@/i18n/context'
 
 const NAV_LINKS = [
@@ -27,6 +28,8 @@ const ArrowIcon = () => (
 
 export default function Navbar() {
   const { lang, t, toggleLang } = useI18n()
+  const pathname = usePathname()
+  const isHome = pathname === '/'
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [logoError, setLogoError] = useState(false)
@@ -49,18 +52,23 @@ export default function Navbar() {
   const handleNavClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>) => {
     const href = e.currentTarget.getAttribute('href')
     if (href?.startsWith('#')) {
-      e.preventDefault()
-      const el = document.querySelector(href)
-      if (el) el.scrollIntoView({ behavior: 'smooth' })
+      if (isHome) {
+        e.preventDefault()
+        const el = document.querySelector(href)
+        if (el) el.scrollIntoView({ behavior: 'smooth' })
+      } else {
+        e.preventDefault()
+        window.location.href = '/' + href
+      }
       setIsOpen(false)
     }
-  }, [])
+  }, [isHome])
 
   return (
     <>
       <nav id="navbar" className={scrolled ? 'scrolled' : ''}>
         <div className="nav-inner">
-          <a href="#hero" className="nav-logo" onClick={handleNavClick}>
+          <a href={isHome ? '#hero' : '/'} className="nav-logo" onClick={isHome ? handleNavClick : undefined}>
             {!logoError ? (
               <img
                 src="/assets/img/logos/botbox-logo.png"
@@ -96,7 +104,7 @@ export default function Navbar() {
               <span className={lang === 'es' ? 'lang-active' : 'lang-inactive'}>ES</span>
             </button>
 
-            <a href="#cta" className="btn" onClick={handleNavClick}>
+            <a href={isHome ? '#cta' : '/#cta'} className="btn" onClick={isHome ? handleNavClick : undefined}>
               <span>{t('nav.quote')}</span>
               <ArrowIcon />
             </a>
@@ -137,9 +145,9 @@ export default function Navbar() {
         </button>
 
         <a
-          href="#cta"
+          href={isHome ? '#cta' : '/#cta'}
           className="btn mobile-menu-cta"
-          onClick={handleNavClick}
+          onClick={isHome ? handleNavClick : undefined}
           style={{ marginTop: 16, textAlign: 'center', textDecoration: 'none' }}
         >
           <span>{t('nav.quote')}</span>
