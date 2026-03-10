@@ -848,7 +848,7 @@
       .footer-grid { grid-template-columns: 1fr; gap: 32px; }
       .footer-bottom { flex-direction: column; gap: 10px; text-align: center; }
       footer { padding: 60px 0 32px; }
-      .nav-links, .nav-cta .btn, .nav-socials { display: none; }
+      .nav-links, .nav-cta .btn, .nav-socials, .nav-cta .lang-toggle { display: none; }
       .hamburger { display: flex; }
       .photos-grid { grid-template-columns: repeat(2, 1fr); }
       .videos-grid { grid-template-columns: 1fr; }
@@ -921,7 +921,7 @@
     <a href="#photos" onclick="toggleMenu()" data-i18n="nav.photography">Photography</a>
     <a href="#process" onclick="toggleMenu()" data-i18n="nav.process">Process</a>
     <a href="#clients-wall" onclick="toggleMenu()" data-i18n="nav.clients">Clients</a>
-    <button class="lang-toggle" onclick="toggleLang()" aria-label="Change language" style="margin-top:16px;align-self:flex-start">
+    <button class="lang-toggle" onclick="toggleLang()" aria-label="Change language" style="margin-top:16px;align-self:flex-start;font-size:14px;padding:8px 14px;gap:4px">
       <span class="lang-active">EN</span><span class="lang-inactive">ES</span>
     </button>
     <a href="#cta" class="btn mobile-menu-cta" onclick="toggleMenu()" style="margin-top:16px;text-align:center;text-decoration:none"><span data-i18n="nav.quote">Get a Quote</span></a>
