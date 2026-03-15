@@ -3,6 +3,7 @@ import { I18nProvider } from '@/i18n/context'
 import './globals.css'
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://www.botboxp.com'),
   title: 'Botbox Production — Miami Audiovisual',
   description: 'Botbox Production is an award-winning audiovisual production studio in Miami, FL. Specializing in commercials, music videos, corporate events, photography and more.',
   openGraph: {
