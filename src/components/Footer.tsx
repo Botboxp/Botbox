@@ -72,15 +72,30 @@ export default function Footer() {
             <div className="footer-col-title">{t('footer.contact')}</div>
             <div className="footer-contact-item">
               <div className="footer-contact-label">{t('footer.email')}</div>
-              <div className="footer-contact-value"><a href="mailto:info@botboxp.com">info@botboxp.com</a></div>
+              <div className="footer-contact-value" style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                <a href="mailto:info@botboxp.com">info@botboxp.com</a>
+                <button type="button" className="copy-btn" onClick={() => navigator.clipboard.writeText('info@botboxp.com')} title="Copy email">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                </button>
+              </div>
             </div>
             <div className="footer-contact-item">
               <div className="footer-contact-label">Daniel Lares &middot; Director</div>
-              <div className="footer-contact-value"><a href="tel:+13055464487">305-546-4487</a></div>
+              <div className="footer-contact-value" style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                <a href="https://wa.me/13055464487" target="_blank" rel="noopener noreferrer">+1 (305) 546-4487</a>
+                <button type="button" className="copy-btn" onClick={() => navigator.clipboard.writeText('+13055464487')} title="Copy number">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                </button>
+              </div>
             </div>
             <div className="footer-contact-item">
               <div className="footer-contact-label">Angel Pierini &middot; Photography</div>
-              <div className="footer-contact-value"><a href="tel:+13057769016">305-776-9016</a></div>
+              <div className="footer-contact-value" style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                <a href="https://wa.me/13057769016" target="_blank" rel="noopener noreferrer">+1 (305) 776-9016</a>
+                <button type="button" className="copy-btn" onClick={() => navigator.clipboard.writeText('+13057769016')} title="Copy number">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                </button>
+              </div>
             </div>
             <div className="footer-contact-item">
               <div className="footer-contact-label">{t('footer.location')}</div>

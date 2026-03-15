@@ -14,34 +14,34 @@ interface ContactData {
 const PROJECT_TYPES = [
   {
     key: 'form.type.video',
-    icon: <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="3" width="12" height="8" rx="1" stroke="currentColor" strokeWidth="1.2"/><path d="M10 7L7 5v4l3-2z" fill="currentColor"/></svg>,
+    icon: <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 2h8v2H2zM2 4h10v8H2z" stroke="currentColor" strokeWidth="1.2"/><path d="M4 4v8M8 4v8" stroke="currentColor" strokeWidth="1.2"/></svg>,
   },
   {
     key: 'form.type.music',
-    icon: <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5.5" stroke="currentColor" strokeWidth="1.2"/><path d="M5.5 5l3 2-3 2V5z" fill="currentColor"/></svg>,
+    icon: <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M5.5 12V3.5L11 2.5v8" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/><circle cx="3.5" cy="11.5" r="2" stroke="currentColor" strokeWidth="1.2"/><circle cx="9" cy="10.5" r="2" stroke="currentColor" strokeWidth="1.2"/></svg>,
   },
   {
     key: 'form.type.photo',
-    icon: <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1.5" y="3.5" width="8" height="7" rx="1" stroke="currentColor" strokeWidth="1.2"/><path d="M9.5 5.5l3-1.5v6l-3-1.5v-3z" stroke="currentColor" strokeWidth="1.2"/></svg>,
+    icon: <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="3.5" width="12" height="8.5" rx="1" stroke="currentColor" strokeWidth="1.2"/><circle cx="7" cy="8" r="2.5" stroke="currentColor" strokeWidth="1.2"/><path d="M4.5 3.5L5.5 2h3l1 1.5" stroke="currentColor" strokeWidth="1.2"/></svg>,
   },
   {
     key: 'form.type.doc',
-    icon: <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1.5 10V4l4.5 3 2.5-3 4 1v5l-4-2.5-2.5 2.5-4.5 0z" stroke="currentColor" strokeWidth="1.2"/></svg>,
+    icon: <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1.5" y="2" width="11" height="10" rx="1" stroke="currentColor" strokeWidth="1.2"/><path d="M1.5 5h11" stroke="currentColor" strokeWidth="1.2"/><path d="M5.5 2v3" stroke="currentColor" strokeWidth="1.2"/><circle cx="7" cy="8.5" r="0.8" fill="currentColor"/></svg>,
   },
   {
     key: 'form.type.corp',
-    icon: <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 11V4l2.5 1.5L7 3l2.5 1.5L12 4v7H2z" stroke="currentColor" strokeWidth="1.2"/></svg>,
+    icon: <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 12V3h8v9" stroke="currentColor" strokeWidth="1.2"/><path d="M1 12h12" stroke="currentColor" strokeWidth="1.2"/><rect x="5" y="5" width="1.5" height="1.5" fill="currentColor"/><rect x="7.5" y="5" width="1.5" height="1.5" fill="currentColor"/><rect x="5" y="7.5" width="1.5" height="1.5" fill="currentColor"/><rect x="7.5" y="7.5" width="1.5" height="1.5" fill="currentColor"/></svg>,
   },
   {
     key: 'form.type.other',
-    icon: <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5.5" stroke="currentColor" strokeWidth="1.2"/><path d="M7 4v3l2 1.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/></svg>,
+    icon: <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="3.5" cy="7" r="1.2" fill="currentColor"/><circle cx="7" cy="7" r="1.2" fill="currentColor"/><circle cx="10.5" cy="7" r="1.2" fill="currentColor"/></svg>,
   },
 ]
 
 const ContactIcon = () => (
-  <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
-    <path d="M1.5 1.5h10v10h-10z" stroke="#888" strokeWidth="1.1" />
-    <path d="M1.5 4l5 3.5 5-3.5" stroke="#888" strokeWidth="1.1" />
+  <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" fill="#888"/>
+    <path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.832-1.438A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z" stroke="#888" strokeWidth="1.5" fill="none"/>
   </svg>
 )
 
@@ -139,15 +139,29 @@ export default function CTA() {
               <span>{contact?.email || 'info@botboxp.com'}</span>
             </a>
             <div className="cta-contact">
-              {contact?.contacts.map((c, i) => (
-                <div key={i} className="cta-contact-item">
-                  <div className="cta-contact-icon"><ContactIcon /></div>
-                  <div>
-                    <div className="cta-contact-label">{c.name} &middot; {c.role}</div>
-                    <div className="cta-contact-value">{c.phone}</div>
+              {contact?.contacts.map((c, i) => {
+                const waNumber = c.phone.replace(/\D/g, '')
+                const displayPhone = `+1 (${waNumber.slice(0, 3)}) ${waNumber.slice(3, 6)}-${waNumber.slice(6)}`
+                return (
+                  <div key={i} className="cta-contact-item">
+                    <a href={`https://wa.me/1${waNumber}`} target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none', color: 'inherit' }}>
+                      <div className="cta-contact-icon"><ContactIcon /></div>
+                      <div>
+                        <div className="cta-contact-label">{c.name} &middot; {c.role}</div>
+                        <div className="cta-contact-value">{displayPhone}</div>
+                      </div>
+                    </a>
+                    <button
+                      type="button"
+                      className="copy-btn"
+                      onClick={() => { navigator.clipboard.writeText(`+1${waNumber}`) }}
+                      title="Copy number"
+                    >
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                    </button>
                   </div>
-                </div>
-              ))}
+                )
+              })}
             </div>
           </div>
 
