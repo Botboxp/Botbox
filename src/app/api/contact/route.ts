@@ -15,7 +15,7 @@ export async function POST(req: Request) {
         Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
       },
       body: JSON.stringify({
-        from: 'Botbox Website <onboarding@resend.dev>',
+        from: 'Botbox Website <noreply@botboxp.com>',
         to: 'info@botboxp.com',
         subject: `New Project Inquiry - ${projectType}`,
         reply_to: email,
