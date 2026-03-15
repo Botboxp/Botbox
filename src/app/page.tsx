@@ -30,7 +30,7 @@ export default function Home() {
       <Process />
       <Stats />
       <ClientsWall />
-      <Testimonials />
+      {/* <Testimonials /> */}
       <CTA />
       <Footer />
       <VideoModal />
