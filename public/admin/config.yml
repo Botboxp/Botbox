@@ -5,8 +5,8 @@ backend:
   base_url: https://www.botboxp.com
   auth_endpoint: /api/auth
 
-media_folder: "assets/img/uploads"
-public_folder: "assets/img/uploads"
+media_folder: "public/assets/uploads"
+public_folder: "/assets/uploads"
 
 collections:
   - name: "settings"
@@ -18,8 +18,8 @@ collections:
         label: "Configuración General"
         file: "content/settings.json"
         fields:
-          - { name: "hero_video", label: "Video del Hero (ruta del archivo)", widget: "string", hint: "Ruta al video, ej: /assets/video/Botbox DemoReel.mp4" }
-          - { name: "hero_showreel_id", label: "YouTube Showreel ID", widget: "string", hint: "El ID del video de YouTube para el botón Watch Showreel" }
+          - { name: "hero_video", label: "Video de fondo del Hero", widget: "file", hint: "Sube un video MP4 (máximo 100MB) que se reproducirá de fondo en el hero" }
+          - { name: "hero_showreel_id", label: "YouTube Showreel Link", widget: "string", hint: "Pega el link de YouTube del Demo Reel, ej: https://www.youtube.com/watch?v=lfIq4rXrXF4" }
           - { name: "show_testimonials", label: "Mostrar Testimoniales", widget: "boolean", default: false, hint: "Activar/desactivar la sección de testimoniales en la página" }
 
   - name: "sections"

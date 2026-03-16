@@ -37,9 +37,15 @@ export default function Hero() {
     return () => video.removeEventListener('timeupdate', handleTime)
   }, [settings])
 
+  const extractYouTubeId = (input: string) => {
+    const match = input.match(/(?:v=|youtu\.be\/|\/embed\/)([a-zA-Z0-9_-]{11})/)
+    return match ? match[1] : input
+  }
+
   const openReel = (e: React.MouseEvent) => {
     e.preventDefault()
-    window.dispatchEvent(new CustomEvent('openVideo', { detail: settings?.hero_showreel_id || 'lfIq4rXrXF4' }))
+    const id = extractYouTubeId(settings?.hero_showreel_id || 'lfIq4rXrXF4')
+    window.dispatchEvent(new CustomEvent('openVideo', { detail: id }))
   }
 
   const handleAnchorClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
