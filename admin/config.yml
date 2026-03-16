@@ -18,7 +18,7 @@ collections:
         label: "Configuración General"
         file: "content/settings.json"
         fields:
-          - { name: "hero_video", label: "Video de fondo del Hero", widget: "file", hint: "Sube un video MP4 (máximo 100MB) que se reproducirá de fondo en el hero" }
+          - { name: "hero_video", label: "Video de fondo del Hero", widget: "file", hint: "Formato: MP4 (H.264) | Resolución: 1920x1080 (Full HD) | Duración: 15-30 seg | Peso: menos de 10MB ideal, máximo 20MB | FPS: 24-30 | Audio: sin audio. Tip: usar tomas lentas, comprimir con Handbrake a 2-4 Mbps" }
           - { name: "hero_showreel_id", label: "YouTube Showreel Link", widget: "string", hint: "Pega el link de YouTube del Demo Reel, ej: https://www.youtube.com/watch?v=lfIq4rXrXF4" }
           - { name: "show_testimonials", label: "Mostrar Testimoniales", widget: "boolean", default: false, hint: "Activar/desactivar la sección de testimoniales en la página" }
 
