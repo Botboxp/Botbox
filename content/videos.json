@@ -1,35 +1,47 @@
 {
-  "items": [
-    {"title": "DemoReel \"Imagine\"", "youtube_id": "lfIq4rXrXF4", "category": "commercial"},
-    {"title": "INFINITO Short Film", "youtube_id": "XJTLHcif6UI", "category": "short-film"},
-    {"title": "Dr Brandt #sayiloveyou", "youtube_id": "FlQkNbZRvNE", "category": "commercial"},
-    {"title": "Le Carnaval Jean Paul Gaultier", "youtube_id": "H3ehF4_McRM", "category": "commercial"},
-    {"title": "Peakpals Tours Introduction", "youtube_id": "a3d6TNs8_3A", "category": "commercial"},
-    {"title": "Eighty Seven Park", "youtube_id": "OeSTDudywSY", "category": "real-estate"},
-    {"title": "Famfest '17", "youtube_id": "mdN-IVsV7Vs", "category": "event"},
-    {"title": "Echo Brickell", "youtube_id": "UZBDpiNMI-M", "category": "real-estate"},
-    {"title": "Peakpals Europe Tours", "youtube_id": "RI-wS649ixo", "category": "commercial"},
-    {"title": "Dr Brandt Water Booster", "youtube_id": "YXBJn6fznX8", "category": "commercial"},
-    {"title": "Peakpals La Vuelta Spain", "youtube_id": "X_tL26s1_Yw", "category": "commercial"},
-    {"title": "CASSETTE", "youtube_id": "ofSFhBLBKNU", "category": "music-video"},
-    {"title": "Pro Files Bboy Lego", "youtube_id": "6jY8c4nxI28", "category": "documentary"},
-    {"title": "Dr Brandt Foundation", "youtube_id": "qTAX6kP7qII", "category": "commercial"},
-    {"title": "Ltd Edition Refiner", "youtube_id": "SEAez1V5QGU", "category": "commercial"},
-    {"title": "Beer", "youtube_id": "5wHJSJGuQ6M", "category": "commercial"},
-    {"title": "Peakpals Three Lakes Italy", "youtube_id": "ffCZI0dpYoU", "category": "commercial"},
-    {"title": "AMC FTWD Snapchat", "youtube_id": "DRL-hA7d-fY", "category": "promo"},
-    {"title": "Papas Mix", "youtube_id": "4fG39cDK6Gw", "category": "commercial"},
-    {"title": "Caribbean Packs", "youtube_id": "wNeHHHC8PZw", "category": "commercial"},
-    {"title": "Peakpals Dolomites", "youtube_id": "s5Zfi2rIohg", "category": "commercial"},
-    {"title": "Peakpals Tuscany Italy", "youtube_id": "RwZFiqYeqDs", "category": "commercial"},
-    {"title": "Comic Book Men", "youtube_id": "P-I5AVeDO1g", "category": "promo"},
-    {"title": "Heel Over Wheel Ep1", "youtube_id": "HDHKCCI4lwM", "category": "documentary"},
-    {"title": "Into The Badlands", "youtube_id": "p6duLsN2cB0", "category": "promo"},
-    {"title": "Heel Over Wheel Ep2", "youtube_id": "ghPR3qcwAio", "category": "documentary"},
-    {"title": "Halt and Catch Fire S3", "youtube_id": "oAR20wrbW74", "category": "promo"},
-    {"title": "The Ecoboost Mustang Guy", "youtube_id": "KuzoNh396G8", "category": "commercial"},
-    {"title": "Pepsi iHeart", "youtube_id": "zK5ZXVf_-xY", "category": "event"},
-    {"title": "Wedding Preeti & Armando", "youtube_id": "dsVWaIR4nas", "category": "event"},
-    {"title": "Preeti & Armando Mehndi", "youtube_id": "VweXutciRIU", "category": "event"}
+  "commercial": [
+    {"title": "DemoReel \"Imagine\"", "youtube_id": "lfIq4rXrXF4"},
+    {"title": "Dr Brandt #sayiloveyou", "youtube_id": "FlQkNbZRvNE"},
+    {"title": "Le Carnaval Jean Paul Gaultier", "youtube_id": "H3ehF4_McRM"},
+    {"title": "Peakpals Tours Introduction", "youtube_id": "a3d6TNs8_3A"},
+    {"title": "Peakpals Europe Tours", "youtube_id": "RI-wS649ixo"},
+    {"title": "Dr Brandt Water Booster", "youtube_id": "YXBJn6fznX8"},
+    {"title": "Peakpals La Vuelta Spain", "youtube_id": "X_tL26s1_Yw"},
+    {"title": "Dr Brandt Foundation", "youtube_id": "qTAX6kP7qII"},
+    {"title": "Ltd Edition Refiner", "youtube_id": "SEAez1V5QGU"},
+    {"title": "Beer", "youtube_id": "5wHJSJGuQ6M"},
+    {"title": "Peakpals Three Lakes Italy", "youtube_id": "ffCZI0dpYoU"},
+    {"title": "Papas Mix", "youtube_id": "4fG39cDK6Gw"},
+    {"title": "Caribbean Packs", "youtube_id": "wNeHHHC8PZw"},
+    {"title": "Peakpals Dolomites", "youtube_id": "s5Zfi2rIohg"},
+    {"title": "Peakpals Tuscany Italy", "youtube_id": "RwZFiqYeqDs"},
+    {"title": "The Ecoboost Mustang Guy", "youtube_id": "KuzoNh396G8"}
+  ],
+  "music-video": [
+    {"title": "CASSETTE", "youtube_id": "ofSFhBLBKNU"}
+  ],
+  "documentary": [
+    {"title": "Pro Files Bboy Lego", "youtube_id": "6jY8c4nxI28"},
+    {"title": "Heel Over Wheel Ep1", "youtube_id": "HDHKCCI4lwM"},
+    {"title": "Heel Over Wheel Ep2", "youtube_id": "ghPR3qcwAio"}
+  ],
+  "promo": [
+    {"title": "AMC FTWD Snapchat", "youtube_id": "DRL-hA7d-fY"},
+    {"title": "Comic Book Men", "youtube_id": "P-I5AVeDO1g"},
+    {"title": "Into The Badlands", "youtube_id": "p6duLsN2cB0"},
+    {"title": "Halt and Catch Fire S3", "youtube_id": "oAR20wrbW74"}
+  ],
+  "real-estate": [
+    {"title": "Eighty Seven Park", "youtube_id": "OeSTDudywSY"},
+    {"title": "Echo Brickell", "youtube_id": "UZBDpiNMI-M"}
+  ],
+  "event": [
+    {"title": "Famfest '17", "youtube_id": "mdN-IVsV7Vs"},
+    {"title": "Pepsi iHeart", "youtube_id": "zK5ZXVf_-xY"},
+    {"title": "Wedding Preeti & Armando", "youtube_id": "dsVWaIR4nas"},
+    {"title": "Preeti & Armando Mehndi", "youtube_id": "VweXutciRIU"}
+  ],
+  "short-film": [
+    {"title": "INFINITO Short Film", "youtube_id": "XJTLHcif6UI"}
   ]
 }

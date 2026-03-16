@@ -15,8 +15,9 @@ import Footer from '@/components/Footer'
 interface Video {
   title: string
   youtube_id: string
-  category: string
 }
+
+type VideoData = Record<string, Video[]>
 
 const VIDEO_TABS = [
   { key: 'commercial', i18n: 'tab.commercial' },
@@ -61,7 +62,7 @@ export default function PortfolioPage() {
   const [showTop, setShowTop] = useState(false)
 
   /* ── Video state ── */
-  const [videos, setVideos] = useState<Video[]>([])
+  const [videoData, setVideoData] = useState<VideoData>({})
   const [videoTab, setVideoTab] = useState('commercial')
   const [videoError, setVideoError] = useState(false)
 
@@ -73,7 +74,7 @@ export default function PortfolioPage() {
   useEffect(() => {
     fetch('/content/videos.json')
       .then(r => { if (!r.ok) throw new Error(); return r.json() })
-      .then(data => setVideos(data.items))
+      .then(data => setVideoData(data))
       .catch(() => setVideoError(true))
 
     fetch('/content/photos.json')
@@ -132,7 +133,7 @@ export default function PortfolioPage() {
     }
   }, [videoTab, photoTab])
 
-  const filteredVideos = videos.filter(v => v.category === videoTab)
+  const filteredVideos = videoData[videoTab] || []
 
   const photoImages: string[] = photoData
     ? photoData[photoTab].map(p => prefixPath(p.image))
@@ -202,7 +203,7 @@ export default function PortfolioPage() {
             {/* ── VIDEO ── */}
             {section === 'video' && (
               <div className="videos-grid" id="videosGrid">
-                {!videoError && videos.length === 0 && Array.from({ length: 6 }).map((_, i) => (
+                {!videoError && Object.keys(videoData).length === 0 && Array.from({ length: 6 }).map((_, i) => (
                   <div key={i} className="skeleton skeleton-card" />
                 ))}
                 {videoError && <p className="fetch-error">{t('error.load')}</p>}
@@ -225,7 +226,7 @@ export default function PortfolioPage() {
                         <path d="M1 1l11 6.5L1 14V1z" fill="white" />
                       </svg>
                     </div>
-                    <div className="video-tag">{video.category}</div>
+                    <div className="video-tag">{videoTab}</div>
                     <div className="video-info">
                       <div className="video-info-title disp">{video.title}</div>
                     </div>

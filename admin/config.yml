@@ -68,26 +68,62 @@ collections:
         label: "Videos por Categoría"
         file: "content/videos.json"
         fields:
-          - name: "items"
-            label: "Videos"
+          - name: "commercial"
+            label: "Commercial"
             widget: "list"
-            summary: "{{fields.title}} — {{fields.category}}"
+            summary: "{{fields.title}}"
             allow_add: true
-            collapsed: true
             fields:
               - { name: "title", label: "Título", widget: "string" }
-              - { name: "youtube_id", label: "YouTube Link o ID", widget: "string", hint: "Pega el link de YouTube completo o solo el ID (lo que va después de v=)" }
-              - name: "category"
-                label: "Categoría"
-                widget: "select"
-                options:
-                  - { label: "Commercial", value: "commercial" }
-                  - { label: "Music Video", value: "music-video" }
-                  - { label: "Documentary", value: "documentary" }
-                  - { label: "Promo", value: "promo" }
-                  - { label: "Real Estate", value: "real-estate" }
-                  - { label: "Event", value: "event" }
-                  - { label: "Short Film", value: "short-film" }
+              - { name: "youtube_id", label: "YouTube Link o ID", widget: "string", hint: "Pega el link de YouTube completo o solo el ID" }
+          - name: "music-video"
+            label: "Music Video"
+            widget: "list"
+            summary: "{{fields.title}}"
+            allow_add: true
+            fields:
+              - { name: "title", label: "Título", widget: "string" }
+              - { name: "youtube_id", label: "YouTube Link o ID", widget: "string", hint: "Pega el link de YouTube completo o solo el ID" }
+          - name: "documentary"
+            label: "Documentary"
+            widget: "list"
+            summary: "{{fields.title}}"
+            allow_add: true
+            fields:
+              - { name: "title", label: "Título", widget: "string" }
+              - { name: "youtube_id", label: "YouTube Link o ID", widget: "string", hint: "Pega el link de YouTube completo o solo el ID" }
+          - name: "promo"
+            label: "Promo"
+            widget: "list"
+            summary: "{{fields.title}}"
+            allow_add: true
+            fields:
+              - { name: "title", label: "Título", widget: "string" }
+              - { name: "youtube_id", label: "YouTube Link o ID", widget: "string", hint: "Pega el link de YouTube completo o solo el ID" }
+          - name: "real-estate"
+            label: "Real Estate"
+            widget: "list"
+            summary: "{{fields.title}}"
+            allow_add: true
+            fields:
+              - { name: "title", label: "Título", widget: "string" }
+              - { name: "youtube_id", label: "YouTube Link o ID", widget: "string", hint: "Pega el link de YouTube completo o solo el ID" }
+          - name: "event"
+            label: "Event"
+            widget: "list"
+            summary: "{{fields.title}}"
+            allow_add: true
+            fields:
+              - { name: "title", label: "Título", widget: "string" }
+              - { name: "youtube_id", label: "YouTube Link o ID", widget: "string", hint: "Pega el link de YouTube completo o solo el ID" }
+          - name: "short-film"
+            label: "Short Film"
+            widget: "list"
+            summary: "{{fields.title}}"
+            allow_add: true
+            fields:
+              - { name: "title", label: "Título", widget: "string" }
+              - { name: "youtube_id", label: "YouTube Link o ID", widget: "string", hint: "Pega el link de YouTube completo o solo el ID" }
 
   - name: "photos"
     label: "Fotografía"

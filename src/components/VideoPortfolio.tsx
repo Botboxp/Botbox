@@ -7,8 +7,9 @@ import { useI18n } from '@/i18n/context'
 interface Video {
   title: string
   youtube_id: string
-  category: string
 }
+
+type VideoData = Record<string, Video[]>
 
 const TABS = [
   { key: 'commercial', i18n: 'tab.commercial' },
@@ -24,7 +25,7 @@ const LIMIT = 6
 
 export default function VideoPortfolio() {
   const { t } = useI18n()
-  const [videos, setVideos] = useState<Video[]>([])
+  const [videoData, setVideoData] = useState<VideoData>({})
   const [activeCategory, setActiveCategory] = useState('commercial')
   const [error, setError] = useState(false)
   const tabsRef = useRef<HTMLDivElement>(null)
@@ -40,11 +41,11 @@ export default function VideoPortfolio() {
   useEffect(() => {
     fetch('/content/videos.json')
       .then(r => { if (!r.ok) throw new Error(); return r.json() })
-      .then(data => setVideos(data.items))
+      .then(data => setVideoData(data))
       .catch(() => setError(true))
   }, [])
 
-  const filtered = videos.filter(v => v.category === activeCategory)
+  const filtered = videoData[activeCategory] || []
   const visible = filtered.slice(0, LIMIT)
 
   function handleVideoClick(youtubeId: string) {
@@ -76,7 +77,7 @@ export default function VideoPortfolio() {
         </div>
 
         <div className="videos-grid reveal" id="videosGrid">
-          {!error && videos.length === 0 && Array.from({ length: LIMIT }).map((_, i) => (
+          {!error && Object.keys(videoData).length === 0 && Array.from({ length: LIMIT }).map((_, i) => (
             <div key={i} className="skeleton skeleton-card" />
           ))}
           {error && <p className="fetch-error">{t('error.load')}</p>}
@@ -99,7 +100,7 @@ export default function VideoPortfolio() {
                   <path d="M1 1l11 6.5L1 14V1z" fill="white" />
                 </svg>
               </div>
-              <div className="video-tag">{video.category}</div>
+              <div className="video-tag">{activeCategory}</div>
               <div className="video-info">
                 <div className="video-info-title disp">{video.title}</div>
               </div>
