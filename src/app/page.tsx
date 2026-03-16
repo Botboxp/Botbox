@@ -1,3 +1,6 @@
+'use client'
+
+import { useEffect, useState } from 'react'
 import Navbar from '@/components/Navbar'
 import Hero from '@/components/Hero'
 import ClientTicker from '@/components/ClientTicker'
@@ -17,6 +20,15 @@ import CustomCursor from '@/components/CustomCursor'
 import ScrollReveal from '@/components/ScrollReveal'
 
 export default function Home() {
+  const [showTestimonials, setShowTestimonials] = useState(false)
+
+  useEffect(() => {
+    fetch('/content/settings.json')
+      .then(r => r.json())
+      .then(data => setShowTestimonials(data.show_testimonials))
+      .catch(() => setShowTestimonials(false))
+  }, [])
+
   return (
     <>
       <CustomCursor />
@@ -30,7 +42,7 @@ export default function Home() {
       <Process />
       <Stats />
       <ClientsWall />
-      {/* <Testimonials /> */}
+      {showTestimonials && <Testimonials />}
       <CTA />
       <Footer />
       <VideoModal />

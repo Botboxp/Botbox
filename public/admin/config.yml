@@ -9,6 +9,19 @@ media_folder: "assets/img/uploads"
 public_folder: "assets/img/uploads"
 
 collections:
+  - name: "settings"
+    label: "Configuración"
+    editor:
+      preview: false
+    files:
+      - name: "settings"
+        label: "Configuración General"
+        file: "content/settings.json"
+        fields:
+          - { name: "hero_video", label: "Video del Hero (ruta del archivo)", widget: "string", hint: "Ruta al video, ej: /assets/video/Botbox DemoReel.mp4" }
+          - { name: "hero_showreel_id", label: "YouTube Showreel ID", widget: "string", hint: "El ID del video de YouTube para el botón Watch Showreel" }
+          - { name: "show_testimonials", label: "Mostrar Testimoniales", widget: "boolean", default: false, hint: "Activar/desactivar la sección de testimoniales en la página" }
+
   - name: "sections"
     label: "Secciones"
     editor:

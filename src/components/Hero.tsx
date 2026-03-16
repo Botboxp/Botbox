@@ -4,10 +4,23 @@ import { useRef, useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useI18n } from '@/i18n/context'
 
+interface Settings {
+  hero_video: string
+  hero_showreel_id: string
+}
+
 export default function Hero() {
   const { t } = useI18n()
   const videoRef = useRef<HTMLVideoElement>(null)
   const [videoFailed, setVideoFailed] = useState(false)
+  const [settings, setSettings] = useState<Settings | null>(null)
+
+  useEffect(() => {
+    fetch('/content/settings.json')
+      .then(r => r.json())
+      .then(data => setSettings(data))
+      .catch(console.error)
+  }, [])
 
   useEffect(() => {
     const video = videoRef.current
@@ -22,11 +35,11 @@ export default function Hero() {
     }
     video.addEventListener('timeupdate', handleTime)
     return () => video.removeEventListener('timeupdate', handleTime)
-  }, [])
+  }, [settings])
 
   const openReel = (e: React.MouseEvent) => {
     e.preventDefault()
-    window.dispatchEvent(new CustomEvent('openVideo', { detail: 'lfIq4rXrXF4' }))
+    window.dispatchEvent(new CustomEvent('openVideo', { detail: settings?.hero_showreel_id || 'lfIq4rXrXF4' }))
   }
 
   const handleAnchorClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -51,7 +64,7 @@ export default function Hero() {
             poster="/assets/img/logos/botbox-logo.png"
             onError={() => setVideoFailed(true)}
           >
-            <source src="/assets/video/Botbox DemoReel.mp4" type="video/mp4" />
+            <source src={settings?.hero_video || '/assets/video/Botbox DemoReel.mp4'} type="video/mp4" />
           </video>
         ) : (
           <div className="hero-video-fallback" style={{ backgroundImage: "url('/assets/img/logos/botbox-logo.png')" }} />
