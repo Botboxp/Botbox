@@ -5,11 +5,11 @@
   "description_2": "We are a team of talented artists with backgrounds in a variety of disciplines from fine art, videography, photography and design.",
   "emmy_text": "We have built entertainment brands for television networks, films and advertising agencies, receiving recognition through various Academy of Television Arts & Sciences awards (Emmy Awards).",
   "gallery": [
-    {"image": "assets/img/about/about-01.webp"},
-    {"image": "assets/img/about/about-02.webp"},
-    {"image": "assets/img/about/about-03.webp"},
-    {"image": "assets/img/about/about-04.webp"},
-    {"image": "assets/img/about/about-05.webp"},
-    {"image": "assets/img/about/about-06.webp"}
+    {"image": "/assets/img/about/about-01.webp"},
+    {"image": "/assets/img/about/about-02.webp"},
+    {"image": "/assets/img/about/about-03.webp"},
+    {"image": "/assets/img/about/about-04.webp"},
+    {"image": "/assets/img/about/about-05.webp"},
+    {"image": "/assets/img/about/about-06.webp"}
   ]
 }

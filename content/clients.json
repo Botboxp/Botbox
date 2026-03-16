@@ -1,16 +1,16 @@
 {
   "items": [
-    {"name": "AMC", "logo": "assets/img/clients/amc.png"},
-    {"name": "Pepsi", "logo": "assets/img/clients/pepsi.png"},
-    {"name": "Discovery Channel", "logo": "assets/img/clients/discovery.png"},
-    {"name": "NBC Universal", "logo": "assets/img/clients/nbc.png"},
-    {"name": "Telemundo", "logo": "assets/img/clients/telemundo.png"},
-    {"name": "MGM", "logo": "assets/img/clients/mgm.png"},
-    {"name": "Estée Lauder", "logo": "assets/img/clients/estee-lauder.png"},
-    {"name": "Univision", "logo": "assets/img/clients/univision.png"},
-    {"name": "Animal Planet", "logo": "assets/img/clients/animal-planet.png"},
-    {"name": "Clinique", "logo": "assets/img/clients/clinique.png"},
-    {"name": "Telefutura", "logo": "assets/img/clients/telefutura.png"},
-    {"name": "Dr. Brandt", "logo": "assets/img/clients/dr-brandt.png"}
+    {"name": "AMC", "logo": "/assets/img/clients/amc.png"},
+    {"name": "Pepsi", "logo": "/assets/img/clients/pepsi.png"},
+    {"name": "Discovery Channel", "logo": "/assets/img/clients/discovery.png"},
+    {"name": "NBC Universal", "logo": "/assets/img/clients/nbc.png"},
+    {"name": "Telemundo", "logo": "/assets/img/clients/telemundo.png"},
+    {"name": "MGM", "logo": "/assets/img/clients/mgm.png"},
+    {"name": "Estée Lauder", "logo": "/assets/img/clients/estee-lauder.png"},
+    {"name": "Univision", "logo": "/assets/img/clients/univision.png"},
+    {"name": "Animal Planet", "logo": "/assets/img/clients/animal-planet.png"},
+    {"name": "Clinique", "logo": "/assets/img/clients/clinique.png"},
+    {"name": "Telefutura", "logo": "/assets/img/clients/telefutura.png"},
+    {"name": "Dr. Brandt", "logo": "/assets/img/clients/dr-brandt.png"}
   ]
 }
