@@ -65,17 +65,18 @@ collections:
       preview: false
     files:
       - name: "videos"
-        label: "Lista de Videos"
+        label: "Videos por Categoría"
         file: "content/videos.json"
         fields:
           - name: "items"
             label: "Videos"
             widget: "list"
-            summary: "{{fields.title}} ({{fields.category}})"
+            summary: "{{fields.title}} — {{fields.category}}"
             allow_add: true
+            collapsed: true
             fields:
               - { name: "title", label: "Título", widget: "string" }
-              - { name: "youtube_id", label: "YouTube ID", widget: "string", hint: "El ID del video de YouTube (lo que va después de v= en la URL)" }
+              - { name: "youtube_id", label: "YouTube Link o ID", widget: "string", hint: "Pega el link de YouTube completo o solo el ID (lo que va después de v=)" }
               - name: "category"
                 label: "Categoría"
                 widget: "select"
