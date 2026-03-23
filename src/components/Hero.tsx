@@ -2,6 +2,7 @@
 
 import { useRef, useEffect, useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useI18n } from '@/i18n/context'
 
 interface Settings {
@@ -87,10 +88,13 @@ export default function Hero() {
         </div>
 
         <h1 className="hero-title">
-          <img
+          <Image
             src="/assets/img/botbox-logo.svg"
             alt="Botbox Production"
             className="hero-logo"
+            width={600}
+            height={120}
+            priority
           />
         </h1>
 

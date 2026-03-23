@@ -1,5 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react'
+import Image from 'next/image'
 import { useI18n } from '@/i18n/context'
 
 interface Client { name: string; logo: string }
@@ -26,7 +27,7 @@ export default function ClientsWall() {
           <div className="clients-grid reveal">
             {clients.map((c, i) => (
               <div key={i} className="client-logo-card">
-                <img className="client-logo-img" src={c.logo} alt={c.name} />
+                <Image className="client-logo-img" src={c.logo} alt={c.name} width={120} height={60} loading="lazy" />
               </div>
             ))}
           </div>

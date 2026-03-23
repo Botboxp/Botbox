@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import Image from 'next/image'
 import { useI18n } from '@/i18n/context'
 
 interface Client {
@@ -34,7 +35,7 @@ export default function ClientTicker() {
             {items.map((c, i) => (
               <span key={i}>
                 <span className="ticker-item">
-                  <img src={prefixPath(c.logo)} alt={c.name} />
+                  <Image src={prefixPath(c.logo)} alt={c.name} width={80} height={40} loading="lazy" />
                 </span>
                 <span className="ticker-dot"></span>
               </span>

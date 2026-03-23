@@ -2,7 +2,11 @@ import { NextResponse } from 'next/server'
 
 export async function POST(req: Request) {
   try {
-    const { name, email, company, projectType, message } = await req.json()
+    const { name, email, company, projectType, message, website } = await req.json()
+
+    if (website) {
+      return NextResponse.json({ success: true })
+    }
 
     if (!name || !email) {
       return NextResponse.json({ error: 'Name and email are required' }, { status: 400 })

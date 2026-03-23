@@ -58,6 +58,7 @@ export default function CTA() {
   const [sent, setSent] = useState(false)
   const [error, setError] = useState(false)
   const [touched, setTouched] = useState(false)
+  const [website, setWebsite] = useState('')
 
   useEffect(() => {
     fetch('/content/contact.json')
@@ -80,6 +81,8 @@ export default function CTA() {
       return
     }
 
+    if (website) return
+
     setSending(true)
     setError(false)
 
@@ -95,6 +98,7 @@ export default function CTA() {
           company: company || 'N/A',
           projectType,
           message: message || 'No message provided.',
+          website,
         }),
       })
 
@@ -190,6 +194,11 @@ export default function CTA() {
                   ))}
                 </div>
               )}
+
+              <div aria-hidden="true" style={{ position: 'absolute', left: '-9999px', opacity: 0, height: 0, overflow: 'hidden' }}>
+                <label htmlFor="website">Website</label>
+                <input id="website" type="text" name="website" value={website} onChange={e => setWebsite(e.target.value)} autoComplete="off" tabIndex={-1} />
+              </div>
 
               {currentStep === 2 && (
                 <>

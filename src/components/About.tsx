@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import Image from 'next/image'
 import { useI18n } from '@/i18n/context'
 
 interface GalleryItem {
@@ -61,11 +62,14 @@ export default function About() {
           </div>
           <div className="about-gallery reveal reveal-delay-2">
             {gallery.map((g, i) => (
-              <img
+              <Image
                 key={i}
                 className="about-gallery-img"
                 src={prefixPath(g.image)}
                 alt="Behind the scenes"
+                width={400}
+                height={300}
+                loading="lazy"
               />
             ))}
           </div>
