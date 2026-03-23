@@ -65,11 +65,11 @@ export default function PortfolioPage() {
   const [showTop, setShowTop] = useState(false)
 
   /* ── Video state ── */
-  const { data: videoData, error: videoError } = useContent<VideoData>('/content/videos.json')
+  const { data: videoData, error: videoError, retry: retryVideos } = useContent<VideoData>('/content/videos.json')
   const [videoTab, setVideoTab] = useState('commercial')
 
   /* ── Photo state ── */
-  const { data: photoData, error: photoError } = useContent<PhotoData>('/content/photos.json')
+  const { data: photoData, error: photoError, retry: retryPhotos } = useContent<PhotoData>('/content/photos.json')
   const [photoTab, setPhotoTab] = useState<PhotoCategory>('portraits')
 
   /* Handle hash on load */
@@ -194,7 +194,7 @@ export default function PortfolioPage() {
                 {!videoError && !videoData && Array.from({ length: 6 }).map((_, i) => (
                   <div key={i} className="skeleton skeleton-card" />
                 ))}
-                {videoError && <p className="fetch-error">{t('error.load')}</p>}
+                {videoError && <div className="fetch-error"><p>{t('error.load')}</p><button className="retry-btn" onClick={retryVideos}>{t('error.retry')}</button></div>}
                 {filteredVideos.map((video, i) => (
                   <div
                     key={`${video.youtube_id}-${i}`}
@@ -233,7 +233,7 @@ export default function PortfolioPage() {
                 {!photoError && !photoData && Array.from({ length: 8 }).map((_, i) => (
                   <div key={i} className="skeleton skeleton-photo" />
                 ))}
-                {photoError && <p className="fetch-error">{t('error.load')}</p>}
+                {photoError && <div className="fetch-error"><p>{t('error.load')}</p><button className="retry-btn" onClick={retryPhotos}>{t('error.retry')}</button></div>}
                 {photoImages.map((src, i) => (
                   <div
                     key={`${photoTab}-${i}`}

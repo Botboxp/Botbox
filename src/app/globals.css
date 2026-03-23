@@ -333,7 +333,7 @@ nav.scrolled {
   height: 36px; width: auto; max-width: 130px;
   object-fit: contain;
   filter: brightness(0) invert(1);
-  opacity: 0.4;
+  opacity: 0.55;
   transition: opacity 0.3s;
 }
 .ticker-item:hover img { opacity: 0.9; }
@@ -927,7 +927,21 @@ a:focus-visible, button:focus-visible {
   color: var(--grey);
   font-size: 15px;
   padding: 40px 20px;
+  display: flex; flex-direction: column; align-items: center; gap: 16px;
 }
+.retry-btn {
+  padding: 8px 24px;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--grey-lt);
+  font-family: var(--font-body);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color 0.25s, color 0.25s;
+}
+.retry-btn:hover { border-color: var(--accent-a); color: var(--accent-a); }
 
 /* LAZY RENDERING — offscreen cards skip paint until near viewport */
 .video-card, .photo-card, .service-card {

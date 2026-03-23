@@ -35,7 +35,7 @@ const LIMIT = 8
 
 export default function PhotoPortfolio() {
   const { t } = useI18n()
-  const { data, error, loading } = useContent<PhotoData>('/content/photos.json')
+  const { data, error, loading, retry } = useContent<PhotoData>('/content/photos.json')
   const [activeTab, setActiveTab] = useState<Category>('portraits')
   const tabsRef = useRef<HTMLDivElement>(null)
 
@@ -84,7 +84,7 @@ export default function PhotoPortfolio() {
           {loading && Array.from({ length: LIMIT }).map((_, i) => (
             <div key={i} className="skeleton skeleton-photo" />
           ))}
-          {error && <p className="fetch-error">{t('error.load')}</p>}
+          {error && <div className="fetch-error"><p>{t('error.load')}</p><button className="retry-btn" onClick={retry}>{t('error.retry')}</button></div>}
           {visible.map((src, i) => (
             <div
               key={`${activeTab}-${i}`}

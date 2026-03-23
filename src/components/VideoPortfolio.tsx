@@ -28,7 +28,7 @@ const LIMIT = 6
 
 export default function VideoPortfolio() {
   const { t } = useI18n()
-  const { data: videoData, error } = useContent<VideoData>('/content/videos.json')
+  const { data: videoData, error, retry } = useContent<VideoData>('/content/videos.json')
   const [activeCategory, setActiveCategory] = useState('commercial')
   const tabsRef = useRef<HTMLDivElement>(null)
 
@@ -77,7 +77,7 @@ export default function VideoPortfolio() {
           {!error && !videoData && Array.from({ length: LIMIT }).map((_, i) => (
             <div key={i} className="skeleton skeleton-card" />
           ))}
-          {error && <p className="fetch-error">{t('error.load')}</p>}
+          {error && <div className="fetch-error"><p>{t('error.load')}</p><button className="retry-btn" onClick={retry}>{t('error.retry')}</button></div>}
           {visible.map((video, i) => (
             <div
               key={`${video.youtube_id}-${i}`}

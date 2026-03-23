@@ -22,7 +22,7 @@ interface ServicesData {
 
 export default function Services() {
   const { t } = useI18n()
-  const { data, error } = useContent<ServicesData>('/content/services.json')
+  const { data, error, retry } = useContent<ServicesData>('/content/services.json')
   const services = data?.items ?? []
 
   return (
@@ -44,7 +44,7 @@ export default function Services() {
           {!error && services.length === 0 && Array.from({ length: 4 }).map((_, i) => (
             <div key={i} className="skeleton" style={{ aspectRatio: '3/4', minHeight: 300 }} />
           ))}
-          {error && <p className="fetch-error">{t('error.load')}</p>}
+          {error && <div className="fetch-error"><p>{t('error.load')}</p><button className="retry-btn" onClick={retry}>{t('error.retry')}</button></div>}
           {services.map((s, i) => {
             const idx = i + 1
             const title = t(`svc.${idx}.title`)
