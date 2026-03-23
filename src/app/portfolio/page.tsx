@@ -151,19 +151,21 @@ export default function PortfolioPage() {
             </Link>
 
             {/* Header */}
-            <h2 className="videos-title disp" style={{ marginTop: 12, marginBottom: 0, textAlign: 'center' }}>
+            <h1 className="videos-title disp" style={{ marginTop: 12, marginBottom: 0, textAlign: 'center' }}>
               {section === 'video' ? t('videos.title') : t('photos.title')}
-            </h2>
+            </h1>
           </div>
 
           {/* Sticky category tabs — full width, centered */}
           <div className="portfolio-sticky-bar">
             <div className="container">
-              <div ref={tabsRef} className="photo-tabs portfolio-tabs">
+              <div ref={tabsRef} className="photo-tabs portfolio-tabs" role="tablist" aria-label={section === 'video' ? 'Video categories' : 'Photo categories'}>
                 {section === 'video'
                   ? VIDEO_TABS.map(tab => (
                       <button
                         key={tab.key}
+                        role="tab"
+                        aria-selected={videoTab === tab.key}
                         className={`photo-tab${videoTab === tab.key ? ' active' : ''}`}
                         onClick={() => setVideoTab(tab.key)}
                       >
@@ -173,6 +175,8 @@ export default function PortfolioPage() {
                   : PHOTO_TABS.map(tab => (
                       <button
                         key={tab.key}
+                        role="tab"
+                        aria-selected={photoTab === tab.key}
                         className={`photo-tab${photoTab === tab.key ? ' active' : ''}`}
                         onClick={() => setPhotoTab(tab.key)}
                       >

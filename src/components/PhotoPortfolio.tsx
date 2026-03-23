@@ -65,10 +65,12 @@ export default function PhotoPortfolio() {
         </div>
 
         <div className="tabs-wrapper reveal">
-          <div ref={tabsRef} className="photo-tabs">
+          <div ref={tabsRef} className="photo-tabs" role="tablist" aria-label="Photo categories">
             {TABS.map(tab => (
               <button
                 key={tab.key}
+                role="tab"
+                aria-selected={activeTab === tab.key}
                 className={`photo-tab${activeTab === tab.key ? ' active' : ''}`}
                 onClick={() => handleTabClick(tab.key)}
               >

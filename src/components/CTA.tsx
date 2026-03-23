@@ -122,7 +122,7 @@ export default function CTA() {
         <div className="cta-inner">
           <div className="reveal">
             <div className="section-label" style={{ marginBottom: 20 }}>{t('cta.label')}</div>
-            <h2 className="cta-title disp" dangerouslySetInnerHTML={{ __html: t('cta.title') }} />
+            <h2 className="cta-title disp" style={{ whiteSpace: 'pre-line' }}>{t('cta.title')}</h2>
             <p className="cta-subtitle">{t('cta.subtitle')}</p>
             <a href={`mailto:${contact?.email || 'info@botboxp.com'}`} className="btn btn-solid">
               <span>{contact?.email || 'info@botboxp.com'}</span>

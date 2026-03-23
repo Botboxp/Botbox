@@ -58,10 +58,12 @@ export default function VideoPortfolio() {
         </div>
 
         <div className="tabs-wrapper reveal" style={{ marginBottom: 2 }}>
-          <div ref={tabsRef} className="photo-tabs">
+          <div ref={tabsRef} className="photo-tabs" role="tablist" aria-label="Video categories">
             {TABS.map(tab => (
               <button
                 key={tab.key}
+                role="tab"
+                aria-selected={activeCategory === tab.key}
                 className={`photo-tab${activeCategory === tab.key ? ' active' : ''}`}
                 onClick={() => handleTabClick(tab.key)}
               >

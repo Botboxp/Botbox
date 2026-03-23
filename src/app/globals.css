@@ -70,7 +70,7 @@ h1, h2, h3, h4 { line-height: 1.1; }
   width: 32px; height: 1px;
   background: var(--gradient);
 }
-.grad-text, h2 {
+.grad-text, h1, h2 {
   background: var(--gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
