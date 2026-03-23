@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import Image from 'next/image'
 import { useI18n } from '@/i18n/context'
 
 interface Service {
@@ -56,9 +57,13 @@ export default function Services() {
 
             return (
               <a href="#cta" className="service-card reveal" key={i}>
-                <div
+                <Image
                   className="service-card-img"
-                  style={{ backgroundImage: `url('${prefixPath(s.background)}')` }}
+                  src={prefixPath(s.background)}
+                  alt={title}
+                  fill
+                  sizes="(max-width: 768px) 50vw, 20vw"
+                  loading="lazy"
                 />
                 <div className="service-card-overlay" />
                 <div className="service-card-arrow">

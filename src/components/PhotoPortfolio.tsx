@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useI18n } from '@/i18n/context'
 
 interface Photo { image: string }
@@ -101,7 +102,7 @@ export default function PhotoPortfolio() {
               onClick={() => handlePhotoClick(i)}
               onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handlePhotoClick(i) } }}
             >
-              <div className="photo-img" style={{ backgroundImage: `url('${src}')` }} />
+              <Image className="photo-img" src={src} alt={`${activeTab} photo ${i + 1}`} fill sizes="(max-width: 768px) 50vw, 25vw" loading="lazy" />
               <div className="photo-overlay" />
               <div className="photo-expand">
                 <svg width="12" height="12" viewBox="0 0 12 12" fill="none">

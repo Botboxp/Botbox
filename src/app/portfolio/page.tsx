@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useCallback, useRef } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useI18n } from '@/i18n/context'
 import Navbar from '@/components/Navbar'
 import VideoModal from '@/components/VideoModal'
@@ -108,7 +109,7 @@ export default function PortfolioPage() {
 
   /* Show/hide back-to-top button */
   useEffect(() => {
-    const handleScroll = () => setShowTop(window.scrollY > 400)
+    const handleScroll = () => setShowTop(window.scrollY > 1000)
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
@@ -216,9 +217,13 @@ export default function PortfolioPage() {
                     onClick={() => handleVideoClick(video.youtube_id)}
                     onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleVideoClick(video.youtube_id) } }}
                   >
-                    <div
+                    <Image
                       className="video-thumb"
-                      style={{ backgroundImage: `url('https://i.ytimg.com/vi/${video.youtube_id}/hqdefault.jpg')` }}
+                      src={`https://i.ytimg.com/vi/${video.youtube_id}/hqdefault.jpg`}
+                      alt={video.title}
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1100px) 50vw, 33vw"
+                      loading="lazy"
                     />
                     <div className="video-overlay" />
                     <div className="video-play-btn">
@@ -251,7 +256,7 @@ export default function PortfolioPage() {
                     onClick={() => handlePhotoClick(i)}
                     onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handlePhotoClick(i) } }}
                   >
-                    <div className="photo-img" style={{ backgroundImage: `url('${src}')` }} />
+                    <Image className="photo-img" src={src} alt={`${photoTab} photo ${i + 1}`} fill sizes="(max-width: 768px) 50vw, 25vw" loading="lazy" />
                     <div className="photo-overlay" />
                     <div className="photo-expand">
                       <svg width="12" height="12" viewBox="0 0 12 12" fill="none">

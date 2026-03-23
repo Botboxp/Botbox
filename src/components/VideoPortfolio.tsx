@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useI18n } from '@/i18n/context'
 
 interface Video {
@@ -90,9 +91,13 @@ export default function VideoPortfolio() {
               onClick={() => handleVideoClick(video.youtube_id)}
               onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleVideoClick(video.youtube_id) } }}
             >
-              <div
+              <Image
                 className="video-thumb"
-                style={{ backgroundImage: `url('https://i.ytimg.com/vi/${video.youtube_id}/hqdefault.jpg')` }}
+                src={`https://i.ytimg.com/vi/${video.youtube_id}/hqdefault.jpg`}
+                alt={video.title}
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1100px) 50vw, 33vw"
+                loading="lazy"
               />
               <div className="video-overlay" />
               <div className="video-play-btn">

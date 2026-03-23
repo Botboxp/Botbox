@@ -121,15 +121,6 @@ export default function CTA() {
   }
 
   const stepLabel = currentStep === 1 ? t('form.step1') : currentStep === 2 ? t('form.step2') : t('form.step3')
-  const btnLabel = sent
-    ? t('form.sent')
-    : sending
-      ? '...'
-      : error
-        ? t('form.error')
-        : currentStep < 3
-          ? t('form.next')
-          : t('form.send')
 
   return (
     <section id="cta">
@@ -239,18 +230,33 @@ export default function CTA() {
                 />
               )}
 
-              <button
-                type="button"
-                className="btn btn-solid"
-                style={{ width: '100%', justifyContent: 'center' }}
-                onClick={handleSubmit}
-                disabled={sending || sent}
-              >
-                <span>{btnLabel}</span>
-                <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
-                  <path d="M1.5 6.5h10M6.5 1.5l5 5-5 5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </button>
+              {sent && (
+                <div style={{ textAlign: 'center', padding: '24px 0' }}>
+                  <div style={{ fontSize: '32px', marginBottom: '8px' }}>&#10003;</div>
+                  <p style={{ color: 'var(--accent-a)', fontWeight: 600, fontSize: '16px' }}>{t('form.sent')}</p>
+                </div>
+              )}
+
+              {error && (
+                <div style={{ textAlign: 'center', padding: '16px 0', color: '#ff6b6b', fontSize: '14px', marginBottom: '8px' }}>
+                  {t('form.error')}
+                </div>
+              )}
+
+              {!sent && (
+                <button
+                  type="button"
+                  className="btn btn-solid"
+                  style={{ width: '100%', justifyContent: 'center' }}
+                  onClick={handleSubmit}
+                  disabled={sending}
+                >
+                  <span>{sending ? '...' : currentStep < 3 ? t('form.next') : t('form.send')}</span>
+                  <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+                    <path d="M1.5 6.5h10M6.5 1.5l5 5-5 5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </button>
+              )}
             </form>
           </div>
         </div>
