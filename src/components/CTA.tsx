@@ -1,7 +1,8 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useI18n } from '@/i18n/context'
+import { useContent } from '@/hooks/useContent'
 
 interface ContactPerson { name: string; role: string; phone: string }
 interface ContactData {
@@ -47,7 +48,7 @@ const ContactIcon = () => (
 
 export default function CTA() {
   const { t } = useI18n()
-  const [contact, setContact] = useState<ContactData | null>(null)
+  const { data: contact } = useContent<ContactData>('/content/contact.json')
   const [currentStep, setCurrentStep] = useState(1)
   const [selectedIdx, setSelectedIdx] = useState(0)
   const [name, setName] = useState('')
@@ -59,13 +60,6 @@ export default function CTA() {
   const [error, setError] = useState(false)
   const [touched, setTouched] = useState(false)
   const [website, setWebsite] = useState('')
-
-  useEffect(() => {
-    fetch('/content/contact.json')
-      .then(r => r.json())
-      .then(data => setContact(data))
-      .catch(console.error)
-  }, [])
 
   const handleSubmit = async () => {
     if (currentStep === 1) {

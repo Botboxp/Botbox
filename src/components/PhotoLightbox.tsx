@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useState, useCallback, useRef } from 'react'
 import Image from 'next/image'
+import { listenTyped } from '@/types/events'
 
 export default function PhotoLightbox() {
   const [isOpen, setIsOpen] = useState(false)
@@ -9,15 +10,6 @@ export default function PhotoLightbox() {
   const closeRef = useRef<HTMLButtonElement>(null)
   const previousFocusRef = useRef<HTMLElement | null>(null)
   const lightboxRef = useRef<HTMLDivElement>(null)
-
-  const open = useCallback((e: Event) => {
-    const { images: imgs, index: idx } = (e as CustomEvent).detail
-    previousFocusRef.current = document.activeElement as HTMLElement
-    setImages(imgs)
-    setIndex(idx)
-    setIsOpen(true)
-    document.body.style.overflow = 'hidden'
-  }, [])
 
   const close = useCallback(() => {
     setIsOpen(false)
@@ -35,9 +27,14 @@ export default function PhotoLightbox() {
   }, [isOpen])
 
   useEffect(() => {
-    window.addEventListener('openLightbox', open)
-    return () => window.removeEventListener('openLightbox', open)
-  }, [open])
+    return listenTyped('openLightbox', ({ images: imgs, index: idx }) => {
+      previousFocusRef.current = document.activeElement as HTMLElement
+      setImages(imgs)
+      setIndex(idx)
+      setIsOpen(true)
+      document.body.style.overflow = 'hidden'
+    })
+  }, [])
 
   /* Keyboard: Escape, arrows, focus trap */
   useEffect(() => {

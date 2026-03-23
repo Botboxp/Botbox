@@ -6,6 +6,9 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://www.botboxp.com'),
   title: 'Botbox Production — Miami Audiovisual',
   description: 'Botbox Production is an award-winning audiovisual production studio in Miami, FL. Specializing in commercials, music videos, corporate events, photography and more.',
+  alternates: {
+    canonical: 'https://www.botboxp.com',
+  },
   openGraph: {
     title: 'Botbox Production — Miami Audiovisual Studio',
     description: 'Award-winning film production and post-production creative studio specializing in digital media advertising.',

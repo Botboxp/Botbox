@@ -1,8 +1,8 @@
 'use client'
 
-import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { useI18n } from '@/i18n/context'
+import { useContent } from '@/hooks/useContent'
 
 interface Service {
   title: string
@@ -16,17 +16,14 @@ function prefixPath(path: string): string {
   return path.startsWith('/') ? path : `/${path}`
 }
 
+interface ServicesData {
+  items: Service[]
+}
+
 export default function Services() {
   const { t } = useI18n()
-  const [services, setServices] = useState<Service[]>([])
-  const [error, setError] = useState(false)
-
-  useEffect(() => {
-    fetch('/content/services.json')
-      .then(r => { if (!r.ok) throw new Error(); return r.json() })
-      .then(data => setServices(data.items))
-      .catch(() => setError(true))
-  }, [])
+  const { data, error } = useContent<ServicesData>('/content/services.json')
+  const services = data?.items ?? []
 
   return (
     <section id="services">

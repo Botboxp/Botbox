@@ -1,9 +1,11 @@
 'use client'
 
-import { useEffect, useState, useRef } from 'react'
+import { useState, useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useI18n } from '@/i18n/context'
+import { useContent } from '@/hooks/useContent'
+import { dispatchTyped } from '@/types/events'
 
 interface Video {
   title: string
@@ -26,9 +28,8 @@ const LIMIT = 6
 
 export default function VideoPortfolio() {
   const { t } = useI18n()
-  const [videoData, setVideoData] = useState<VideoData>({})
+  const { data: videoData, error } = useContent<VideoData>('/content/videos.json')
   const [activeCategory, setActiveCategory] = useState('commercial')
-  const [error, setError] = useState(false)
   const tabsRef = useRef<HTMLDivElement>(null)
 
   const handleTabClick = (key: string) => {
@@ -39,18 +40,11 @@ export default function VideoPortfolio() {
     })
   }
 
-  useEffect(() => {
-    fetch('/content/videos.json')
-      .then(r => { if (!r.ok) throw new Error(); return r.json() })
-      .then(data => setVideoData(data))
-      .catch(() => setError(true))
-  }, [])
-
-  const filtered = videoData[activeCategory] || []
+  const filtered = videoData ? (videoData[activeCategory] || []) : []
   const visible = filtered.slice(0, LIMIT)
 
   function handleVideoClick(youtubeId: string) {
-    window.dispatchEvent(new CustomEvent('openVideo', { detail: youtubeId }))
+    dispatchTyped('openVideo', youtubeId)
   }
 
   return (
@@ -78,7 +72,7 @@ export default function VideoPortfolio() {
         </div>
 
         <div className="videos-grid reveal" id="videosGrid">
-          {!error && Object.keys(videoData).length === 0 && Array.from({ length: LIMIT }).map((_, i) => (
+          {!error && !videoData && Array.from({ length: LIMIT }).map((_, i) => (
             <div key={i} className="skeleton skeleton-card" />
           ))}
           {error && <p className="fetch-error">{t('error.load')}</p>}

@@ -4,6 +4,8 @@ import { useEffect, useState, useCallback, useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useI18n } from '@/i18n/context'
+import { useContent } from '@/hooks/useContent'
+import { dispatchTyped, listenTyped } from '@/types/events'
 import Navbar from '@/components/Navbar'
 import VideoModal from '@/components/VideoModal'
 import PhotoLightbox from '@/components/PhotoLightbox'
@@ -63,48 +65,29 @@ export default function PortfolioPage() {
   const [showTop, setShowTop] = useState(false)
 
   /* ── Video state ── */
-  const [videoData, setVideoData] = useState<VideoData>({})
+  const { data: videoData, error: videoError } = useContent<VideoData>('/content/videos.json')
   const [videoTab, setVideoTab] = useState('commercial')
-  const [videoError, setVideoError] = useState(false)
 
   /* ── Photo state ── */
-  const [photoData, setPhotoData] = useState<PhotoData | null>(null)
+  const { data: photoData, error: photoError } = useContent<PhotoData>('/content/photos.json')
   const [photoTab, setPhotoTab] = useState<PhotoCategory>('portraits')
-  const [photoError, setPhotoError] = useState(false)
-
-  useEffect(() => {
-    fetch('/content/videos.json')
-      .then(r => { if (!r.ok) throw new Error(); return r.json() })
-      .then(data => setVideoData(data))
-      .catch(() => setVideoError(true))
-
-    fetch('/content/photos.json')
-      .then(r => { if (!r.ok) throw new Error(); return r.json() })
-      .then((d: PhotoData) => setPhotoData(d))
-      .catch(() => setPhotoError(true))
-  }, [])
 
   /* Handle hash on load */
   useEffect(() => {
     if (window.location.hash === '#photos') {
       setSection('photo')
-      window.dispatchEvent(new CustomEvent('portfolioSectionChanged', { detail: 'photo' }))
+      dispatchTyped('portfolioSectionChanged', 'photo')
     }
   }, [])
 
   /* Listen for nav section toggle */
   useEffect(() => {
-    const handler = (e: Event) => {
-      const detail = (e as CustomEvent<Section>).detail
-      setSection(detail)
-    }
-    window.addEventListener('portfolioSection', handler)
-    return () => window.removeEventListener('portfolioSection', handler)
+    return listenTyped('portfolioSection', (detail) => setSection(detail))
   }, [])
 
   /* Notify nav of section changes */
   useEffect(() => {
-    window.dispatchEvent(new CustomEvent('portfolioSectionChanged', { detail: section }))
+    dispatchTyped('portfolioSectionChanged', section)
   }, [section])
 
   /* Show/hide back-to-top button */
@@ -134,18 +117,18 @@ export default function PortfolioPage() {
     }
   }, [videoTab, photoTab])
 
-  const filteredVideos = videoData[videoTab] || []
+  const filteredVideos = videoData ? (videoData[videoTab] || []) : []
 
   const photoImages: string[] = photoData
     ? photoData[photoTab].map(p => prefixPath(p.image))
     : []
 
   function handleVideoClick(youtubeId: string) {
-    window.dispatchEvent(new CustomEvent('openVideo', { detail: youtubeId }))
+    dispatchTyped('openVideo', youtubeId)
   }
 
   function handlePhotoClick(index: number) {
-    window.dispatchEvent(new CustomEvent('openLightbox', { detail: { images: photoImages, index } }))
+    dispatchTyped('openLightbox', { images: photoImages, index })
   }
 
   return (
@@ -204,7 +187,7 @@ export default function PortfolioPage() {
             {/* ── VIDEO ── */}
             {section === 'video' && (
               <div className="videos-grid" id="videosGrid">
-                {!videoError && Object.keys(videoData).length === 0 && Array.from({ length: 6 }).map((_, i) => (
+                {!videoError && !videoData && Array.from({ length: 6 }).map((_, i) => (
                   <div key={i} className="skeleton skeleton-card" />
                 ))}
                 {videoError && <p className="fetch-error">{t('error.load')}</p>}

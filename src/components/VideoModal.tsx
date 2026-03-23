@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useState, useCallback, useRef } from 'react'
 import { useI18n } from '@/i18n/context'
+import { listenTyped } from '@/types/events'
 
 export default function VideoModal() {
   const { t } = useI18n()
@@ -9,14 +10,6 @@ export default function VideoModal() {
   const closeRef = useRef<HTMLButtonElement>(null)
   const previousFocusRef = useRef<HTMLElement | null>(null)
   const overlayRef = useRef<HTMLDivElement>(null)
-
-  const open = useCallback((e: Event) => {
-    const id = (e as CustomEvent).detail
-    previousFocusRef.current = document.activeElement as HTMLElement
-    setVideoId(id)
-    setIsOpen(true)
-    document.body.style.overflow = 'hidden'
-  }, [])
 
   const close = useCallback(() => {
     setIsOpen(false)
@@ -31,9 +24,13 @@ export default function VideoModal() {
   }, [isOpen])
 
   useEffect(() => {
-    window.addEventListener('openVideo', open)
-    return () => window.removeEventListener('openVideo', open)
-  }, [open])
+    return listenTyped('openVideo', (id) => {
+      previousFocusRef.current = document.activeElement as HTMLElement
+      setVideoId(id)
+      setIsOpen(true)
+      document.body.style.overflow = 'hidden'
+    })
+  }, [])
 
   /* Keyboard: Escape to close, trap focus inside modal */
   useEffect(() => {

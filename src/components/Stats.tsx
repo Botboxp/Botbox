@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { useI18n } from '@/i18n/context'
+import { useContent } from '@/hooks/useContent'
 
 interface StatItem {
   target: number
@@ -53,21 +54,21 @@ function StatNumber({ target }: { target: number }) {
   )
 }
 
+interface StatsData {
+  items: StatItem[]
+}
+
+const FALLBACK: StatItem[] = [
+  { target: 15, label: 'stat.years' },
+  { target: 50, label: 'stat.brands' },
+  { target: 200, label: 'stat.projects' },
+  { target: 13, label: 'stat.countries' },
+]
+
 export default function Stats() {
   const { t } = useI18n()
-  const [stats, setStats] = useState<StatItem[]>([])
-
-  useEffect(() => {
-    fetch('/content/stats.json')
-      .then(r => r.json())
-      .then(data => setStats(data.items))
-      .catch(() => setStats([
-        { target: 15, label: 'stat.years' },
-        { target: 50, label: 'stat.brands' },
-        { target: 200, label: 'stat.projects' },
-        { target: 13, label: 'stat.countries' },
-      ]))
-  }, [])
+  const { data } = useContent<StatsData>('/content/stats.json')
+  const stats = data?.items ?? FALLBACK
 
   return (
     <section id="stats">

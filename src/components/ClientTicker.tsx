@@ -1,8 +1,8 @@
 'use client'
 
-import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { useI18n } from '@/i18n/context'
+import { useContent } from '@/hooks/useContent'
 
 interface Client {
   name: string
@@ -13,16 +13,14 @@ function prefixPath(path: string): string {
   return path.startsWith('/') ? path : `/${path}`
 }
 
+interface ClientsData {
+  items: Client[]
+}
+
 export default function ClientTicker() {
   const { t } = useI18n()
-  const [clients, setClients] = useState<Client[]>([])
-
-  useEffect(() => {
-    fetch('/content/clients.json')
-      .then(r => r.json())
-      .then(data => setClients(data.items))
-      .catch(console.error)
-  }, [])
+  const { data } = useContent<ClientsData>('/content/clients.json')
+  const clients = data?.items ?? []
 
   const items = [...clients, ...clients]
 

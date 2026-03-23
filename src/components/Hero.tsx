@@ -4,6 +4,8 @@ import { useRef, useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useI18n } from '@/i18n/context'
+import { useContent } from '@/hooks/useContent'
+import { dispatchTyped } from '@/types/events'
 
 interface Settings {
   hero_video: string
@@ -14,14 +16,7 @@ export default function Hero() {
   const { t } = useI18n()
   const videoRef = useRef<HTMLVideoElement>(null)
   const [videoFailed, setVideoFailed] = useState(false)
-  const [settings, setSettings] = useState<Settings | null>(null)
-
-  useEffect(() => {
-    fetch('/content/settings.json')
-      .then(r => r.json())
-      .then(data => setSettings(data))
-      .catch(console.error)
-  }, [])
+  const { data: settings } = useContent<Settings>('/content/settings.json')
 
   useEffect(() => {
     const video = videoRef.current
@@ -46,7 +41,7 @@ export default function Hero() {
   const openReel = (e: React.MouseEvent) => {
     e.preventDefault()
     const id = extractYouTubeId(settings?.hero_showreel_id || 'lfIq4rXrXF4')
-    window.dispatchEvent(new CustomEvent('openVideo', { detail: id }))
+    dispatchTyped('openVideo', id)
   }
 
   const handleAnchorClick = (e: React.MouseEvent<HTMLAnchorElement>) => {

@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback, useRef } from 'react'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 import { useI18n } from '@/i18n/context'
+import { dispatchTyped, listenTyped } from '@/types/events'
 
 const NAV_LINKS = [
   { href: '#about', key: 'nav.about' },
@@ -94,11 +95,7 @@ export default function Navbar() {
 
   // Listen for portfolio section changes
   useEffect(() => {
-    const handler = (e: Event) => {
-      setActiveSection((e as CustomEvent).detail)
-    }
-    window.addEventListener('portfolioSectionChanged', handler)
-    return () => window.removeEventListener('portfolioSectionChanged', handler)
+    return listenTyped('portfolioSectionChanged', (detail) => setActiveSection(detail))
   }, [])
 
   // Lock body scroll when mobile menu is open
@@ -127,7 +124,7 @@ export default function Navbar() {
 
   /* Portfolio nav: dispatch event to toggle section */
   const handlePortfolioNav = useCallback((section: 'video' | 'photo') => {
-    window.dispatchEvent(new CustomEvent('portfolioSection', { detail: section }))
+    dispatchTyped('portfolioSection', section)
     window.scrollTo({ top: 0, behavior: 'smooth' })
     setIsOpen(false)
   }, [])

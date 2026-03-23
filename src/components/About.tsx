@@ -1,8 +1,8 @@
 'use client'
 
-import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { useI18n } from '@/i18n/context'
+import { useContent } from '@/hooks/useContent'
 
 interface GalleryItem {
   image: string
@@ -13,16 +13,14 @@ function prefixPath(path: string): string {
   return path.startsWith('/') ? path : `/${path}`
 }
 
+interface AboutData {
+  gallery: GalleryItem[]
+}
+
 export default function About() {
   const { t } = useI18n()
-  const [gallery, setGallery] = useState<GalleryItem[]>([])
-
-  useEffect(() => {
-    fetch('/content/about.json')
-      .then(r => r.json())
-      .then(data => setGallery(data.gallery))
-      .catch(console.error)
-  }, [])
+  const { data } = useContent<AboutData>('/content/about.json')
+  const gallery = data?.gallery ?? []
 
   return (
     <section id="about">

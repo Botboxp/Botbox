@@ -1,9 +1,11 @@
 'use client'
 
-import { useEffect, useState, useRef } from 'react'
+import { useState, useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useI18n } from '@/i18n/context'
+import { useContent } from '@/hooks/useContent'
+import { dispatchTyped } from '@/types/events'
 
 interface Photo { image: string }
 interface PhotoData {
@@ -33,10 +35,8 @@ const LIMIT = 8
 
 export default function PhotoPortfolio() {
   const { t } = useI18n()
-  const [data, setData] = useState<PhotoData | null>(null)
+  const { data, error, loading } = useContent<PhotoData>('/content/photos.json')
   const [activeTab, setActiveTab] = useState<Category>('portraits')
-  const [error, setError] = useState(false)
-  const [loading, setLoading] = useState(true)
   const tabsRef = useRef<HTMLDivElement>(null)
 
   const handleTabClick = (key: Category) => {
@@ -47,21 +47,11 @@ export default function PhotoPortfolio() {
     })
   }
 
-  useEffect(() => {
-    fetch('/content/photos.json')
-      .then(r => { if (!r.ok) throw new Error(); return r.json() })
-      .then((d: PhotoData) => setData(d))
-      .catch(() => setError(true))
-      .finally(() => setLoading(false))
-  }, [])
-
   const images: string[] = data ? data[activeTab].map(p => prefixPath(p.image)) : []
   const visible = images.slice(0, LIMIT)
 
   function handlePhotoClick(index: number) {
-    window.dispatchEvent(
-      new CustomEvent('openLightbox', { detail: { images: visible, index } })
-    )
+    dispatchTyped('openLightbox', { images: visible, index })
   }
 
   return (
