@@ -11,6 +11,7 @@ import VideoPortfolio from '@/components/VideoPortfolio'
 import PhotoPortfolio from '@/components/PhotoPortfolio'
 import Process from '@/components/Process'
 import Stats from '@/components/Stats'
+import ClientsWall from '@/components/ClientsWall'
 import Testimonials from '@/components/Testimonials'
 import CTA from '@/components/CTA'
 import Footer from '@/components/Footer'
@@ -39,6 +40,7 @@ export default function Home() {
       <ErrorBoundary><PhotoPortfolio /></ErrorBoundary>
       <ErrorBoundary><Process /></ErrorBoundary>
       <ErrorBoundary><Stats /></ErrorBoundary>
+      <ErrorBoundary><ClientsWall /></ErrorBoundary>
       {showTestimonials && <ErrorBoundary><Testimonials /></ErrorBoundary>}
       <ErrorBoundary><CTA /></ErrorBoundary>
       <Footer />

@@ -1,20 +1,15 @@
 'use client'
-import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { useI18n } from '@/i18n/context'
+import { useContent } from '@/hooks/useContent'
 
 interface Client { name: string; logo: string }
+interface ClientsData { items: Client[] }
 
 export default function ClientsWall() {
   const { t } = useI18n()
-  const [clients, setClients] = useState<Client[]>([])
-
-  useEffect(() => {
-    fetch('/content/clients.json')
-      .then(r => r.json())
-      .then(data => setClients(data.items))
-      .catch(console.error)
-  }, [])
+  const { data } = useContent<ClientsData>('/content/clients.json')
+  const clients = data?.items ?? []
 
   return (
     <section id="clients-wall">
