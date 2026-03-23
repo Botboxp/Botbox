@@ -3,12 +3,12 @@
 import { useEffect, useRef, useState } from 'react'
 import { useI18n } from '@/i18n/context'
 
-const STATS = [
-  { target: 15, label: 'stat.years', delay: '' },
-  { target: 50, label: 'stat.brands', delay: 'reveal-delay-1' },
-  { target: 200, label: 'stat.projects', delay: 'reveal-delay-2' },
-  { target: 13, label: 'stat.countries', delay: 'reveal-delay-3' },
-]
+interface StatItem {
+  target: number
+  label: string
+}
+
+const DELAYS = ['', 'reveal-delay-1', 'reveal-delay-2', 'reveal-delay-3']
 
 function StatNumber({ target }: { target: number }) {
   const [count, setCount] = useState(0)
@@ -55,15 +55,28 @@ function StatNumber({ target }: { target: number }) {
 
 export default function Stats() {
   const { t } = useI18n()
+  const [stats, setStats] = useState<StatItem[]>([])
+
+  useEffect(() => {
+    fetch('/content/stats.json')
+      .then(r => r.json())
+      .then(data => setStats(data.items))
+      .catch(() => setStats([
+        { target: 15, label: 'stat.years' },
+        { target: 50, label: 'stat.brands' },
+        { target: 200, label: 'stat.projects' },
+        { target: 13, label: 'stat.countries' },
+      ]))
+  }, [])
 
   return (
     <section id="stats">
       <div className="container">
         <div className="stats-grid">
-          {STATS.map((stat) => (
+          {stats.map((stat, i) => (
             <div
               key={stat.label}
-              className={`stat-card reveal${stat.delay ? ` ${stat.delay}` : ''}`}
+              className={`stat-card reveal${DELAYS[i] ? ` ${DELAYS[i]}` : ''}`}
             >
               <StatNumber target={stat.target} />
               <div className="stat-label">{t(stat.label)}</div>

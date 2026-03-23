@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import ErrorBoundary from '@/components/ErrorBoundary'
 import Navbar from '@/components/Navbar'
 import Hero from '@/components/Hero'
 import ClientTicker from '@/components/ClientTicker'
@@ -10,7 +11,6 @@ import VideoPortfolio from '@/components/VideoPortfolio'
 import PhotoPortfolio from '@/components/PhotoPortfolio'
 import Process from '@/components/Process'
 import Stats from '@/components/Stats'
-import ClientsWall from '@/components/ClientsWall'
 import Testimonials from '@/components/Testimonials'
 import CTA from '@/components/CTA'
 import Footer from '@/components/Footer'
@@ -33,17 +33,16 @@ export default function Home() {
     <>
       <CustomCursor />
       <Navbar />
-      <Hero />
-      <ClientTicker />
-      <About />
-      <Services />
-      <VideoPortfolio />
-      <PhotoPortfolio />
-      <Process />
-      <Stats />
-      <ClientsWall />
-      {showTestimonials && <Testimonials />}
-      <CTA />
+      <ErrorBoundary><Hero /></ErrorBoundary>
+      <ErrorBoundary><ClientTicker /></ErrorBoundary>
+      <ErrorBoundary><About /></ErrorBoundary>
+      <ErrorBoundary><Services /></ErrorBoundary>
+      <ErrorBoundary><VideoPortfolio /></ErrorBoundary>
+      <ErrorBoundary><PhotoPortfolio /></ErrorBoundary>
+      <ErrorBoundary><Process /></ErrorBoundary>
+      <ErrorBoundary><Stats /></ErrorBoundary>
+      {showTestimonials && <ErrorBoundary><Testimonials /></ErrorBoundary>}
+      <ErrorBoundary><CTA /></ErrorBoundary>
       <Footer />
       <VideoModal />
       <PhotoLightbox />

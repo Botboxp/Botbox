@@ -39,9 +39,10 @@ collections:
           - name: "gallery"
             label: "Galería de fotos"
             widget: "list"
-            summary: "{{fields.image}}"
+            summary: "{{fields.alt}}"
             fields:
               - { name: "image", label: "Imagen", widget: "image" }
+              - { name: "alt", label: "Descripción", widget: "string", hint: "Texto alternativo para la imagen (ej: On set filming)" }
 
       - name: "contact"
         label: "Contacto"
@@ -169,6 +170,23 @@ collections:
             allow_add: true
             fields:
               - { name: "image", label: "Imagen", widget: "image" }
+
+  - name: "stats"
+    label: "Estadísticas"
+    editor:
+      preview: false
+    files:
+      - name: "stats"
+        label: "Números / Estadísticas"
+        file: "content/stats.json"
+        fields:
+          - name: "items"
+            label: "Estadísticas"
+            widget: "list"
+            summary: "{{fields.target}} - {{fields.label}}"
+            fields:
+              - { name: "target", label: "Número", widget: "number", value_type: "int" }
+              - { name: "label", label: "Clave i18n", widget: "string", hint: "Clave de traducción (ej: stat.years, stat.brands, stat.projects, stat.countries)" }
 
   - name: "services"
     label: "Servicios"

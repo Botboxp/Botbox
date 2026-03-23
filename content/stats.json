@@ -1,0 +1,8 @@
+{
+  "items": [
+    {"target": 15, "label": "stat.years"},
+    {"target": 50, "label": "stat.brands"},
+    {"target": 200, "label": "stat.projects"},
+    {"target": 13, "label": "stat.countries"}
+  ]
+}

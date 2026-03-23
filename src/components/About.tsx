@@ -6,6 +6,7 @@ import { useI18n } from '@/i18n/context'
 
 interface GalleryItem {
   image: string
+  alt?: string
 }
 
 function prefixPath(path: string): string {
@@ -66,7 +67,7 @@ export default function About() {
                 key={i}
                 className="about-gallery-img"
                 src={prefixPath(g.image)}
-                alt="Behind the scenes"
+                alt={g.alt || 'Behind the scenes'}
                 width={400}
                 height={300}
                 loading="lazy"
