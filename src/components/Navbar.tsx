@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useI18n } from '@/i18n/context'
 import { dispatchTyped, listenTyped } from '@/types/events'
 
@@ -137,9 +138,12 @@ export default function Navbar() {
         <div className="nav-inner">
           <a href={logoLink} className="nav-logo" onClick={isHome ? handleNavClick : undefined}>
             {!logoError ? (
-              <img
+              <Image
                 src="/assets/img/logos/botbox-logo.png"
                 alt="Botbox Production"
+                width={120}
+                height={32}
+                priority
                 onError={() => setLogoError(true)}
               />
             ) : (

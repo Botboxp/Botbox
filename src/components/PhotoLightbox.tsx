@@ -74,7 +74,7 @@ export default function PhotoLightbox() {
     >
       <button ref={closeRef} className="lightbox-close" onClick={close} aria-label="Close">✕</button>
       <button className="lightbox-nav lightbox-prev" onClick={() => nav(-1)} aria-label="Previous photo">‹</button>
-      {images.length > 0 && <Image className="lightbox-img" src={images[index]} alt={`Photo ${index + 1} of ${images.length}`} width={1200} height={800} priority style={{ objectFit: 'contain', width: '100%', height: 'auto' }} />}
+      {images.length > 0 && <Image className="lightbox-img" src={images[index]} alt={`Photo ${index + 1} of ${images.length}`} width={1200} height={800} loading="eager" style={{ objectFit: 'contain', width: '100%', height: 'auto' }} />}
       <button className="lightbox-nav lightbox-next" onClick={() => nav(1)} aria-label="Next photo">›</button>
     </div>
   )

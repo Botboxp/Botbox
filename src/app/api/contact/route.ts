@@ -1,5 +1,13 @@
 import { NextResponse } from 'next/server'
 
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+}
+
 export async function POST(req: Request) {
   try {
     const { name, email, company, projectType, message, website } = await req.json()
@@ -12,6 +20,12 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Name and email are required' }, { status: 400 })
     }
 
+    const safeName = escapeHtml(name)
+    const safeEmail = escapeHtml(email)
+    const safeCompany = escapeHtml(company || 'N/A')
+    const safeType = escapeHtml(projectType)
+    const safeMessage = escapeHtml(message || 'No message provided.')
+
     const res = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
@@ -21,16 +35,16 @@ export async function POST(req: Request) {
       body: JSON.stringify({
         from: 'Botbox Website <noreply@botboxp.com>',
         to: 'info@botboxp.com',
-        subject: `New Project Inquiry - ${projectType}`,
+        subject: `New Project Inquiry - ${safeType}`,
         reply_to: email,
         html: `
           <h2>New Project Inquiry</h2>
-          <p><strong>Name:</strong> ${name}</p>
-          <p><strong>Email:</strong> ${email}</p>
-          <p><strong>Company:</strong> ${company || 'N/A'}</p>
-          <p><strong>Project Type:</strong> ${projectType}</p>
+          <p><strong>Name:</strong> ${safeName}</p>
+          <p><strong>Email:</strong> ${safeEmail}</p>
+          <p><strong>Company:</strong> ${safeCompany}</p>
+          <p><strong>Project Type:</strong> ${safeType}</p>
           <p><strong>Message:</strong></p>
-          <p>${message || 'No message provided.'}</p>
+          <p>${safeMessage}</p>
         `,
       }),
     })

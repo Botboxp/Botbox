@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import { useI18n } from '@/i18n/context'
 
 export default function Footer() {
@@ -15,9 +16,12 @@ export default function Footer() {
           <div>
             <div className="footer-logo">
               {!logoError ? (
-                <img
+                <Image
                   src="/assets/img/logos/botbox-logo.png"
                   alt="Botbox Production"
+                  width={100}
+                  height={28}
+                  loading="lazy"
                   onError={() => setLogoError(true)}
                 />
               ) : (
