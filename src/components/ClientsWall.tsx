@@ -26,7 +26,7 @@ export default function ClientsWall() {
           <div className="clients-grid reveal">
             {clients.map((c, i) => (
               <div key={i} className="client-logo-card">
-                <img className="client-logo-img" src={'/' + c.logo} alt={c.name} />
+                <img className="client-logo-img" src={c.logo} alt={c.name} />
               </div>
             ))}
           </div>
